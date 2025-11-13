@@ -1,0 +1,5 @@
+{
+  "name": "Maruzzella Roster & Clock-In",
+  "description": "An application for Maruzzella restaurant to manage employee rosters and handle clock-in/clock-out functionality, featuring an AI-powered daily briefing generator.",
+  "requestFramePermissions": []
+}

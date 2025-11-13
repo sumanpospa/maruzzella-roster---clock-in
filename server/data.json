@@ -1,0 +1,200 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Huda",
+      "role": "Manager",
+      "pin": "1234"
+    },
+    {
+      "id": 2,
+      "name": "Suman",
+      "role": "Manager",
+      "pin": "1234"
+    },
+    {
+      "id": 3,
+      "name": "Luca",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 4,
+      "name": "Dennis",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 5,
+      "name": "Enrico",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 6,
+      "name": "Sundesh",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 7,
+      "name": "Siyam",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 8,
+      "name": "Taki",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 9,
+      "name": "Tanbir",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 10,
+      "name": "Progganur",
+      "role": "Chef",
+      "pin": "1234"
+    },
+    {
+      "id": 11,
+      "name": "tipu",
+      "role": "Chef",
+      "pin": "1234"
+    }
+  ],
+  "rosters": {
+    "currentWeek": {
+      "Monday": [
+        {
+          "employeeIds": [
+            1
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        },
+        {
+          "employeeIds": [
+            3
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        }
+      ],
+      "Tuesday": [
+        {
+          "employeeIds": [
+            1
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        },
+        {
+          "employeeIds": [
+            3
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        }
+      ],
+      "Wednesday": [
+        {
+          "employeeIds": [
+            1
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        },
+        {
+          "employeeIds": [
+            3
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        }
+      ],
+      "Thursday": [
+        {
+          "employeeIds": [
+            1
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        },
+        {
+          "employeeIds": [
+            3
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        }
+      ],
+      "Friday": [
+        {
+          "employeeIds": [
+            1
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        },
+        {
+          "employeeIds": [
+            3
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        }
+      ],
+      "Saturday": [
+        {
+          "employeeIds": [
+            1
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        },
+        {
+          "employeeIds": [
+            3
+          ],
+          "startTime": "09:00",
+          "endTime": "17:00"
+        }
+      ],
+      "Sunday": []
+    },
+    "nextWeek": {
+      "Monday": [],
+      "Tuesday": [],
+      "Wednesday": [],
+      "Thursday": [],
+      "Friday": [],
+      "Saturday": [],
+      "Sunday": []
+    }
+  },
+  "timeLogs": [
+    {
+      "id": 1763009204155,
+      "employeeId": 3,
+      "clockInTime": "2025-11-13T04:46:44.155Z",
+      "clockOutTime": null
+    },
+    {
+      "id": 1763014769084,
+      "employeeId": 1,
+      "clockInTime": "2025-11-13T06:19:29.084Z",
+      "clockOutTime": null
+    },
+    {
+      "id": 1763014770633,
+      "employeeId": 2,
+      "clockInTime": "2025-11-13T06:19:30.633Z",
+      "clockOutTime": null
+    }
+  ]
+}
