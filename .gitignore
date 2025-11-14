@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local data files (persisted backend state)
+data.json
+server/data.json

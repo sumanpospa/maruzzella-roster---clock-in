@@ -15,21 +15,34 @@ process.on('unhandledRejection', (reason) => {
 
 const app = express();
 
-// CORS configuration - allow frontend URL from env or localhost
+// CORS configuration - allow frontend URL(s) from env or localhost
+const envOrigins = [
+  process.env.FRONTEND_URL,
+  ...(process.env.FRONTEND_URLS ? process.env.FRONTEND_URLS.split(',').map(s => s.trim()) : [])
+].filter(Boolean);
+
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
-  process.env.FRONTEND_URL || 'http://localhost:3000'
-].filter(Boolean);
+  ...envOrigins
+];
+
+const vercelPattern = /^https?:\/\/([a-z0-9-]+\.)*vercel\.app$/i; // allow preview/prod Vercel URLs
 
 app.use(cors({
   origin: function (origin, callback) {
     const isDev = process.env.NODE_ENV !== 'production';
     const allowLan = /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin || '');
-    // Allow localhost, LAN IPs, or anything in non-production
-    if (!origin || allowedOrigins.includes(origin) || allowLan || isDev) {
+
+    if (
+      !origin || // curl/postman
+      isDev || // anything in dev
+      allowedOrigins.includes(origin) || // explicit allows
+      allowLan || // local LAN testing
+      vercelPattern.test(origin || '') // any *.vercel.app (previews + prod)
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
