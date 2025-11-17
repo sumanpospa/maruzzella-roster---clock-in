@@ -2,7 +2,7 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["npm ci --prefix server"]
+cmds = ["npm ci"]
 
 [start]
-cmd = "node server/index.js"
+cmd = "node index.js"
