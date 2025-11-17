@@ -1,16 +1,14 @@
-
-
 import { GoogleGenAI } from "@google/genai";
-// Fix: Corrected import path to be relative.
 import { Shift, Employee } from '../types';
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable is not set");
-}
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Support Vite define() injection and optional key
+const API_KEY = (process.env as any)?.API_KEY || (process.env as any)?.GEMINI_API_KEY;
+const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
 
 export const generateDailyBriefing = async (shifts: Shift[], employees: Employee[]): Promise<string> => {
+  if (!ai) {
+    return "AI briefing is disabled (no API key). You can enable it by setting GEMINI_API_KEY in your environment.";
+  }
   if (shifts.length === 0) {
     return "No staff are scheduled to work today. The restaurant might be closed.";
   }
