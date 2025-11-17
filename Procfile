@@ -1,1 +1,1 @@
-web: cd server && node index.js
+web: cd server && npm ci && node index.js
