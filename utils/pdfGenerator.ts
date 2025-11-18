@@ -27,9 +27,22 @@ export const generateRosterPDF = (
   const colWidth = 38;
   const nameColWidth = 40;
   
-  // Header row
-  pdf.setFillColor(240, 240, 240);
+  // Header row - Draw backgrounds first
+  pdf.setFillColor(220, 220, 220);
   pdf.rect(startX, startY, nameColWidth, rowHeight, 'F');
+  
+  days.forEach((day, i) => {
+    const x = startX + nameColWidth + (i * colWidth);
+    pdf.setFillColor(220, 220, 220);
+    pdf.rect(x, startY, colWidth, rowHeight, 'F');
+  });
+  
+  // Header row - Draw borders
+  pdf.setDrawColor(100, 100, 100);
+  pdf.setLineWidth(0.5);
+  pdf.rect(startX, startY, nameColWidth + (7 * colWidth), rowHeight, 'S');
+  
+  // Header row - Draw text on top
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(10);
   pdf.setTextColor(0, 0, 0);
@@ -37,12 +50,10 @@ export const generateRosterPDF = (
   
   days.forEach((day, i) => {
     const x = startX + nameColWidth + (i * colWidth);
-    pdf.setFillColor(240, 240, 240);
-    pdf.rect(x, startY, colWidth, rowHeight, 'F');
+    const dateStr = dates[i].toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(10);
     pdf.setTextColor(0, 0, 0);
-    const dateStr = dates[i].toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
     pdf.text(`${day.substring(0, 3)}`, x + 2, startY + 5);
     pdf.setFontSize(8);
     pdf.setFont('helvetica', 'normal');
