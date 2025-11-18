@@ -75,9 +75,12 @@ export const generateRosterPDF = (
       const employeeShifts = roster[day]?.filter(s => s.employeeIds.includes(employee.id)) || [];
       
       if (employeeShifts.length > 0) {
-        const shiftTexts = employeeShifts.map(shift => 
-          `${shift.start}-${shift.end}`
-        );
+        const shiftTexts = employeeShifts.map(shift => {
+          const timeStr = (shift.startTime && shift.endTime) 
+            ? `${shift.startTime}-${shift.endTime}` 
+            : 'TBD';
+          return shift.notes ? `${timeStr} (${shift.notes})` : timeStr;
+        });
         
         let yOffset = 0;
         shiftTexts.forEach((text, idx) => {

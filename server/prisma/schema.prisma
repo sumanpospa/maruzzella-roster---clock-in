@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id        Int        @id @default(autoincrement())
+  name      String
+  role      String
+  pin       String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  shifts    Shift[]
+  timeLogs  TimeLog[]
+}
+
+model Shift {
+  id          Int        @id @default(autoincrement())
+  week        String     // 'currentWeek' or 'nextWeek'
+  day         String     // 'Monday', 'Tuesday', etc.
+  start       String     // e.g., '09:00'
+  end         String     // e.g., '17:00'
+  startTime   String?    // optional detailed time
+  endTime     String?    // optional detailed time
+  notes       String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  employees   Employee[]
+}
+
+model TimeLog {
+  id         Int       @id @default(autoincrement())
+  employeeId Int
+  employee   Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  clockIn    DateTime
+  clockOut   DateTime?
+  date       String    // YYYY-MM-DD format
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([employeeId])
+  @@index([date])
+}
