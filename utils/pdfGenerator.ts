@@ -32,18 +32,21 @@ export const generateRosterPDF = (
   pdf.rect(startX, startY, nameColWidth, rowHeight, 'F');
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(10);
+  pdf.setTextColor(0, 0, 0);
   pdf.text('Employee', startX + 2, startY + 8);
   
   days.forEach((day, i) => {
     const x = startX + nameColWidth + (i * colWidth);
+    pdf.setFillColor(240, 240, 240);
     pdf.rect(x, startY, colWidth, rowHeight, 'F');
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(10);
+    pdf.setTextColor(0, 0, 0);
     const dateStr = dates[i].toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
     pdf.text(`${day.substring(0, 3)}`, x + 2, startY + 5);
     pdf.setFontSize(8);
     pdf.setFont('helvetica', 'normal');
     pdf.text(dateStr, x + 2, startY + 9);
-    pdf.setFontSize(10);
-    pdf.setFont('helvetica', 'bold');
   });
   
   // Employee rows
