@@ -203,12 +203,11 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
         {viewingWeek === 'currentWeek' && <AiBriefing todaysShifts={roster[today] || []} employees={employees} currentUser={currentUser} />}
 
         <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
-            {/* Fixed Header */}
-            <div className="overflow-x-auto border-b border-stone-300">
+            <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-300px)]">
                 <table className="w-full min-w-[800px] sm:min-w-full border-collapse">
                     <thead className="bg-stone-50">
-                        <tr>
-                            <th className="sticky left-0 bg-stone-50 p-3 text-sm font-semibold text-slate-600 z-30 w-[120px] text-left border-r border-stone-300 shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
+                        <tr className="border-b border-stone-300">
+                            <th className="sticky left-0 bg-stone-50 p-3 text-sm font-semibold text-slate-600 z-20 w-[120px] text-left border-r border-stone-300 shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
                                 Employee
                             </th>
                             {days.map((day, i) => (
@@ -228,12 +227,6 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                             ))}
                         </tr>
                     </thead>
-                </table>
-            </div>
-            
-            {/* Scrollable Body */}
-            <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-360px)]">
-                <table className="w-full min-w-[800px] sm:min-w-full border-collapse">
                     <tbody>
                         {employees.map((employee, index) => {
                             const rowBgClass = index % 2 === 0 ? 'bg-white' : 'bg-stone-50/80';
@@ -253,7 +246,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                                             <td
                                                 key={`${day}-${employee.id}`}
                                                 onClick={() => isManager && employeeShifts.length === 0 && handleOpenModal(day, employee.id)}
-                                                className={`relative p-2 align-top min-h-[80px] min-w-[120px] sm:min-w-[150px] md:min-w-0 transition-colors duration-150 border-r border-stone-300 ${todayClass} ${hoverBgClass} ${isManager && employeeShifts.length === 0 ? 'cursor-pointer hover:bg-orange-100/50' : ''}`}
+                                                className={`relative p-2 align-top min-h-[80px] transition-colors duration-150 border-r border-stone-300 ${todayClass} ${hoverBgClass} ${isManager && employeeShifts.length === 0 ? 'cursor-pointer hover:bg-orange-100/50' : ''}`}
                                             >
                                                 <div className="space-y-1.5">
                                                     {employeeShifts.map((shift) => {
