@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node ./node_modules/vite/bin/vite.js",
-    "start": "node server/index.js",
-    "start:server": "node server/index.js",
+    "start": "node server/index-db.js",
+    "start:server": "node server/index-db.js",
     "build": "node ./node_modules/vite/bin/vite.js build",
     "preview": "node ./node_modules/vite/bin/vite.js preview",
     "postinstall": "cd server && npm ci"
