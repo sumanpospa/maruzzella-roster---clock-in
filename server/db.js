@@ -55,7 +55,7 @@ export function convertShiftsToRoster(shifts) {
     const week = shift.week === 'currentWeek' ? roster.currentWeek : roster.nextWeek;
     if (week[shift.day]) {
       week[shift.day].push({
-        employeeIds: shift.employees.map(e => e.id),
+        employeeIds: shift.employees.map(assignment => assignment.employeeId),
         startTime: shift.startTime,
         endTime: shift.endTime,
         notes: shift.notes,
@@ -69,36 +69,46 @@ export function convertShiftsToRoster(shifts) {
 // Convert frontend roster format to database format
 export async function saveRosterToDatabase(rosters) {
   try {
-    // Delete all existing shifts
+    // Delete all existing shifts and assignments
+    await prisma.shiftAssignment.deleteMany();
     await prisma.shift.deleteMany();
 
-    const shiftsToCreate = [];
+    const shiftsCreated = [];
 
     for (const [weekKey, weekRoster] of Object.entries(rosters)) {
       for (const [day, dayShifts] of Object.entries(weekRoster)) {
-        dayShifts.forEach(shift => {
-          shiftsToCreate.push({
-            week: weekKey,
-            day: day,
-            startTime: shift.startTime || null,
-            endTime: shift.endTime || null,
-            notes: shift.notes || null,
-            employees: {
-              connect: shift.employeeIds.map(id => ({ id }))
+        if (!Array.isArray(dayShifts)) continue;
+        
+        for (const shift of dayShifts) {
+          if (!shift.employeeIds || shift.employeeIds.length === 0) continue;
+          
+          // Create the shift first
+          const createdShift = await prisma.shift.create({
+            data: {
+              week: weekKey,
+              day: day,
+              startTime: shift.startTime || null,
+              endTime: shift.endTime || null,
+              notes: shift.notes || null,
             }
           });
-        });
+
+          // Then create assignments for each employee
+          for (const employeeId of shift.employeeIds) {
+            await prisma.shiftAssignment.create({
+              data: {
+                employeeId: employeeId,
+                shiftId: createdShift.id
+              }
+            });
+          }
+
+          shiftsCreated.push(createdShift);
+        }
       }
     }
 
-    // Create all shifts
-    for (const shiftData of shiftsToCreate) {
-      await prisma.shift.create({
-        data: shiftData
-      });
-    }
-
-    console.log(`[DB] Saved ${shiftsToCreate.length} shifts`);
+    console.log(`[DB] Saved ${shiftsCreated.length} shifts`);
   } catch (error) {
     console.error('[DB ERROR] Failed to save roster:', error);
     throw error;

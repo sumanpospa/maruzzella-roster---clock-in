@@ -11,28 +11,39 @@ datasource db {
 }
 
 model Employee {
-  id        Int        @id @default(autoincrement())
+  id        Int              @id @default(autoincrement())
   name      String
   role      String
   pin       String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  shifts    Shift[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  shifts    ShiftAssignment[]
   timeLogs  TimeLog[]
 }
 
 model Shift {
-  id          Int        @id @default(autoincrement())
-  week        String     // 'currentWeek' or 'nextWeek'
-  day         String     // 'Monday', 'Tuesday', etc.
-  start       String     // e.g., '09:00'
-  end         String     // e.g., '17:00'
-  startTime   String?    // optional detailed time
-  endTime     String?    // optional detailed time
+  id          Int              @id @default(autoincrement())
+  week        String           // 'currentWeek' or 'nextWeek'
+  day         String           // 'Monday', 'Tuesday', etc.
+  startTime   String?          // e.g., '09:00'
+  endTime     String?          // e.g., '17:00'
   notes       String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  employees   Employee[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  employees   ShiftAssignment[]
+}
+
+model ShiftAssignment {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  shiftId    Int
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  shift      Shift    @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([employeeId, shiftId])
+  @@index([employeeId])
+  @@index([shiftId])
 }
 
 model TimeLog {

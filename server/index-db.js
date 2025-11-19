@@ -70,7 +70,11 @@ app.get('/api/state', async (req, res) => {
     // Get shifts with their employees
     const shifts = await prisma.shift.findMany({
       include: {
-        employees: true
+        employees: {
+          include: {
+            employee: true
+          }
+        }
       }
     });
 
@@ -160,7 +164,15 @@ app.post('/api/state', async (req, res) => {
     
     // Return updated state
     const updatedEmployees = await prisma.employee.findMany({ orderBy: { id: 'asc' } });
-    const updatedShifts = await prisma.shift.findMany({ include: { employees: true } });
+    const updatedShifts = await prisma.shift.findMany({ 
+      include: { 
+        employees: {
+          include: {
+            employee: true
+          }
+        }
+      } 
+    });
     const updatedTimeLogs = await prisma.timeLog.findMany({ 
       include: { employee: true },
       orderBy: { clockIn: 'desc' }
