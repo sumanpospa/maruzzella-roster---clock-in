@@ -65,6 +65,9 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
 
   const isManager = currentUser.role === 'Manager';
 
+  // Filter employees to show only Kitchen department
+  const kitchenEmployees = employees.filter(e => e.department === 'Kitchen');
+
   const handleOpenModal = (day: DayOfWeek, employeeId: number | null = null, shift: Shift | null = null, shiftIndex: number | null = null) => {
     if (!isManager) return;
     setModalConfig({ day, employeeId, shift, shiftIndex });
@@ -211,7 +214,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
             )}
         </div>
 
-        {viewingWeek === 'currentWeek' && <AiBriefing todaysShifts={roster[today] || []} employees={employees} currentUser={currentUser} />}
+        {viewingWeek === 'currentWeek' && <AiBriefing todaysShifts={roster[today] || []} employees={kitchenEmployees} currentUser={currentUser} />}
 
         <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
             <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-300px)]">
@@ -239,7 +242,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                         </tr>
                     </thead>
                     <tbody>
-                        {employees.map((employee, index) => {
+                        {kitchenEmployees.map((employee, index) => {
                             const rowBgClass = index % 2 === 0 ? 'bg-white' : 'bg-stone-50/80';
                             const hoverBgClass = 'group-hover:bg-amber-50';
 
@@ -265,7 +268,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                                                         const colorIndex = (shift.employeeIds[0] || 0) % COLORS.length;
                                                         const otherEmployeesOnShift = shift.employeeIds
                                                             .filter(id => id !== employee.id)
-                                                            .map(id => employees.find(e => e.id === id))
+                                                            .map(id => kitchenEmployees.find(e => e.id === id))
                                                             .filter((e): e is Employee => !!e);
 
                                                         return (
@@ -318,7 +321,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
             onDelete={handleDeleteShift}
             day={modalConfig.day}
             shift={modalConfig.shift}
-            employees={employees}
+            employees={kitchenEmployees}
             employeeId={modalConfig.employeeId}
             />
         )}

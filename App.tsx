@@ -81,7 +81,12 @@ const App: React.FC = () => {
 
   const handleLogin = (employee: Employee) => {
     setCurrentUser(employee);
-    setActiveView('roster'); // Default to roster view on login
+    // Default to clock-in for FOH/Stewarding, roster for Kitchen
+    if (employee.department === 'Kitchen') {
+      setActiveView('roster');
+    } else {
+      setActiveView('clock-in');
+    }
   };
 
   const handleLogout = () => {
@@ -93,6 +98,7 @@ const App: React.FC = () => {
   }
 
   const isManager = currentUser.role === 'Manager';
+  const isKitchenDepartment = currentUser.department === 'Kitchen';
 
   const navButtonClasses = (view: View) =>
     `px-4 py-3 text-sm font-medium rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
@@ -104,6 +110,9 @@ const App: React.FC = () => {
   const handleNavClick = (view: View) => {
     if ((view === 'employees' || view === 'payroll') && !isManager) {
       return;
+    }
+    if (view === 'roster' && !isKitchenDepartment) {
+      return; // FOH and Stewarding can't access roster
     }
     setActiveView(view);
   };
@@ -118,7 +127,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (activeView) {
       case 'roster':
-        return <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} />;
+        return isKitchenDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} /> : <AccessDenied />;
       case 'clock-in':
         return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
       case 'employees':
@@ -136,9 +145,11 @@ const App: React.FC = () => {
       <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24">
         <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 p-2 bg-white/80 backdrop-blur-sm shadow-lg rounded-full border border-stone-200">
             <nav className="flex gap-2">
-                <button onClick={() => handleNavClick('roster')} className={navButtonClasses('roster')} aria-label="Roster">
-                    Roster
-                </button>
+                {isKitchenDepartment && (
+                    <button onClick={() => handleNavClick('roster')} className={navButtonClasses('roster')} aria-label="Roster">
+                        Roster
+                    </button>
+                )}
                 <button onClick={() => handleNavClick('clock-in')} className={navButtonClasses('clock-in')} aria-label="Clock In">
                     Clock In
                 </button>

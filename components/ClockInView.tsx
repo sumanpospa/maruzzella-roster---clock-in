@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 // Fix: Corrected import path to be relative.
-import { Employee, TimeLog, ClockStatus } from '../types';
+import { Employee, TimeLog, ClockStatus, Department } from '../types';
 
 interface EmployeeClockCardProps {
     employee: Employee;
@@ -59,6 +59,9 @@ interface ClockInViewProps {
 
 const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [selectedDepartment, setSelectedDepartment] = useState<Department | 'All'>(
+    currentUser.role === 'Manager' ? 'All' : currentUser.department
+  );
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -67,7 +70,14 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
 
   const isManager = currentUser.role === 'Manager';
 
-  const employeesToDisplay = isManager ? employees : employees.filter(e => e.id === currentUser.id);
+  // Filter by department first
+  let filteredEmployees = employees;
+  if (selectedDepartment !== 'All') {
+    filteredEmployees = employees.filter(e => e.department === selectedDepartment);
+  }
+
+  // Then filter for non-managers (show only themselves)
+  const employeesToDisplay = isManager ? filteredEmployees : filteredEmployees.filter(e => e.id === currentUser.id);
 
   const employeeClockStatus = useMemo(() => {
     const statusMap = new Map<number, ClockStatus>();
@@ -139,6 +149,52 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
                 </p>
             </div>
         </div>
+
+        {isManager && (
+            <div className="mb-6 flex gap-2 flex-wrap">
+                <button
+                    onClick={() => setSelectedDepartment('All')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'All'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    Show All
+                </button>
+                <button
+                    onClick={() => setSelectedDepartment('Kitchen')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'Kitchen'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    Kitchen
+                </button>
+                <button
+                    onClick={() => setSelectedDepartment('FOH')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'FOH'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    FOH
+                </button>
+                <button
+                    onClick={() => setSelectedDepartment('Stewarding')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'Stewarding'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    Stewarding
+                </button>
+            </div>
+        )}
+
       <div className="space-y-4">
         {employeesToDisplay.map(employee => {
             const status = employeeClockStatus.get(employee.id) || { status: 'out', time: null };

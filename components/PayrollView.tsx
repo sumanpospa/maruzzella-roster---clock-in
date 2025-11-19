@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Fix: Corrected import path to be relative.
-import { Employee, TimeLog } from '../types';
+import { Employee, TimeLog, Department } from '../types';
 import TimeLogModal from './TimeLogModal';
 
 const formatDuration = (milliseconds: number): string => {
@@ -48,6 +48,7 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
     const [isExporting, setIsExporting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingLog, setEditingLog] = useState<{ log: Partial<TimeLog> | null; employee: Employee | null }>({ log: null, employee: null });
+    const [selectedDepartment, setSelectedDepartment] = useState<Department | 'All'>('All');
 
     const handleOpenModal = (log: Partial<TimeLog> | null, employee: Employee) => {
         setEditingLog({ log, employee });
@@ -88,7 +89,12 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
         );
     };
 
-    const employeePayData = employees.map(employee => {
+    // Filter employees by department
+    const filteredEmployees = selectedDepartment === 'All' 
+        ? employees 
+        : employees.filter(e => e.department === selectedDepartment);
+
+    const employeePayData = filteredEmployees.map(employee => {
         const employeeLogs = timeLogs.filter(log => log.employeeId === employee.id);
         
         const approvedHours = employeeLogs
@@ -163,6 +169,48 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
                 </button>
             </div>
 
+            <div className="mb-6 flex gap-2 flex-wrap">
+                <button
+                    onClick={() => setSelectedDepartment('All')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'All'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    All Departments
+                </button>
+                <button
+                    onClick={() => setSelectedDepartment('Kitchen')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'Kitchen'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    Kitchen
+                </button>
+                <button
+                    onClick={() => setSelectedDepartment('FOH')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'FOH'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    FOH
+                </button>
+                <button
+                    onClick={() => setSelectedDepartment('Stewarding')}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                        selectedDepartment === 'Stewarding'
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
+                    }`}
+                >
+                    Stewarding
+                </button>
+            </div>
 
             <div className="space-y-6">
                 {employeePayData.map(data => (
