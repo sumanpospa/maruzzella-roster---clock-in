@@ -202,9 +202,9 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
 
         {viewingWeek === 'currentWeek' && <AiBriefing todaysShifts={roster[today] || []} employees={employees} currentUser={currentUser} />}
 
-        <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden relative">
-            <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-300px)] relative">
-                <table className="w-full min-w-[800px] sm:min-w-full border-collapse relative">
+        <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+            <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-300px)]">
+                <table className="w-full min-w-[800px] sm:min-w-full border-collapse">
                     <thead className="sticky top-0 z-10 bg-stone-50">
                         <tr className="border-b border-stone-300">
                             <th className="sticky left-0 bg-stone-50 p-3 text-sm font-semibold text-slate-600 z-30 min-w-[150px] sm:min-w-[180px] text-left border-r border-stone-300 shadow-[2px_0_4px_rgba(0,0,0,0.05)]">
@@ -213,7 +213,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                             {days.map((day, i) => (
                                 <th
                                     key={day}
-                                    className={`p-3 text-sm font-semibold text-slate-600 min-w-[120px] sm:min-w-[150px] md:min-w-0 z-20 text-left border-r border-stone-300 ${
+                                    className={`p-3 text-sm font-semibold text-slate-600 min-w-[120px] sm:min-w-[150px] md:min-w-0 text-left border-r border-stone-300 ${
                                         viewingWeek === 'currentWeek' && day === today ? 'bg-orange-100 text-orange-800' : 'bg-stone-50'
                                     }`}
                                 >
