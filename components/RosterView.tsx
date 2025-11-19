@@ -241,7 +241,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
 
                             return (
                                 <tr key={employee.id} className="group border-b border-stone-200 last:border-b-0">
-                                    <td className={`sticky left-0 p-3 z-20 transition-colors duration-150 border-r border-stone-300 shadow-[2px_0_4px_rgba(0,0,0,0.05)] ${rowBgClass} ${hoverBgClass}`}>
+                                    <td className={`sticky left-0 p-3 z-20 transition-colors duration-150 border-r border-stone-300 shadow-[2px_0_4px_rgba(0,0,0,0.05)] min-w-[150px] sm:min-w-[180px] ${rowBgClass} ${hoverBgClass}`}>
                                         <div className="font-bold text-slate-800">{employee.name}</div>
                                         <div className="text-xs text-stone-500">{employee.role}</div>
                                     </td>
@@ -253,7 +253,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                                             <td
                                                 key={`${day}-${employee.id}`}
                                                 onClick={() => isManager && employeeShifts.length === 0 && handleOpenModal(day, employee.id)}
-                                                className={`relative p-2 align-top min-h-[80px] transition-colors duration-150 border-r border-stone-300 ${todayClass} ${hoverBgClass} ${isManager && employeeShifts.length === 0 ? 'cursor-pointer hover:bg-orange-100/50' : ''}`}
+                                                className={`relative p-2 align-top min-h-[80px] min-w-[120px] sm:min-w-[150px] md:min-w-0 transition-colors duration-150 border-r border-stone-300 ${todayClass} ${hoverBgClass} ${isManager && employeeShifts.length === 0 ? 'cursor-pointer hover:bg-orange-100/50' : ''}`}
                                             >
                                                 <div className="space-y-1.5">
                                                     {employeeShifts.map((shift) => {
