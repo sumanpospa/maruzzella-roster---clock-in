@@ -16,6 +16,7 @@ type View = 'roster' | 'clock-in' | 'employees' | 'payroll';
 
 // NOTE: state is now persisted to a backend. We initialize with defaults and
 // then attempt to hydrate from the backend on mount.
+// Department system: Kitchen (with roster), FOH, Stewarding (clock in/payroll only)
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>('roster');
