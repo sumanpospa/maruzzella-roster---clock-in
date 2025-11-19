@@ -8,6 +8,36 @@ const prisma = new PrismaClient();
 
 console.log('[BOOT] Starting Maruzzella backend with PostgreSQL (JSON storage)...');
 
+// Initialize database tables on startup
+async function initializeDatabase() {
+  try {
+    console.log('[DB] Checking database connection and schema...');
+    await prisma.$connect();
+    
+    // Try to query the Employee table - if it doesn't exist, this will fail
+    await prisma.$executeRaw`SELECT 1 FROM "Employee" LIMIT 1`;
+    console.log('[DB] Database schema verified successfully');
+  } catch (error) {
+    console.log('[DB] Schema not found or connection issue. Attempting to create schema...');
+    try {
+      // Create the Employee table if it doesn't exist
+      await prisma.$executeRaw`
+        CREATE TABLE IF NOT EXISTS "Employee" (
+          "id" SERIAL PRIMARY KEY,
+          "name" TEXT NOT NULL,
+          "role" TEXT NOT NULL,
+          "pin" TEXT NOT NULL,
+          "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+      `;
+      console.log('[DB] Employee table created successfully');
+    } catch (createError) {
+      console.error('[DB] Failed to create schema:', createError.message);
+    }
+  }
+}
+
 process.on('uncaughtException', (err) => {
   console.error('[UNCAUGHT EXCEPTION]', err);
 });
@@ -149,6 +179,9 @@ const HOST = '0.0.0.0';
 
 async function startServer(port, remainingAttempts) {
   try {
+    // Initialize database schema first
+    await initializeDatabase();
+    
     // Test database connection
     await prisma.$connect();
     console.log('[DB] Connected to PostgreSQL');
