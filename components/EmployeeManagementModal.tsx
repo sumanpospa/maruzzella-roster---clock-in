@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Employee } from '../types';
+import { Employee, Department } from '../types';
 import EmployeeModal from './EmployeeModal';
 import { UsersIcon } from './icons/UsersIcon';
 import { PlusIcon } from './icons/PlusIcon';
@@ -16,8 +16,14 @@ interface EmployeeManagementModalProps {
 const EmployeeManagementModal: React.FC<EmployeeManagementModalProps> = ({ isOpen, onClose, employees, setEmployees }) => {
     const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
     const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+    const [selectedDepartment, setSelectedDepartment] = useState<Department | 'All'>('All');
 
     if (!isOpen) return null;
+
+    // Filter employees by selected department
+    const filteredEmployees = selectedDepartment === 'All' 
+        ? employees 
+        : employees.filter(e => e.department === selectedDepartment);
 
     const handleAddEmployee = () => {
         setEditingEmployee(null);
@@ -79,9 +85,53 @@ const EmployeeManagementModal: React.FC<EmployeeManagementModalProps> = ({ isOpe
 
                     {/* Content */}
                     <div className="p-6 overflow-y-auto max-h-[calc(80vh-140px)]">
+                        {/* Department Filter Buttons */}
+                        <div className="mb-4 flex gap-2 flex-wrap">
+                            <button
+                                onClick={() => setSelectedDepartment('All')}
+                                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                                    selectedDepartment === 'All'
+                                        ? 'bg-orange-500 text-white'
+                                        : 'bg-stone-100 text-slate-700 border border-stone-300 hover:bg-stone-200'
+                                }`}
+                            >
+                                All Departments ({employees.length})
+                            </button>
+                            <button
+                                onClick={() => setSelectedDepartment('Kitchen')}
+                                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                                    selectedDepartment === 'Kitchen'
+                                        ? 'bg-orange-500 text-white'
+                                        : 'bg-stone-100 text-slate-700 border border-stone-300 hover:bg-stone-200'
+                                }`}
+                            >
+                                Kitchen ({employees.filter(e => e.department === 'Kitchen').length})
+                            </button>
+                            <button
+                                onClick={() => setSelectedDepartment('FOH')}
+                                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                                    selectedDepartment === 'FOH'
+                                        ? 'bg-orange-500 text-white'
+                                        : 'bg-stone-100 text-slate-700 border border-stone-300 hover:bg-stone-200'
+                                }`}
+                            >
+                                FOH ({employees.filter(e => e.department === 'FOH').length})
+                            </button>
+                            <button
+                                onClick={() => setSelectedDepartment('Stewarding')}
+                                className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
+                                    selectedDepartment === 'Stewarding'
+                                        ? 'bg-orange-500 text-white'
+                                        : 'bg-stone-100 text-slate-700 border border-stone-300 hover:bg-stone-200'
+                                }`}
+                            >
+                                Stewarding ({employees.filter(e => e.department === 'Stewarding').length})
+                            </button>
+                        </div>
+
                         <div className="flex justify-between items-center mb-4">
                             <p className="text-stone-600">
-                                {employees.length} {employees.length === 1 ? 'employee' : 'employees'}
+                                {filteredEmployees.length} {filteredEmployees.length === 1 ? 'employee' : 'employees'}
                             </p>
                             <button
                                 onClick={handleAddEmployee}
@@ -94,7 +144,7 @@ const EmployeeManagementModal: React.FC<EmployeeManagementModalProps> = ({ isOpe
 
                         {/* Employee List */}
                         <div className="space-y-3">
-                            {employees.map(employee => (
+                            {filteredEmployees.map(employee => (
                                 <div
                                     key={employee.id}
                                     className="bg-stone-50 rounded-lg p-4 border border-stone-200 hover:border-orange-300 transition-colors"
@@ -132,10 +182,10 @@ const EmployeeManagementModal: React.FC<EmployeeManagementModalProps> = ({ isOpe
                             ))}
                         </div>
 
-                        {employees.length === 0 && (
+                        {filteredEmployees.length === 0 && (
                             <div className="text-center py-12">
                                 <UsersIcon className="w-16 h-16 mx-auto text-stone-300 mb-4" />
-                                <p className="text-stone-500 text-lg">No employees yet</p>
+                                <p className="text-stone-500 text-lg">No employees in {selectedDepartment === 'All' ? 'any department' : selectedDepartment}</p>
                                 <p className="text-stone-400 text-sm mt-2">Click "Add Employee" to get started</p>
                             </div>
                         )}
