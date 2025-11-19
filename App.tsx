@@ -5,13 +5,12 @@ import ClockInView from './components/ClockInView';
 import EmployeeView from './components/EmployeeView';
 import PayrollView from './components/PayrollView';
 import LoginView from './components/LoginView';
-import SettingsView from './components/SettingsView';
 // Fix: Corrected import paths to be relative.
 import { INITIAL_EMPLOYEES, WEEKLY_ROSTER } from './constants';
 import { Employee, Roster, TimeLog, Shift, Rosters } from './types';
 import { getState as apiGetState, saveState as apiSaveState } from './services/api';
 
-type View = 'roster' | 'clock-in' | 'employees' | 'payroll' | 'settings';
+type View = 'roster' | 'clock-in' | 'employees' | 'payroll';
 
 // Rosters type moved to types.ts
 
@@ -103,7 +102,7 @@ const App: React.FC = () => {
     }`;
 
   const handleNavClick = (view: View) => {
-    if ((view === 'employees' || view === 'payroll' || view === 'settings') && !isManager) {
+    if ((view === 'employees' || view === 'payroll') && !isManager) {
       return;
     }
     setActiveView(view);
@@ -119,15 +118,13 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (activeView) {
       case 'roster':
-        return <RosterView employees={employees} rosters={rosters} setRosters={setRosters} currentUser={currentUser} />;
+        return <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} />;
       case 'clock-in':
         return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
       case 'employees':
         return isManager ? <EmployeeView employees={employees} setEmployees={setEmployees} setRosters={setRosters} currentUser={currentUser} /> : <AccessDenied />;
       case 'payroll':
         return isManager ? <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} /> : <AccessDenied />;
-    case 'settings':
-      return isManager ? <SettingsView employees={employees} rosters={rosters} timeLogs={timeLogs} setEmployees={setEmployees} setRosters={setRosters} setTimeLogs={setTimeLogs} /> : <AccessDenied />;
       default:
         return null;
     }
@@ -152,9 +149,6 @@ const App: React.FC = () => {
                         </button>
                         <button onClick={() => handleNavClick('payroll')} className={navButtonClasses('payroll')} aria-label="Payroll">
                             Payroll
-                        </button>
-                        <button onClick={() => handleNavClick('settings')} className={navButtonClasses('settings')} aria-label="Settings">
-                            Settings
                         </button>
                     </>
                 )}

@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import { DayOfWeek, Shift, Roster, Employee, Rosters } from '../types';
 import ShiftModal from './ShiftModal';
 import AiBriefing from './AiBriefing';
+import EmployeeManagementModal from './EmployeeManagementModal';
 import { generateRosterPDF } from '../utils/pdfGenerator';
+import { UsersIcon } from './icons/UsersIcon';
 
 const COLORS = [
   'bg-emerald-100/70 border-l-4 border-emerald-400 text-emerald-900',
@@ -38,11 +40,13 @@ interface RosterViewProps {
     employees: Employee[];
     rosters: Rosters;
     setRosters: React.Dispatch<React.SetStateAction<Rosters>>;
+    setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
     currentUser: Employee;
 }
 
-const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters, currentUser }) => {
+const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters, setEmployees, currentUser }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEmployeeManagementOpen, setIsEmployeeManagementOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState<{
     day: DayOfWeek | null;
     employeeId: number | null;
@@ -177,7 +181,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                 </div>
             </div>
             {isManager && (
-                 <div className="flex items-center gap-2 self-start sm:self-center">
+                 <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
                     {viewingWeek === 'currentWeek' && (
                         <button
                             onClick={handleCopyToNextWeek}
@@ -186,6 +190,13 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                             Copy to Next Week
                         </button>
                     )}
+                    <button
+                        onClick={() => setIsEmployeeManagementOpen(true)}
+                        className="bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-purple-700 transform hover:scale-105 flex items-center gap-2"
+                    >
+                        <UsersIcon className="h-5 w-5" />
+                        Manage Employees
+                    </button>
                     <button
                         onClick={handleShareWhatsApp}
                         disabled={isExporting}
@@ -309,6 +320,15 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
             shift={modalConfig.shift}
             employees={employees}
             employeeId={modalConfig.employeeId}
+            />
+        )}
+
+        {isEmployeeManagementOpen && (
+            <EmployeeManagementModal
+            isOpen={isEmployeeManagementOpen}
+            onClose={() => setIsEmployeeManagementOpen(false)}
+            employees={employees}
+            setEmployees={setEmployees}
             />
         )}
     </div>

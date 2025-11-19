@@ -4,7 +4,8 @@
 
 ### Accessing the App
 1. Open your web browser (Chrome, Safari, Firefox, etc.)
-2. Go to: **https://roster-app-final-nnuyjwr78-sumanpospas-projects.vercel.app**
+2. Go to: **
+https://roster-app-final.vercel.app/
 3. Bookmark this page for easy access
 
 ### Adding to Your Phone's Home Screen (Recommended)
@@ -103,8 +104,8 @@ Your device will remember you until you log out or clear your browser data.
 4. Attach the downloaded PDF and send to your team group
 
 ### Managing Employees
-1. Go to the **"Settings"** tab
-2. Click **"Employees"** section
+1. Go to the **"Roster"** tab
+2. Click **"Manage Employees"** button (purple button in top right, managers only)
 3. **To add a new employee:**
    - Click **"Add Employee"**
    - Enter name, role, and PIN
@@ -120,32 +121,23 @@ Your device will remember you until you log out or clear your browser data.
    - Change the PIN field
    - Click **"Save"**
 
+6. **To delete an employee:**
+   - Click the trash icon next to their name
+   - Confirm the deletion
+
 ### Editing Time Logs
 1. Go to **"Payroll"** tab
 2. Click the edit icon next to any time log entry
 3. Adjust clock-in or clock-out times if needed
 4. Click **"Save"**
 
-### Backing Up Data
-1. Go to **"Settings"** tab
-2. Click **"Export Data"**
-3. A JSON file will download - **save this file safely**
-4. You can restore this data later using "Import Data"
-
-### Restoring Data from Backup
-1. Go to **"Settings"** tab
-2. Click **"Import Data"**
-3. Select your backup JSON file
-4. All data will be restored
-
 ---
 
-## ⚙️ Settings & Account
+## ⚙️ Account Settings
 
 ### Changing Your PIN
-1. Go to **"Settings"** tab (managers only)
-2. Find your name in the employee list
-3. Click edit, change PIN, and save
+1. Ask your manager to update your PIN
+2. Managers can change PINs via **"Roster" tab → "Manage Employees"**
 
 ### Logging Out
 - Click the **Logout** icon in the top right corner
@@ -175,7 +167,8 @@ Your device will remember you until you log out or clear your browser data.
 - If data keeps disappearing, notify your manager immediately
 
 **Forgot your PIN?**
-- Ask your manager to check/reset your PIN in Settings
+- Ask your manager to reset your PIN
+- Managers can update PINs via "Roster" → "Manage Employees"
 
 ---
 
@@ -191,8 +184,8 @@ If you have technical issues or questions:
 
 - **Don't share your PIN** with other staff members
 - **Log out** when using a shared device
-- **Keep your PIN secure** - change it from the default `1234`
-- Only managers should access Settings and edit rosters
+- **Keep your PIN secure** - ask your manager to change it from the default `1234`
+- Only managers should manage employee accounts
 
 ---
 
@@ -204,8 +197,7 @@ If you have technical issues or questions:
 | Clock In/Out | Everyone | Clock In tab |
 | View Payroll | Everyone | Payroll tab |
 | Edit Shifts | Managers only | Roster tab |
-| Add Employees | Managers only | Settings tab |
-| Export/Import Data | Managers only | Settings tab |
+| Manage Employees | Managers only | Roster tab → Manage Employees button |
 | Share via WhatsApp | Managers only | Roster tab |
 
 ---
