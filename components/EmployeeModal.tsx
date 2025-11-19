@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Employee, EmployeeRole } from '../types';
+import { Employee, EmployeeRole, Department } from '../types';
 
 interface EmployeeModalProps {
     isOpen: boolean;
@@ -9,12 +9,14 @@ interface EmployeeModalProps {
     employee: Employee | null;
 }
 
-const ROLES: EmployeeRole[] = ['Manager', 'Chef', 'Waiter', 'Host'];
+const ROLES: EmployeeRole[] = ['Manager', 'Chef', 'Waiter', 'Host', 'Dishwasher', 'Kitchen Hand'];
+const DEPARTMENTS: Department[] = ['Kitchen', 'FOH', 'Stewarding'];
 
 const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, employee }) => {
     const isEditing = employee !== null;
     const [name, setName] = useState('');
     const [role, setRole] = useState<EmployeeRole>('Waiter');
+    const [department, setDepartment] = useState<Department>('Kitchen');
     const [pin, setPin] = useState('');
     const [isResettingPin, setIsResettingPin] = useState(false);
 
@@ -24,18 +26,20 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
         if (employee) {
             setName(employee.name);
             setRole(employee.role);
+            setDepartment(employee.department);
             setPin(employee.pin);
             setIsResettingPin(false);
         } else {
             setName('');
             setRole('Waiter');
+            setDepartment('Kitchen');
             setPin('');
         }
     }, [employee, isOpen]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name || !role || !pin.match(/^\d{4}$/)) {
+        if (!name || !role || !department || !pin.match(/^\d{4}$/)) {
             alert('Please fill out all fields. PIN must be 4 digits.');
             return;
         }
@@ -43,6 +47,7 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
             id: employee?.id,
             name,
             role,
+            department,
             pin,
         });
     };
@@ -86,6 +91,20 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
                         >
                             {ROLES.map(r => (
                                 <option key={r} value={r}>{r}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="department" className="block text-sm font-medium text-slate-700 mb-1">Department</label>
+                        <select
+                            id="department"
+                            value={department}
+                            onChange={(e) => setDepartment(e.target.value as Department)}
+                            className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                            required
+                        >
+                            {DEPARTMENTS.map(d => (
+                                <option key={d} value={d}>{d}</option>
                             ))}
                         </select>
                     </div>

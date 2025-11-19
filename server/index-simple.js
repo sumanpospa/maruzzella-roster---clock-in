@@ -27,11 +27,23 @@ async function initializeDatabase() {
           "name" TEXT NOT NULL,
           "role" TEXT NOT NULL,
           "pin" TEXT NOT NULL,
+          "department" TEXT NOT NULL DEFAULT 'Kitchen',
           "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
           "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
       `;
       console.log('[DB] Employee table created successfully');
+      
+      // Add department column if table exists but column doesn't
+      try {
+        await prisma.$executeRaw`
+          ALTER TABLE "Employee" 
+          ADD COLUMN IF NOT EXISTS "department" TEXT NOT NULL DEFAULT 'Kitchen'
+        `;
+        console.log('[DB] Department column added/verified');
+      } catch (alterError) {
+        console.log('[DB] Department column already exists or error:', alterError.message);
+      }
     } catch (createError) {
       console.error('[DB] Failed to create schema:', createError.message);
     }

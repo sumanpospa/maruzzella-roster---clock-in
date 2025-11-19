@@ -1,11 +1,14 @@
 
-export type EmployeeRole = 'Manager' | 'Chef' | 'Waiter' | 'Host';
+export type EmployeeRole = 'Manager' | 'Chef' | 'Waiter' | 'Host' | 'Dishwasher' | 'Kitchen Hand';
+
+export type Department = 'Kitchen' | 'FOH' | 'Stewarding';
 
 export interface Employee {
   id: number;
   name: string;
   role: EmployeeRole;
   pin: string; // 4-digit string
+  department: Department; // Kitchen, FOH, or Stewarding
 }
 
 export interface Shift {
