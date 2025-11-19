@@ -203,17 +203,17 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
         {viewingWeek === 'currentWeek' && <AiBriefing todaysShifts={roster[today] || []} employees={employees} currentUser={currentUser} />}
 
         <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-[calc(100vh-300px)] overflow-y-auto">
                 <table className="w-full min-w-[800px] sm:min-w-full border-collapse">
                     <thead className="bg-stone-50">
                         <tr className="border-b border-stone-300">
-                            <th className="sticky left-0 bg-stone-50 p-3 text-sm font-semibold text-slate-600 z-30 min-w-[150px] sm:min-w-[180px] text-left border-r border-stone-300">
+                            <th className="sticky left-0 top-0 bg-stone-50 p-3 text-sm font-semibold text-slate-600 z-30 min-w-[150px] sm:min-w-[180px] text-left border-r border-stone-300">
                                 Employee
                             </th>
                             {days.map((day, i) => (
                                 <th
                                     key={day}
-                                    className={`sticky top-0 p-3 text-sm font-semibold text-slate-600 min-w-[120px] sm:min-w-[150px] md:min-w-0 z-10 text-left border-r border-stone-300 ${
+                                    className={`sticky top-0 p-3 text-sm font-semibold text-slate-600 min-w-[120px] sm:min-w-[150px] md:min-w-0 z-20 text-left border-r border-stone-300 ${
                                         viewingWeek === 'currentWeek' && day === today ? 'bg-orange-100 text-orange-800' : 'bg-stone-50'
                                     }`}
                                 >
