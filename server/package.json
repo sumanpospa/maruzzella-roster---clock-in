@@ -4,8 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node index-db.js",
-    "build": "prisma generate && prisma db push --skip-generate",
+    "start": "node index-simple.js",
+    "build": "prisma generate",
     "postinstall": "prisma generate"
   },
   "dependencies": {
