@@ -115,16 +115,16 @@ app.use(express.json());
 // Default state
 const getDefaultState = () => ({
   employees: [
-    { id: 1, name: 'Huda', role: 'Manager', pin: '1234' },
-    { id: 2, name: 'Suman', role: 'Manager', pin: '1234' },
-    { id: 3, name: 'Luca', role: 'Chef', pin: '1234' },
-    { id: 4, name: 'Dennis', role: 'Chef', pin: '1234' },
-    { id: 5, name: 'Enrico', role: 'Waiter', pin: '1234' },
-    { id: 6, name: 'Sundesh', role: 'Waiter', pin: '1234' },
-    { id: 7, name: 'Siyam', role: 'Waiter', pin: '1234' },
-    { id: 8, name: 'Taki', role: 'Waiter', pin: '1234' },
-    { id: 9, name: 'Tanbir', role: 'Host', pin: '1234' },
-    { id: 10, name: 'Progganur', role: 'Host', pin: '1234' },
+    { id: 1, name: 'Huda', role: 'Manager', pin: '1234', department: 'Kitchen' },
+    { id: 2, name: 'Suman', role: 'Manager', pin: '1234', department: 'Kitchen' },
+    { id: 3, name: 'Luca', role: 'Chef', pin: '1234', department: 'Kitchen' },
+    { id: 4, name: 'Dennis', role: 'Chef', pin: '1234', department: 'Kitchen' },
+    { id: 5, name: 'Enrico', role: 'Waiter', pin: '1234', department: 'Kitchen' },
+    { id: 6, name: 'Sundesh', role: 'Waiter', pin: '1234', department: 'Kitchen' },
+    { id: 7, name: 'Siyam', role: 'Waiter', pin: '1234', department: 'Kitchen' },
+    { id: 8, name: 'Taki', role: 'Waiter', pin: '1234', department: 'Kitchen' },
+    { id: 9, name: 'Tanbir', role: 'Host', pin: '1234', department: 'Kitchen' },
+    { id: 10, name: 'Progganur', role: 'Host', pin: '1234', department: 'Kitchen' },
   ],
   rosters: {
     currentWeek: {
@@ -155,6 +155,15 @@ app.get('/api/state', async (req, res) => {
     if (stateRecord && stateRecord.pin) {
       // State is stored in the pin field as JSON
       const state = JSON.parse(stateRecord.pin);
+      
+      // Migration: Ensure all employees have department field
+      if (state.employees && Array.isArray(state.employees)) {
+        state.employees = state.employees.map(emp => ({
+          ...emp,
+          department: emp.department || 'Kitchen' // Default to Kitchen if missing
+        }));
+      }
+      
       console.log('[DB] State retrieved from database');
       return res.json(state);
     }
