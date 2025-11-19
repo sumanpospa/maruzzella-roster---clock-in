@@ -107,7 +107,7 @@ const EmployeeManagementModal: React.FC<EmployeeManagementModalProps> = ({ isOpe
                                                 </div>
                                                 <div>
                                                     <h3 className="font-bold text-slate-800">{employee.name}</h3>
-                                                    <p className="text-sm text-stone-500">{employee.role}</p>
+                                                    <p className="text-sm text-stone-500">{employee.role} • {employee.department}</p>
                                                 </div>
                                             </div>
                                         </div>
