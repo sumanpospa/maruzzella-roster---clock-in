@@ -44,6 +44,18 @@ async function initializeDatabase() {
       } catch (alterError) {
         console.log('[DB] Department column already exists or error:', alterError.message);
       }
+      
+      // Update any existing rows that might have NULL department
+      try {
+        await prisma.$executeRaw`
+          UPDATE "Employee" 
+          SET "department" = 'Kitchen' 
+          WHERE "department" IS NULL OR "department" = ''
+        `;
+        console.log('[DB] Existing employees updated with Kitchen department');
+      } catch (updateError) {
+        console.log('[DB] Error updating existing employees:', updateError.message);
+      }
     } catch (createError) {
       console.error('[DB] Failed to create schema:', createError.message);
     }
