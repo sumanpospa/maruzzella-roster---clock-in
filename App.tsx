@@ -22,6 +22,7 @@ type View = 'dashboard' | 'roster' | 'clock-in' | 'employees' | 'payroll';
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>('dashboard');
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
+  const [showLoginForDepartment, setShowLoginForDepartment] = useState<Department | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(INITIAL_EMPLOYEES);
   const [rosters, setRosters] = useState<Rosters>({ currentWeek: WEEKLY_ROSTER, nextWeek: WEEKLY_ROSTER });
   const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
@@ -84,29 +85,33 @@ const App: React.FC = () => {
 
   const handleLogin = (employee: Employee) => {
     setCurrentUser(employee);
-    setActiveView('dashboard'); // Always start at dashboard
+    setShowLoginForDepartment(null);
+    // After login, go to roster/management for the selected department
+    if (showLoginForDepartment) {
+      setSelectedDepartment(showLoginForDepartment);
+      setActiveView('roster');
+    }
   };
 
   const handleSelectDepartment = (department: Department) => {
-    setSelectedDepartment(department);
-    setActiveView('roster'); // Go to roster after selecting department
+    // Show login modal for the selected department
+    setShowLoginForDepartment(department);
   };
 
   const handleBackToDashboard = () => {
     setActiveView('dashboard');
     setSelectedDepartment(null);
+    setCurrentUser(null); // Log out when going back
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
+    setActiveView('dashboard');
+    setSelectedDepartment(null);
   };
 
-  if (!currentUser) {
-    return <LoginView employees={employees} onLogin={handleLogin} />;
-  }
-
-  const isManager = currentUser.role === 'Manager';
-  const isKitchenDepartment = currentUser.department === 'Kitchen';
+  const isManager = currentUser?.role === 'Manager';
+  const isKitchenDepartment = currentUser?.department === 'Kitchen';
 
   const navButtonClasses = (view: View) =>
     `px-4 py-3 text-sm font-medium rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
@@ -133,9 +138,17 @@ const App: React.FC = () => {
   );
 
   const renderContent = () => {
+    // Show dashboard without login
+    if (activeView === 'dashboard') {
+      return <DashboardView currentUser={currentUser || { id: 0, name: 'Guest', role: 'Manager', pin: '', department: 'Kitchen' }} employees={employees} onSelectDepartment={handleSelectDepartment} />;
+    }
+
+    // For other views, require login
+    if (!currentUser) {
+      return null;
+    }
+
     switch (activeView) {
-      case 'dashboard':
-        return <DashboardView currentUser={currentUser} employees={employees} onSelectDepartment={handleSelectDepartment} />;
       case 'roster':
         return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} /> : <AccessDenied />;
       case 'clock-in':
@@ -151,9 +164,9 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-slate-800">
-      <Header currentUser={currentUser} onLogout={handleLogout} />
+      {currentUser && <Header currentUser={currentUser} onLogout={handleLogout} />}
       <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24">
-        {activeView !== 'dashboard' && (
+        {activeView !== 'dashboard' && currentUser && (
           <button
             onClick={handleBackToDashboard}
             className="mb-4 flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold transition-colors"
@@ -166,6 +179,28 @@ const App: React.FC = () => {
         )}
         {renderContent()}
       </main>
+
+      {/* Login Modal - Shows when department is selected */}
+      {showLoginForDepartment && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-slate-800">Login to {showLoginForDepartment}</h2>
+                <button
+                  onClick={() => setShowLoginForDepartment(null)}
+                  className="text-stone-400 hover:text-stone-600"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <LoginView employees={employees.filter(e => e.department === showLoginForDepartment)} onLogin={handleLogin} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
