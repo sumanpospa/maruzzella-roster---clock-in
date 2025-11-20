@@ -172,8 +172,35 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-slate-800">
-      {currentUser && <Header currentUser={currentUser} onLogout={handleLogout} />}
-      <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24">
+      {/* Only show header when NOT on dashboard */}
+      {activeView !== 'dashboard' && currentUser && <Header currentUser={currentUser} onLogout={handleLogout} />}
+      
+      <main className={`p-4 sm:p-6 md:p-8 max-w-7xl mx-auto ${activeView === 'dashboard' ? 'pt-8' : 'pb-24'}`}>
+        {/* Back to Dashboard button for non-dashboard views */}
+        {activeView !== 'dashboard' && currentUser && (
+          <button
+            onClick={handleBackToDashboard}
+            className="mb-6 flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold transition-colors group"
+          >
+            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Dashboard
+          </button>
+        )}
+        
+        {/* Logout button on dashboard when logged in */}
+        {activeView === 'dashboard' && currentUser && (
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors shadow-sm"
+            >
+              Log Out
+            </button>
+          </div>
+        )}
+        
         {renderContent()}
       </main>
 
