@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
+import DashboardView from './components/DashboardView';
 import RosterView from './components/RosterView';
 import ClockInView from './components/ClockInView';
 import EmployeeView from './components/EmployeeView';
@@ -7,10 +8,10 @@ import PayrollView from './components/PayrollView';
 import LoginView from './components/LoginView';
 // Fix: Corrected import paths to be relative.
 import { INITIAL_EMPLOYEES, WEEKLY_ROSTER } from './constants';
-import { Employee, Roster, TimeLog, Shift, Rosters } from './types';
+import { Employee, Roster, TimeLog, Shift, Rosters, Department } from './types';
 import { getState as apiGetState, saveState as apiSaveState } from './services/api';
 
-type View = 'roster' | 'clock-in' | 'employees' | 'payroll';
+type View = 'dashboard' | 'roster' | 'clock-in' | 'employees' | 'payroll';
 
 // Rosters type moved to types.ts
 
@@ -19,7 +20,8 @@ type View = 'roster' | 'clock-in' | 'employees' | 'payroll';
 // Department system: Kitchen (with roster), FOH, Stewarding (clock in/payroll only)
 
 const App: React.FC = () => {
-  const [activeView, setActiveView] = useState<View>('roster');
+  const [activeView, setActiveView] = useState<View>('dashboard');
+  const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(INITIAL_EMPLOYEES);
   const [rosters, setRosters] = useState<Rosters>({ currentWeek: WEEKLY_ROSTER, nextWeek: WEEKLY_ROSTER });
   const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
@@ -82,12 +84,17 @@ const App: React.FC = () => {
 
   const handleLogin = (employee: Employee) => {
     setCurrentUser(employee);
-    // Default to clock-in for FOH/Stewarding, roster for Kitchen
-    if (employee.department === 'Kitchen') {
-      setActiveView('roster');
-    } else {
-      setActiveView('clock-in');
-    }
+    setActiveView('dashboard'); // Always start at dashboard
+  };
+
+  const handleSelectDepartment = (department: Department) => {
+    setSelectedDepartment(department);
+    setActiveView('roster'); // Go to roster after selecting department
+  };
+
+  const handleBackToDashboard = () => {
+    setActiveView('dashboard');
+    setSelectedDepartment(null);
   };
 
   const handleLogout = () => {
@@ -127,8 +134,10 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeView) {
+      case 'dashboard':
+        return <DashboardView currentUser={currentUser} employees={employees} onSelectDepartment={handleSelectDepartment} />;
       case 'roster':
-        return isKitchenDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} /> : <AccessDenied />;
+        return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} /> : <AccessDenied />;
       case 'clock-in':
         return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
       case 'employees':
@@ -144,28 +153,17 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-stone-50 font-sans text-slate-800">
       <Header currentUser={currentUser} onLogout={handleLogout} />
       <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24">
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 p-2 bg-white/80 backdrop-blur-sm shadow-lg rounded-full border border-stone-200">
-            <nav className="flex gap-2">
-                {isKitchenDepartment && (
-                    <button onClick={() => handleNavClick('roster')} className={navButtonClasses('roster')} aria-label="Roster">
-                        Roster
-                    </button>
-                )}
-                <button onClick={() => handleNavClick('clock-in')} className={navButtonClasses('clock-in')} aria-label="Clock In">
-                    Clock In
-                </button>
-                {isManager && (
-                    <>
-                        <button onClick={() => handleNavClick('employees')} className={navButtonClasses('employees')} aria-label="Employees">
-                            Employees
-                        </button>
-                        <button onClick={() => handleNavClick('payroll')} className={navButtonClasses('payroll')} aria-label="Payroll">
-                            Payroll
-                        </button>
-                    </>
-                )}
-            </nav>
-        </div>
+        {activeView !== 'dashboard' && (
+          <button
+            onClick={handleBackToDashboard}
+            className="mb-4 flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Dashboard
+          </button>
+        )}
         {renderContent()}
       </main>
     </div>
