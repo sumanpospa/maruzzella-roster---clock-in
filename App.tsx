@@ -140,7 +140,15 @@ const App: React.FC = () => {
   const renderContent = () => {
     // Show dashboard without login
     if (activeView === 'dashboard') {
-      return <DashboardView currentUser={currentUser || { id: 0, name: 'Guest', role: 'Manager', pin: '', department: 'Kitchen' }} employees={employees} onSelectDepartment={handleSelectDepartment} />;
+      return (
+        <DashboardView 
+          currentUser={currentUser || { id: 0, name: 'Guest', role: 'Manager', pin: '', department: 'Kitchen' }} 
+          employees={employees} 
+          onSelectDepartment={handleSelectDepartment}
+          showBackButton={!!currentUser}
+          onBackToDashboard={currentUser ? handleBackToDashboard : undefined}
+        />
+      );
     }
 
     // For other views, require login
@@ -166,17 +174,6 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-stone-50 font-sans text-slate-800">
       {currentUser && <Header currentUser={currentUser} onLogout={handleLogout} />}
       <main className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto pb-24">
-        {activeView !== 'dashboard' && currentUser && (
-          <button
-            onClick={handleBackToDashboard}
-            className="mb-4 flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Back to Dashboard
-          </button>
-        )}
         {renderContent()}
       </main>
 
