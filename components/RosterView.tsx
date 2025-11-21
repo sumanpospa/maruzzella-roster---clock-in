@@ -42,9 +42,10 @@ interface RosterViewProps {
     setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
     currentUser: Employee;
     onNavigateToEmployees: () => void;
+    onNavigateToClockIn: () => void;
 }
 
-const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters, setEmployees, currentUser, onNavigateToEmployees }) => {
+const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters, setEmployees, currentUser, onNavigateToEmployees, onNavigateToClockIn }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState<{
     day: DayOfWeek | null;
@@ -192,6 +193,15 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                             Copy to Next Week
                         </button>
                     )}
+                    <button
+                        onClick={onNavigateToClockIn}
+                        className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-emerald-700 transform hover:scale-105 flex items-center gap-2"
+                    >
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Clock In/Out
+                    </button>
                     <button
                         onClick={onNavigateToEmployees}
                         className="bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-purple-700 transform hover:scale-105 flex items-center gap-2"

@@ -75,9 +75,10 @@ interface EmployeeViewProps {
     setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
     setRosters: React.Dispatch<React.SetStateAction<Rosters>>;
     currentUser: Employee;
+    onNavigateToClockIn: () => void;
 }
 
-const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, setRosters, currentUser }) => {
+const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, setRosters, currentUser, onNavigateToClockIn }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
 
@@ -161,12 +162,23 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, se
                     <h2 className="text-2xl font-bold text-slate-800">Manage {currentUser.department} Staff</h2>
                     <p className="text-stone-600">Add, edit, or remove staff members from {currentUser.department}.</p>
                 </div>
-                <button
-                    onClick={handleOpenAddModal}
-                    className="bg-orange-600 text-white font-semibold py-2 px-5 rounded-lg transition-all duration-200 ease-in-out hover:bg-orange-700 transform hover:scale-105"
-                >
-                    Add Employee
-                </button>
+                <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                        onClick={onNavigateToClockIn}
+                        className="bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-emerald-700 transform hover:scale-105 flex items-center gap-2"
+                    >
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Clock In/Out
+                    </button>
+                    <button
+                        onClick={handleOpenAddModal}
+                        className="bg-orange-600 text-white font-semibold py-2 px-5 rounded-lg transition-all duration-200 ease-in-out hover:bg-orange-700 transform hover:scale-105"
+                    >
+                        Add Employee
+                    </button>
+                </div>
             </div>
 
             <div className="space-y-4">

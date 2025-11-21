@@ -163,11 +163,11 @@ const App: React.FC = () => {
 
     switch (activeView) {
       case 'roster':
-        return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} onNavigateToEmployees={() => setActiveView('employees')} /> : <AccessDenied />;
+        return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} onNavigateToEmployees={() => setActiveView('employees')} onNavigateToClockIn={() => setActiveView('clock-in')} /> : <AccessDenied />;
       case 'clock-in':
         return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
       case 'employees':
-        return isManager ? <EmployeeView employees={employees} setEmployees={setEmployees} setRosters={setRosters} currentUser={currentUser} /> : <AccessDenied />;
+        return isManager ? <EmployeeView employees={employees} setEmployees={setEmployees} setRosters={setRosters} currentUser={currentUser} onNavigateToClockIn={() => setActiveView('clock-in')} /> : <AccessDenied />;
       case 'payroll':
         return isManager ? <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} /> : <AccessDenied />;
       default:
