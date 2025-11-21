@@ -26,6 +26,7 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
     const [department, setDepartment] = useState<Department>('Kitchen');
     const [pin, setPin] = useState('');
     const [isResettingPin, setIsResettingPin] = useState(false);
+    const [showRoleWarning, setShowRoleWarning] = useState(false);
 
     // Get roles for the current department
     const availableRoles = DEPARTMENT_ROLES[department];
@@ -35,16 +36,27 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
 
         if (employee) {
             setName(employee.name);
-            setRole(employee.role);
             setDepartment(employee.department);
             setPin(employee.pin);
             setIsResettingPin(false);
+            
+            // Validate that the employee's role exists in their department's role list
+            const departmentRoles = DEPARTMENT_ROLES[employee.department];
+            if (departmentRoles.includes(employee.role)) {
+                setRole(employee.role);
+                setShowRoleWarning(false);
+            } else {
+                // If role doesn't match department, set to first available role and show warning
+                setRole(departmentRoles[0]);
+                setShowRoleWarning(true);
+            }
         } else {
             setName('');
             setDepartment(defaultDepartment);
             // Set first role from the department's role list
             setRole(DEPARTMENT_ROLES[defaultDepartment][0]);
             setPin('');
+            setShowRoleWarning(false);
         }
     }, [employee, isOpen, defaultDepartment]);
 
@@ -80,6 +92,13 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
                 <h2 id="employee-modal-title" className="text-2xl font-bold text-slate-800 mb-6">{isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    {showRoleWarning && (
+                        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                            <p className="text-sm text-amber-800">
+                                ⚠️ This employee's role has been updated to match their department's available roles.
+                            </p>
+                        </div>
+                    )}
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
                         <input

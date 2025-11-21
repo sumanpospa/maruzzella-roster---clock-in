@@ -156,12 +156,28 @@ app.get('/api/state', async (req, res) => {
       // State is stored in the pin field as JSON
       const state = JSON.parse(stateRecord.pin);
       
-      // Migration: Ensure all employees have department field
+      // Department-specific role mapping
+      const DEPARTMENT_ROLES = {
+        Kitchen: ['Manager', 'Chef', 'Cook'],
+        FOH: ['Manager', 'Supervisor', 'Bar Tender', 'Food Runner'],
+        Stewarding: ['Manager', 'Kitchen Hand']
+      };
+      
+      // Migration: Ensure all employees have department field and valid roles
       if (state.employees && Array.isArray(state.employees)) {
-        state.employees = state.employees.map(emp => ({
-          ...emp,
-          department: emp.department || 'Kitchen' // Default to Kitchen if missing
-        }));
+        state.employees = state.employees.map(emp => {
+          const department = emp.department || 'Kitchen';
+          const validRoles = DEPARTMENT_ROLES[department] || ['Manager'];
+          
+          // If role is invalid for department, set to Manager
+          const role = validRoles.includes(emp.role) ? emp.role : 'Manager';
+          
+          return {
+            ...emp,
+            department,
+            role
+          };
+        });
       }
       
       console.log('[DB] State retrieved from database');
