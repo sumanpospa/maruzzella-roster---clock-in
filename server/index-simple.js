@@ -14,51 +14,49 @@ async function initializeDatabase() {
     console.log('[DB] Checking database connection and schema...');
     await prisma.$connect();
     
-    // Try to query the Employee table - if it doesn't exist, this will fail
-    await prisma.$executeRaw`SELECT 1 FROM "Employee" LIMIT 1`;
+    // Always ensure the Employee table exists with correct schema
+    await prisma.$executeRaw`
+      CREATE TABLE IF NOT EXISTS "Employee" (
+        "id" SERIAL PRIMARY KEY,
+        "name" TEXT NOT NULL,
+        "role" TEXT NOT NULL,
+        "pin" TEXT NOT NULL,
+        "department" TEXT NOT NULL DEFAULT 'Kitchen',
+        "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    console.log('[DB] Employee table verified/created');
+    
+    // Check if department column exists, add it if missing
+    const checkColumn = await prisma.$queryRaw`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'Employee' AND column_name = 'department'
+    `;
+    
+    if (checkColumn.length === 0) {
+      console.log('[DB] Department column missing, adding it...');
+      await prisma.$executeRaw`
+        ALTER TABLE "Employee" 
+        ADD COLUMN "department" TEXT NOT NULL DEFAULT 'Kitchen'
+      `;
+      console.log('[DB] Department column added successfully');
+    } else {
+      console.log('[DB] Department column already exists');
+    }
+    
+    // Update any existing rows that might have empty department
+    await prisma.$executeRaw`
+      UPDATE "Employee" 
+      SET "department" = 'Kitchen' 
+      WHERE "department" IS NULL OR "department" = ''
+    `;
+    
     console.log('[DB] Database schema verified successfully');
   } catch (error) {
-    console.log('[DB] Schema not found or connection issue. Attempting to create schema...');
-    try {
-      // Create the Employee table if it doesn't exist
-      await prisma.$executeRaw`
-        CREATE TABLE IF NOT EXISTS "Employee" (
-          "id" SERIAL PRIMARY KEY,
-          "name" TEXT NOT NULL,
-          "role" TEXT NOT NULL,
-          "pin" TEXT NOT NULL,
-          "department" TEXT NOT NULL DEFAULT 'Kitchen',
-          "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-          "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
-        )
-      `;
-      console.log('[DB] Employee table created successfully');
-      
-      // Add department column if table exists but column doesn't
-      try {
-        await prisma.$executeRaw`
-          ALTER TABLE "Employee" 
-          ADD COLUMN IF NOT EXISTS "department" TEXT NOT NULL DEFAULT 'Kitchen'
-        `;
-        console.log('[DB] Department column added/verified');
-      } catch (alterError) {
-        console.log('[DB] Department column already exists or error:', alterError.message);
-      }
-      
-      // Update any existing rows that might have NULL department
-      try {
-        await prisma.$executeRaw`
-          UPDATE "Employee" 
-          SET "department" = 'Kitchen' 
-          WHERE "department" IS NULL OR "department" = ''
-        `;
-        console.log('[DB] Existing employees updated with Kitchen department');
-      } catch (updateError) {
-        console.log('[DB] Error updating existing employees:', updateError.message);
-      }
-    } catch (createError) {
-      console.error('[DB] Failed to create schema:', createError.message);
-    }
+    console.error('[DB] Database initialization error:', error.message);
+    throw error;
   }
 }
 
