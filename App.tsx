@@ -86,14 +86,20 @@ const App: React.FC = () => {
   const handleLogin = (employee: Employee) => {
     setCurrentUser(employee);
     setShowLoginForDepartment(null);
-    // After login, route based on department
+    // After login, route based on department and role
     if (showLoginForDepartment) {
       setSelectedDepartment(showLoginForDepartment);
-      // Kitchen goes to roster, FOH and Stewarding go to employees management
-      if (showLoginForDepartment === 'Kitchen') {
-        setActiveView('roster');
+      
+      // Managers go to their department management view
+      if (employee.role === 'Manager') {
+        if (showLoginForDepartment === 'Kitchen') {
+          setActiveView('roster');
+        } else {
+          setActiveView('employees');
+        }
       } else {
-        setActiveView('employees');
+        // Regular employees go to clock-in
+        setActiveView('clock-in');
       }
     }
   };
@@ -126,11 +132,11 @@ const App: React.FC = () => {
     }`;
 
   const handleNavClick = (view: View) => {
-    if (view === 'payroll' && !isManager) {
-      return;
-    }
     if (view === 'roster' && !isKitchenDepartment) {
       return; // FOH and Stewarding can't access roster
+    }
+    if (view === 'employees' && !isManager) {
+      return; // Only managers can access employee management
     }
     setActiveView(view);
   };
@@ -165,11 +171,11 @@ const App: React.FC = () => {
       case 'roster':
         return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} onNavigateToEmployees={() => setActiveView('employees')} onNavigateToClockIn={() => setActiveView('clock-in')} /> : <AccessDenied />;
       case 'clock-in':
-        return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
+        return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} onNavigateToPayroll={() => setActiveView('payroll')} />;
       case 'employees':
         return isManager ? <EmployeeView employees={employees} setEmployees={setEmployees} setRosters={setRosters} currentUser={currentUser} onNavigateToClockIn={() => setActiveView('clock-in')} /> : <AccessDenied />;
       case 'payroll':
-        return isManager ? <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} /> : <AccessDenied />;
+        return <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
       default:
         return null;
     }

@@ -90,7 +90,11 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
     };
 
     // Filter employees by current user's department
-    const filteredEmployees = employees.filter(e => e.department === currentUser.department);
+    // If not a manager, show only current user's data
+    const isManager = currentUser.role === 'Manager';
+    const filteredEmployees = isManager 
+        ? employees.filter(e => e.department === currentUser.department)
+        : employees.filter(e => e.id === currentUser.id);
 
     const employeePayData = filteredEmployees.map(employee => {
         const employeeLogs = timeLogs.filter(log => log.employeeId === employee.id);
@@ -155,16 +159,22 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
         <div>
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-slate-800">Payroll & Timesheets - {currentUser.department}</h2>
-                    <p className="text-stone-600">Review, approve, and manage all recorded work hours for your department.</p>
+                    <h2 className="text-2xl font-bold text-slate-800">
+                        {isManager ? `Payroll & Timesheets - ${currentUser.department}` : 'My Timesheets'}
+                    </h2>
+                    <p className="text-stone-600">
+                        {isManager ? 'Review, approve, and manage all recorded work hours for your department.' : 'View your work hours, approved time, and pending approvals.'}
+                    </p>
                 </div>
-                 <button
-                    onClick={handleExportSummaryCsv}
-                    disabled={isExporting}
-                    className="bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-orange-700 disabled:bg-orange-300 disabled:cursor-not-allowed transform hover:scale-105"
-                >
-                    {isExporting ? 'Exporting...' : 'Export Weekly Summary'}
-                </button>
+                {isManager && (
+                    <button
+                        onClick={handleExportSummaryCsv}
+                        disabled={isExporting}
+                        className="bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-orange-700 disabled:bg-orange-300 disabled:cursor-not-allowed transform hover:scale-105"
+                    >
+                        {isExporting ? 'Exporting...' : 'Export Weekly Summary'}
+                    </button>
+                )}
             </div>
 
             <div className="space-y-6">
@@ -188,12 +198,14 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
                                         <p className="text-2xl font-bold text-orange-600">{formatDuration(data.approvedHours)}</p>
                                     </div>
                                 </div>
-                                <button
-                                    onClick={() => handleOpenModal(null, data)}
-                                    className="ml-4 px-3 py-1 text-sm font-medium text-orange-700 bg-orange-100 hover:bg-orange-200 rounded-lg transition-colors"
-                                >
-                                    Add Entry
-                                </button>
+                                {isManager && (
+                                    <button
+                                        onClick={() => handleOpenModal(null, data)}
+                                        className="ml-4 px-3 py-1 text-sm font-medium text-orange-700 bg-orange-100 hover:bg-orange-200 rounded-lg transition-colors"
+                                    >
+                                        Add Entry
+                                    </button>
+                                )}
                             </div>
                         </div>
                         
@@ -224,38 +236,42 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
                                                     <td className="p-2"><StatusBadge status={log.status} /></td>
                                                     <td className="p-2 text-right">
                                                         <div className="flex items-center justify-end gap-1">
-                                                            {log.status === 'pending' && (
+                                                            {isManager && (
                                                                 <>
+                                                                    {log.status === 'pending' && (
+                                                                        <>
+                                                                            <button
+                                                                                onClick={() => handleUpdateLogStatus(log.id, 'rejected')}
+                                                                                className="px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-100 rounded-md transition-colors"
+                                                                                aria-label="Reject time entry"
+                                                                            >
+                                                                                Reject
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={() => handleUpdateLogStatus(log.id, 'approved')}
+                                                                                className="px-2 py-1 text-xs font-medium text-white bg-green-600 hover:bg-green-700 rounded-md transition-colors"
+                                                                                aria-label="Approve time entry"
+                                                                            >
+                                                                                Approve
+                                                                            </button>
+                                                                        </>
+                                                                    )}
                                                                     <button
-                                                                        onClick={() => handleUpdateLogStatus(log.id, 'rejected')}
-                                                                        className="px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-100 rounded-md transition-colors"
-                                                                        aria-label="Reject time entry"
+                                                                        onClick={() => handleOpenModal(log, data)}
+                                                                        className="px-2 py-1 text-xs font-medium text-slate-500 hover:bg-slate-200 rounded-md transition-colors"
+                                                                        aria-label="Edit time entry"
                                                                     >
-                                                                        Reject
+                                                                        Edit
                                                                     </button>
-                                                                    <button
-                                                                        onClick={() => handleUpdateLogStatus(log.id, 'approved')}
-                                                                        className="px-2 py-1 text-xs font-medium text-white bg-green-600 hover:bg-green-700 rounded-md transition-colors"
-                                                                        aria-label="Approve time entry"
+                                                                    <button 
+                                                                        onClick={() => handleDeleteLog(log.id)} 
+                                                                        className="px-2 py-1 text-xs font-medium text-slate-500 hover:text-red-700 hover:bg-red-100 rounded-md transition-colors"
+                                                                        aria-label="Delete time entry"
                                                                     >
-                                                                        Approve
+                                                                        Delete
                                                                     </button>
                                                                 </>
                                                             )}
-                                                             <button
-                                                                onClick={() => handleOpenModal(log, data)}
-                                                                className="px-2 py-1 text-xs font-medium text-slate-500 hover:bg-slate-200 rounded-md transition-colors"
-                                                                aria-label="Edit time entry"
-                                                            >
-                                                                Edit
-                                                            </button>
-                                                            <button 
-                                                                onClick={() => handleDeleteLog(log.id)} 
-                                                                className="px-2 py-1 text-xs font-medium text-slate-500 hover:text-red-700 hover:bg-red-100 rounded-md transition-colors"
-                                                                aria-label="Delete time entry"
-                                                            >
-                                                                Delete
-                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>

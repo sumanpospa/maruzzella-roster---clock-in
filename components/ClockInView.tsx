@@ -55,9 +55,10 @@ interface ClockInViewProps {
     timeLogs: TimeLog[];
     setTimeLogs: React.Dispatch<React.SetStateAction<TimeLog[]>>;
     currentUser: Employee;
+    onNavigateToPayroll: () => void;
 }
 
-const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser }) => {
+const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser, onNavigateToPayroll }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -137,10 +138,21 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
                 <h2 className="text-2xl font-bold text-slate-800">Time Clock - {currentUser.department}</h2>
                 <p className="text-stone-600">{isManager ? "Manage clock-ins for your department." : "Clock in or out for your shift."}</p>
             </div>
-            <div className="bg-white p-3 rounded-lg shadow-sm border border-stone-200 text-center">
-                <p className="font-mono text-3xl font-bold text-orange-600">
-                    {currentTime.toLocaleTimeString()}
-                </p>
+            <div className="flex items-center gap-3">
+                <button
+                    onClick={onNavigateToPayroll}
+                    className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-blue-700 transform hover:scale-105 flex items-center gap-2"
+                >
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    {isManager ? 'View Hours' : 'My Hours'}
+                </button>
+                <div className="bg-white p-3 rounded-lg shadow-sm border border-stone-200 text-center">
+                    <p className="font-mono text-3xl font-bold text-orange-600">
+                        {currentTime.toLocaleTimeString()}
+                    </p>
+                </div>
             </div>
         </div>
 
