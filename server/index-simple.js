@@ -159,7 +159,7 @@ app.get('/api/state', async (req, res) => {
       // Department-specific role mapping
       const DEPARTMENT_ROLES = {
         Kitchen: ['Manager', 'Chef', 'Cook'],
-        FOH: ['Manager', 'Supervisor', 'Bar Tender', 'Food Runner'],
+        FOH: ['Manager', 'Supervisor', 'Bar Tender', 'Waiter', 'Food Runner'],
         Stewarding: ['Manager', 'Kitchen Hand']
       };
       

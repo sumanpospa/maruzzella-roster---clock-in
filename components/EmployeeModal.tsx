@@ -13,7 +13,7 @@ interface EmployeeModalProps {
 // Department-specific roles
 const DEPARTMENT_ROLES: Record<Department, EmployeeRole[]> = {
     Kitchen: ['Manager', 'Chef', 'Cook'],
-    FOH: ['Manager', 'Supervisor', 'Bar Tender', 'Food Runner'],
+    FOH: ['Manager', 'Supervisor', 'Bar Tender', 'Waiter', 'Food Runner'],
     Stewarding: ['Manager', 'Kitchen Hand'],
 };
 
