@@ -163,7 +163,7 @@ const App: React.FC = () => {
 
     switch (activeView) {
       case 'roster':
-        return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} /> : <AccessDenied />;
+        return selectedDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} onNavigateToEmployees={() => setActiveView('employees')} /> : <AccessDenied />;
       case 'clock-in':
         return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
       case 'employees':

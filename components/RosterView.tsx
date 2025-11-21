@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { DayOfWeek, Shift, Roster, Employee, Rosters } from '../types';
 import ShiftModal from './ShiftModal';
 import AiBriefing from './AiBriefing';
-import EmployeeManagementModal from './EmployeeManagementModal';
 import { generateRosterPDF } from '../utils/pdfGenerator';
 import { UsersIcon } from './icons/UsersIcon';
 
@@ -42,11 +41,11 @@ interface RosterViewProps {
     setRosters: React.Dispatch<React.SetStateAction<Rosters>>;
     setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
     currentUser: Employee;
+    onNavigateToEmployees: () => void;
 }
 
-const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters, setEmployees, currentUser }) => {
+const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters, setEmployees, currentUser, onNavigateToEmployees }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEmployeeManagementOpen, setIsEmployeeManagementOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState<{
     day: DayOfWeek | null;
     employeeId: number | null;
@@ -194,7 +193,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                         </button>
                     )}
                     <button
-                        onClick={() => setIsEmployeeManagementOpen(true)}
+                        onClick={onNavigateToEmployees}
                         className="bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-purple-700 transform hover:scale-105 flex items-center gap-2"
                     >
                         <UsersIcon className="h-5 w-5" />
@@ -323,15 +322,6 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
             shift={modalConfig.shift}
             employees={kitchenEmployees}
             employeeId={modalConfig.employeeId}
-            />
-        )}
-
-        {isEmployeeManagementOpen && (
-            <EmployeeManagementModal
-            isOpen={isEmployeeManagementOpen}
-            onClose={() => setIsEmployeeManagementOpen(false)}
-            employees={employees}
-            setEmployees={setEmployees}
             />
         )}
     </div>
