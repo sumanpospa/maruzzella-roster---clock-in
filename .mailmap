@@ -1,0 +1,14 @@
+# Git mailmap file
+# This file helps map commit authors/emails to proper identities
+# 
+# Syntax: Proper Name <proper@email.com> <commit@email.com>
+#
+# To use this file, replace the placeholders below with actual values:
+# - Replace "Your Actual Name" with your real name
+# - Replace "your-actual-email@example.com" with your GitHub verified email
+#
+# Example:
+# John Doe <john@example.com> Your Name <you@example.com>
+#
+# Uncomment and update the line below:
+# Your Actual Name <your-actual-email@example.com> Your Name <you@example.com>
