@@ -86,10 +86,15 @@ const App: React.FC = () => {
   const handleLogin = (employee: Employee) => {
     setCurrentUser(employee);
     setShowLoginForDepartment(null);
-    // After login, go to roster/management for the selected department
+    // After login, route based on department
     if (showLoginForDepartment) {
       setSelectedDepartment(showLoginForDepartment);
-      setActiveView('roster');
+      // Kitchen goes to roster, FOH and Stewarding go to employees management
+      if (showLoginForDepartment === 'Kitchen') {
+        setActiveView('roster');
+      } else {
+        setActiveView('employees');
+      }
     }
   };
 
@@ -121,7 +126,7 @@ const App: React.FC = () => {
     }`;
 
   const handleNavClick = (view: View) => {
-    if ((view === 'employees' || view === 'payroll') && !isManager) {
+    if (view === 'payroll' && !isManager) {
       return;
     }
     if (view === 'roster' && !isKitchenDepartment) {
@@ -164,7 +169,7 @@ const App: React.FC = () => {
       case 'employees':
         return isManager ? <EmployeeView employees={employees} setEmployees={setEmployees} setRosters={setRosters} currentUser={currentUser} /> : <AccessDenied />;
       case 'payroll':
-        return isManager ? <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} /> : <AccessDenied />;
+        return isManager ? <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} /> : <AccessDenied />;
       default:
         return null;
     }

@@ -42,13 +42,13 @@ interface PayrollViewProps {
     employees: Employee[];
     timeLogs: TimeLog[];
     setTimeLogs: React.Dispatch<React.SetStateAction<TimeLog[]>>;
+    currentUser: Employee;
 }
 
-const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeLogs }) => {
+const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser }) => {
     const [isExporting, setIsExporting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingLog, setEditingLog] = useState<{ log: Partial<TimeLog> | null; employee: Employee | null }>({ log: null, employee: null });
-    const [selectedDepartment, setSelectedDepartment] = useState<Department | 'All'>('All');
 
     const handleOpenModal = (log: Partial<TimeLog> | null, employee: Employee) => {
         setEditingLog({ log, employee });
@@ -89,10 +89,8 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
         );
     };
 
-    // Filter employees by department
-    const filteredEmployees = selectedDepartment === 'All' 
-        ? employees 
-        : employees.filter(e => e.department === selectedDepartment);
+    // Filter employees by current user's department
+    const filteredEmployees = employees.filter(e => e.department === currentUser.department);
 
     const employeePayData = filteredEmployees.map(employee => {
         const employeeLogs = timeLogs.filter(log => log.employeeId === employee.id);
@@ -157,8 +155,8 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
         <div>
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-slate-800">Payroll & Timesheets</h2>
-                    <p className="text-stone-600">Review, approve, and manage all recorded work hours.</p>
+                    <h2 className="text-2xl font-bold text-slate-800">Payroll & Timesheets - {currentUser.department}</h2>
+                    <p className="text-stone-600">Review, approve, and manage all recorded work hours for your department.</p>
                 </div>
                  <button
                     onClick={handleExportSummaryCsv}
@@ -166,49 +164,6 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
                     className="bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-orange-700 disabled:bg-orange-300 disabled:cursor-not-allowed transform hover:scale-105"
                 >
                     {isExporting ? 'Exporting...' : 'Export Weekly Summary'}
-                </button>
-            </div>
-
-            <div className="mb-6 flex gap-2 flex-wrap">
-                <button
-                    onClick={() => setSelectedDepartment('All')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'All'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    All Departments
-                </button>
-                <button
-                    onClick={() => setSelectedDepartment('Kitchen')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'Kitchen'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    Kitchen
-                </button>
-                <button
-                    onClick={() => setSelectedDepartment('FOH')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'FOH'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    FOH
-                </button>
-                <button
-                    onClick={() => setSelectedDepartment('Stewarding')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'Stewarding'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    Stewarding
                 </button>
             </div>
 

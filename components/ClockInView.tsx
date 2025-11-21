@@ -59,9 +59,6 @@ interface ClockInViewProps {
 
 const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [selectedDepartment, setSelectedDepartment] = useState<Department | 'All'>(
-    currentUser.role === 'Manager' ? 'All' : currentUser.department
-  );
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -70,11 +67,8 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
 
   const isManager = currentUser.role === 'Manager';
 
-  // Filter by department first
-  let filteredEmployees = employees;
-  if (selectedDepartment !== 'All') {
-    filteredEmployees = employees.filter(e => e.department === selectedDepartment);
-  }
+  // Filter by current user's department only
+  const filteredEmployees = employees.filter(e => e.department === currentUser.department);
 
   // Then filter for non-managers (show only themselves)
   const employeesToDisplay = isManager ? filteredEmployees : filteredEmployees.filter(e => e.id === currentUser.id);
@@ -140,8 +134,8 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
     <div>
         <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
             <div>
-                <h2 className="text-2xl font-bold text-slate-800">Time Clock</h2>
-                <p className="text-stone-600">{isManager ? "Manage clock-ins for the entire team." : "Clock in or out for your shift."}</p>
+                <h2 className="text-2xl font-bold text-slate-800">Time Clock - {currentUser.department}</h2>
+                <p className="text-stone-600">{isManager ? "Manage clock-ins for your department." : "Clock in or out for your shift."}</p>
             </div>
             <div className="bg-white p-3 rounded-lg shadow-sm border border-stone-200 text-center">
                 <p className="font-mono text-3xl font-bold text-orange-600">
@@ -149,51 +143,6 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
                 </p>
             </div>
         </div>
-
-        {isManager && (
-            <div className="mb-6 flex gap-2 flex-wrap">
-                <button
-                    onClick={() => setSelectedDepartment('All')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'All'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    Show All
-                </button>
-                <button
-                    onClick={() => setSelectedDepartment('Kitchen')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'Kitchen'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    Kitchen
-                </button>
-                <button
-                    onClick={() => setSelectedDepartment('FOH')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'FOH'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    FOH
-                </button>
-                <button
-                    onClick={() => setSelectedDepartment('Stewarding')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                        selectedDepartment === 'Stewarding'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-slate-700 border border-stone-300 hover:bg-stone-50'
-                    }`}
-                >
-                    Stewarding
-                </button>
-            </div>
-        )}
 
       <div className="space-y-4">
         {employeesToDisplay.map(employee => {

@@ -7,12 +7,13 @@ interface EmployeeModalProps {
     onClose: () => void;
     onSave: (employeeData: Omit<Employee, 'id'> & { id?: number }) => void;
     employee: Employee | null;
+    defaultDepartment: Department;
 }
 
 const ROLES: EmployeeRole[] = ['Manager', 'Chef', 'Waiter', 'Host', 'Dishwasher', 'Kitchen Hand'];
 const DEPARTMENTS: Department[] = ['Kitchen', 'FOH', 'Stewarding'];
 
-const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, employee }) => {
+const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, employee, defaultDepartment }) => {
     const isEditing = employee !== null;
     const [name, setName] = useState('');
     const [role, setRole] = useState<EmployeeRole>('Waiter');
@@ -32,10 +33,10 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
         } else {
             setName('');
             setRole('Waiter');
-            setDepartment('Kitchen');
+            setDepartment(defaultDepartment);
             setPin('');
         }
-    }, [employee, isOpen]);
+    }, [employee, isOpen, defaultDepartment]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -100,13 +101,15 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
                             id="department"
                             value={department}
                             onChange={(e) => setDepartment(e.target.value as Department)}
-                            className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                            className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 disabled:bg-stone-100 disabled:text-stone-500"
                             required
+                            disabled
                         >
                             {DEPARTMENTS.map(d => (
                                 <option key={d} value={d}>{d}</option>
                             ))}
                         </select>
+                        <p className="text-xs text-stone-500 mt-1">Each department manages its own staff</p>
                     </div>
                     <div>
                         {isEditing ? (

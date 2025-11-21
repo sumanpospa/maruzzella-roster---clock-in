@@ -151,12 +151,15 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, se
         });
     };
 
+    // Filter employees to show only current user's department
+    const departmentEmployees = employees.filter(e => e.department === currentUser.department);
+
     return (
         <div>
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-slate-800">Manage Employees</h2>
-                    <p className="text-stone-600">Add, edit, or remove staff members.</p>
+                    <h2 className="text-2xl font-bold text-slate-800">Manage {currentUser.department} Staff</h2>
+                    <p className="text-stone-600">Add, edit, or remove staff members from {currentUser.department}.</p>
                 </div>
                 <button
                     onClick={handleOpenAddModal}
@@ -167,7 +170,7 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, se
             </div>
 
             <div className="space-y-4">
-                {employees.length > 0 ? employees.map(employee => (
+                {departmentEmployees.length > 0 ? departmentEmployees.map(employee => (
                     <EmployeeCard
                         key={employee.id}
                         employee={employee}
@@ -190,6 +193,7 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, se
                     onClose={handleCloseModal}
                     onSave={handleSaveEmployee}
                     employee={editingEmployee}
+                    defaultDepartment={currentUser.department}
                 />
             )}
         </div>

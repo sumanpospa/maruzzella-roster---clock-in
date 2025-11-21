@@ -11,6 +11,8 @@ export const INITIAL_EMPLOYEES: Employee[] = [
   { id: 8, name: 'Taki', role: 'Chef', pin: '1234', department: 'Kitchen' },
   { id: 9, name: 'Tanbir', role: 'Chef', pin: '1234', department: 'Kitchen' },
   { id: 10, name: 'Progganur', role: 'Chef', pin: '1234', department: 'Kitchen' },
+  { id: 11, name: 'FOH Manager', role: 'Manager', pin: '1234', department: 'FOH' },
+  { id: 12, name: 'Stewarding Manager', role: 'Manager', pin: '1234', department: 'Stewarding' },
 ];
 
 export const WEEKLY_ROSTER: Roster = {
