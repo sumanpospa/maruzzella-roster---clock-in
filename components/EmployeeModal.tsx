@@ -10,16 +10,25 @@ interface EmployeeModalProps {
     defaultDepartment: Department;
 }
 
-const ROLES: EmployeeRole[] = ['Manager', 'Chef', 'Waiter', 'Host', 'Dishwasher', 'Kitchen Hand'];
+// Department-specific roles
+const DEPARTMENT_ROLES: Record<Department, EmployeeRole[]> = {
+    Kitchen: ['Manager', 'Chef', 'Cook'],
+    FOH: ['Manager', 'Supervisor', 'Bar Tender', 'Food Runner'],
+    Stewarding: ['Manager', 'Kitchen Hand'],
+};
+
 const DEPARTMENTS: Department[] = ['Kitchen', 'FOH', 'Stewarding'];
 
 const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, employee, defaultDepartment }) => {
     const isEditing = employee !== null;
     const [name, setName] = useState('');
-    const [role, setRole] = useState<EmployeeRole>('Waiter');
+    const [role, setRole] = useState<EmployeeRole>('Manager');
     const [department, setDepartment] = useState<Department>('Kitchen');
     const [pin, setPin] = useState('');
     const [isResettingPin, setIsResettingPin] = useState(false);
+
+    // Get roles for the current department
+    const availableRoles = DEPARTMENT_ROLES[department];
 
     useEffect(() => {
         if (!isOpen) return;
@@ -32,8 +41,9 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
             setIsResettingPin(false);
         } else {
             setName('');
-            setRole('Waiter');
             setDepartment(defaultDepartment);
+            // Set first role from the department's role list
+            setRole(DEPARTMENT_ROLES[defaultDepartment][0]);
             setPin('');
         }
     }, [employee, isOpen, defaultDepartment]);
@@ -90,7 +100,7 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({ isOpen, onClose, onSave, 
                             className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
                             required
                         >
-                            {ROLES.map(r => (
+                            {availableRoles.map(r => (
                                 <option key={r} value={r}>{r}</option>
                             ))}
                         </select>

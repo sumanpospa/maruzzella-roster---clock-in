@@ -1,5 +1,5 @@
 
-export type EmployeeRole = 'Manager' | 'Chef' | 'Waiter' | 'Host' | 'Dishwasher' | 'Kitchen Hand';
+export type EmployeeRole = 'Manager' | 'Chef' | 'Cook' | 'Kitchen Hand' | 'Supervisor' | 'Bar Tender' | 'Food Runner';
 
 export type Department = 'Kitchen' | 'FOH' | 'Stewarding';
 
