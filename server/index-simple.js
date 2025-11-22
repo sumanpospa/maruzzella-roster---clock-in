@@ -142,6 +142,16 @@ app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Maruzzella backend (PostgreSQL - Simple Storage)' });
 });
 
+// Health check endpoint for uptime monitoring
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    service: 'maruzzella-backend'
+  });
+});
+
 // GET /api/state
 app.get('/api/state', async (req, res) => {
   try {
