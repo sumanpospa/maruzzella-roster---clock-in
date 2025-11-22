@@ -18,7 +18,11 @@ const formatHoursDecimal = (milliseconds: number): string => {
 }
 
 const formatDate = (date: Date): string => {
-    return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+    // Ensure we're formatting the date in local timezone, not UTC
+    const year = date.getFullYear();
+    const month = date.toLocaleString('default', { month: 'short' });
+    const day = date.getDate();
+    return `${month} ${day}`;
 }
 
 const formatTime = (date: Date): string => {
