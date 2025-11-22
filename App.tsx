@@ -28,6 +28,7 @@ const App: React.FC = () => {
   const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
   const [currentUser, setCurrentUser] = useState<Employee | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Hydrate from backend on mount
   useEffect(() => {
@@ -51,7 +52,10 @@ const App: React.FC = () => {
       } catch (error) {
         console.warn('Could not load remote state; continuing with local defaults.', error);
       } finally {
-        if (mounted) setIsHydrated(true);
+        if (mounted) {
+          setIsHydrated(true);
+          setIsLoading(false);
+        }
       }
     })();
     return () => { mounted = false; };
@@ -179,6 +183,18 @@ const App: React.FC = () => {
       default:
         return null;
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-stone-300 border-t-orange-600 mb-4"></div>
+          <p className="text-slate-700 text-xl font-semibold">Loading your workspace...</p>
+          <p className="text-stone-500 text-sm mt-2">This may take a moment on first load</p>
+        </div>
+      </div>
+    );
   }
 
   return (
