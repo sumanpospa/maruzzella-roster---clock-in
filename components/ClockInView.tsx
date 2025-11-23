@@ -56,9 +56,10 @@ interface ClockInViewProps {
     setTimeLogs: React.Dispatch<React.SetStateAction<TimeLog[]>>;
     currentUser: Employee;
     onNavigateToPayroll: () => void;
+    onNavigateToRoster?: () => void;
 }
 
-const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser, onNavigateToPayroll }) => {
+const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser, onNavigateToPayroll, onNavigateToRoster }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -139,6 +140,17 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
                 <p className="text-stone-600">{isManager ? "Manage clock-ins for your department." : "Clock in or out for your shift."}</p>
             </div>
             <div className="flex items-center gap-3">
+                {onNavigateToRoster && currentUser.department === 'Kitchen' && (
+                    <button
+                        onClick={onNavigateToRoster}
+                        className="bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-orange-700 transform hover:scale-105 flex items-center gap-2"
+                    >
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        View Roster
+                    </button>
+                )}
                 <button
                     onClick={onNavigateToPayroll}
                     className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out hover:bg-blue-700 transform hover:scale-105 flex items-center gap-2"
