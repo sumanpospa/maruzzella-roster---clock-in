@@ -78,6 +78,13 @@ const App: React.FC = () => {
   // Persist to backend whenever core state changes (but only after initial hydration)
   useEffect(() => {
     if (!isHydrated) return; // Skip until hydration is done
+    
+    // SAFETY CHECK: Prevent saving if data looks corrupted or empty
+    if (employees.length === 0) {
+      console.error('🚫 BLOCKED: Attempted to save empty employees list!');
+      return;
+    }
+    
     (async () => {
       try {
         // Serialize dates to ISO strings
