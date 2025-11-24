@@ -39,7 +39,13 @@ const App: React.FC = () => {
         if (!mounted || !remote) return;
         // Merge remote values with defaults (so missing keys don't break)
         if (Array.isArray(remote.employees) && remote.employees.length > 0) setEmployees(remote.employees);
-        if (remote.rosters) setRosters(remote.rosters);
+        // Only load rosters if they contain actual shifts (prevent overwriting with empty data)
+        if (remote.rosters) {
+          const hasShifts = Object.values(remote.rosters.nextWeek || {}).some((day: any) => Array.isArray(day) && day.length > 0);
+          if (hasShifts) {
+            setRosters(remote.rosters);
+          }
+        }
         if (Array.isArray(remote.timeLogs) && remote.timeLogs.length > 0) {
           // Rehydrate dates
           const parsed = remote.timeLogs.map((log: any) => ({
