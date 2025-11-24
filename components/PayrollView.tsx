@@ -49,10 +49,28 @@ interface PayrollViewProps {
     currentUser: Employee;
 }
 
+// Helper to get week start (Monday) and end (Sunday)
+const getWeekRange = (weekOffset: number = 0) => {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const mondayOffset = (currentDay === 0 ? -6 : 1) - currentDay;
+    
+    const monday = new Date(now);
+    monday.setDate(now.getDate() + mondayOffset + (weekOffset * 7));
+    monday.setHours(0, 0, 0, 0);
+    
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    sunday.setHours(23, 59, 59, 999);
+    
+    return { start: monday, end: sunday };
+};
+
 const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeLogs, currentUser }) => {
     const [isExporting, setIsExporting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingLog, setEditingLog] = useState<{ log: Partial<TimeLog> | null; employee: Employee | null }>({ log: null, employee: null });
+    const [weekOffset, setWeekOffset] = useState(0); // 0 = current week, -1 = last week, etc.
 
     const handleOpenModal = (log: Partial<TimeLog> | null, employee: Employee) => {
         setEditingLog({ log, employee });
@@ -100,8 +118,17 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
         ? employees.filter(e => e.department === currentUser.department)
         : employees.filter(e => e.id === currentUser.id);
 
+    // Get current week range
+    const weekRange = getWeekRange(weekOffset);
+    
+    // Filter time logs by selected week
+    const filteredTimeLogs = timeLogs.filter(log => {
+        const logDate = new Date(log.clockInTime);
+        return logDate >= weekRange.start && logDate <= weekRange.end;
+    });
+
     const employeePayData = filteredEmployees.map(employee => {
-        const employeeLogs = timeLogs.filter(log => log.employeeId === employee.id);
+        const employeeLogs = filteredTimeLogs.filter(log => log.employeeId === employee.id);
         
         const approvedHours = employeeLogs
             .filter(log => log.status === 'approved' && log.clockOutTime)
@@ -127,6 +154,7 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
     const handleExportSummaryCsv = () => {
         setIsExporting(true);
         try {
+            const weekRangeText = `${formatDate(weekRange.start)}_to_${formatDate(weekRange.end)}`;
             const header = ['Employee Name', 'Role', 'Approved Hours', 'Pending Hours', 'Rejected Hours'];
             const rows = employeePayData.map(data => {
                 return [
@@ -144,7 +172,7 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
             const url = URL.createObjectURL(blob);
             const date = new Date().toISOString().split('T')[0];
             link.setAttribute("href", url);
-            link.setAttribute("download", `Maruzzella_Weekly_Summary_${date}.csv`);
+            link.setAttribute("download", `Maruzzella_Weekly_Summary_${weekRangeText}_${date}.csv`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -157,6 +185,12 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
         } finally {
             setIsExporting(false);
         }
+    };
+
+    const formatWeekLabel = () => {
+        if (weekOffset === 0) return 'Current Week';
+        if (weekOffset === -1) return 'Last Week';
+        return `${Math.abs(weekOffset)} Weeks Ago`;
     };
 
     return (
@@ -179,6 +213,41 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
                         {isExporting ? 'Exporting...' : 'Export Weekly Summary'}
                     </button>
                 )}
+            </div>
+
+            {/* Week Navigation */}
+            <div className="bg-white rounded-xl shadow-sm border border-stone-200 p-4 mb-6">
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                    <button
+                        onClick={() => setWeekOffset(weekOffset - 1)}
+                        className="flex items-center gap-2 px-4 py-2 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors font-medium text-slate-700"
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span className="hidden sm:inline">Previous Week</span>
+                        <span className="sm:hidden">Prev</span>
+                    </button>
+                    
+                    <div className="text-center">
+                        <p className="text-lg font-bold text-slate-800">{formatWeekLabel()}</p>
+                        <p className="text-sm text-stone-600">
+                            {formatDate(weekRange.start)} - {formatDate(weekRange.end)}
+                        </p>
+                    </div>
+                    
+                    <button
+                        onClick={() => setWeekOffset(weekOffset + 1)}
+                        disabled={weekOffset >= 0}
+                        className="flex items-center gap-2 px-4 py-2 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors font-medium text-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                        <span className="hidden sm:inline">Next Week</span>
+                        <span className="sm:hidden">Next</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div className="space-y-6">
