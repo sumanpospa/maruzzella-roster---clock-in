@@ -262,7 +262,7 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                                         <div className="text-xs text-stone-500">{employee.role}</div>
                                     </td>
                                     {days.map(day => {
-                                        const employeeShifts = roster[day]?.filter(s => s.employeeIds.includes(employee.id)) || [];
+                                        const employeeShifts = roster[day]?.filter(s => s.employeeId === employee.id) || [];
                                         const todayClass = viewingWeek === 'currentWeek' && day === today ? 'bg-orange-50' : rowBgClass;
                                         
                                         return (
@@ -274,11 +274,9 @@ const RosterView: React.FC<RosterViewProps> = ({ employees, rosters, setRosters,
                                                 <div className="space-y-1.5">
                                                     {employeeShifts.map((shift) => {
                                                         const originalIndex = roster[day].findIndex(s => s === shift);
-                                                        const colorIndex = (shift.employeeIds[0] || 0) % COLORS.length;
-                                                        const otherEmployeesOnShift = shift.employeeIds
-                                                            .filter(id => id !== employee.id)
-                                                            .map(id => kitchenEmployees.find(e => e.id === id))
-                                                            .filter((e): e is Employee => !!e);
+                                                        const colorIndex = (shift.employeeId || 0) % COLORS.length;
+                                                        // Single employee per shift, no other employees
+                                                        const otherEmployeesOnShift: Employee[] = [];
 
                                                         return (
                                                             <div

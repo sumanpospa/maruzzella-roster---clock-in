@@ -16,12 +16,13 @@ interface ShiftModalProps {
 
 const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDelete, day, shift, employees, employeeId: preselectedEmployeeId }) => {
     const isEditing = shift !== null;
-    const [employeeIds, setEmployeeIds] = useState<number[]>([]);
+    const [employeeId, setEmployeeId] = useState<number | null>(null);
     const [startTime, setStartTime] = useState('09:00');
     const [endTime, setEndTime] = useState('17:00');
     const [breakStartTime, setBreakStartTime] = useState('');
     const [breakEndTime, setBreakEndTime] = useState('');
     const [notes, setNotes] = useState('');
+    const [role, setRole] = useState('');
     const [isRecurring, setIsRecurring] = useState(false);
     const [recurringDays, setRecurringDays] = useState<Set<DayOfWeek>>(new Set());
     const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
@@ -35,21 +36,23 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
         }
 
         if (shift) { // Editing
-            setEmployeeIds(shift.employeeIds);
+            setEmployeeId(shift.employeeId);
             setStartTime(shift.startTime || '');
             setEndTime(shift.endTime || '');
             setBreakStartTime(shift.breakStartTime || '');
             setBreakEndTime(shift.breakEndTime || '');
             setNotes(shift.notes || '');
+            setRole(shift.role || '');
             setIsRecurring(false);
             setRecurringDays(new Set());
         } else { // Adding
-            setEmployeeIds(preselectedEmployeeId ? [preselectedEmployeeId] : []);
+            setEmployeeId(preselectedEmployeeId || null);
             setStartTime('09:00');
             setEndTime('17:00');
             setBreakStartTime('');
             setBreakEndTime('');
             setNotes('');
+            setRole('');
             setIsRecurring(false);
             setRecurringDays(new Set([day]));
         }
@@ -68,11 +71,7 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
     };
 
     const handleEmployeeSelection = (selectedId: number) => {
-        setEmployeeIds(prev =>
-            prev.includes(selectedId)
-                ? prev.filter(id => id !== selectedId)
-                : [...prev, selectedId]
-        );
+        setEmployeeId(selectedId);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -84,9 +83,10 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
         const finalBreakStartTime = breakStartTime.trim();
         const finalBreakEndTime = breakEndTime.trim();
         const finalNotes = notes.trim();
+        const finalRole = role.trim();
 
-        if (employeeIds.length === 0) {
-            alert('Please select at least one employee.');
+        if (!employeeId) {
+            alert('Please select an employee.');
             return;
         }
 
@@ -125,7 +125,8 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
 
         onSave({
             newShift: {
-                employeeIds: employeeIds,
+                employeeId: employeeId,
+                role: finalRole || undefined,
                 startTime: finalStartTime || undefined,
                 endTime: finalEndTime || undefined,
                 breakStartTime: finalBreakStartTime || undefined,
@@ -160,28 +161,32 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
                 {/* Scrollable Form Body */}
                 <form id="shift-modal-form" onSubmit={handleSubmit} className="space-y-4 p-6 flex-1 overflow-y-auto">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Employees</label>
-                        <div className="max-h-40 overflow-y-auto space-y-2 rounded-md border border-stone-300 p-3 bg-stone-50/50">
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Employee</label>
+                        <select
+                            value={employeeId || ''}
+                            onChange={(e) => setEmployeeId(Number(e.target.value))}
+                            className="w-full px-3 py-2 rounded-md border border-stone-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                            required
+                        >
+                            <option value="">Select an employee</option>
                             {employees.map(emp => (
-                                <div key={emp.id} className="relative flex items-start">
-                                    <div className="flex h-6 items-center">
-                                        <input
-                                            id={`employee-${emp.id}`}
-                                            name="employees"
-                                            type="checkbox"
-                                            checked={employeeIds.includes(emp.id)}
-                                            onChange={() => handleEmployeeSelection(emp.id)}
-                                            className="h-4 w-4 rounded border-stone-300 text-orange-600 focus:ring-orange-600"
-                                        />
-                                    </div>
-                                    <div className="ml-3 text-sm leading-6">
-                                        <label htmlFor={`employee-${emp.id}`} className="font-medium text-slate-900 cursor-pointer">
-                                            {emp.name} <span className="text-stone-500">({emp.role})</span>
-                                        </label>
-                                    </div>
-                                </div>
+                                <option key={emp.id} value={emp.id}>
+                                    {emp.name} ({emp.role})
+                                </option>
                             ))}
-                        </div>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label htmlFor="role" className="block text-sm font-medium text-slate-700 mb-1">Role for this shift (optional)</label>
+                        <input
+                            id="role"
+                            type="text"
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            placeholder="e.g., Manager, Chef"
+                            className="w-full px-3 py-2 rounded-md border border-stone-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                        />
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4">

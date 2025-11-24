@@ -125,22 +125,10 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({ employees, setEmployees, se
                 const newRoster = { ...roster };
                 for (const day in newRoster) {
                     const dayKey = day as DayOfWeek;
-                    newRoster[dayKey] = newRoster[dayKey]
-                        .map(shift => {
-                            // Filter out the deleted employee from the shift
-                            const newEmployeeIds = shift.employeeIds.filter(
-                                id => id !== employeeToDelete.id
-                            );
-
-                            // If other employees are still on the shift, update it
-                            if (newEmployeeIds.length > 0) {
-                                return { ...shift, employeeIds: newEmployeeIds };
-                            }
-                            
-                            // If the shift is now empty, remove it by returning null
-                            return null;
-                        })
-                        .filter((shift): shift is Shift => shift !== null); // Filter out the nulls
+                    // Filter out any shifts belonging to the deleted employee
+                    newRoster[dayKey] = newRoster[dayKey].filter(
+                        shift => shift.employeeId !== employeeToDelete.id
+                    );
                 }
                 return newRoster;
             };

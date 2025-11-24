@@ -12,7 +12,8 @@ export interface Employee {
 }
 
 export interface Shift {
-  employeeIds: number[];
+  employeeId: number; // Single employee per shift
+  role?: string; // Role for this shift (e.g., "Manager", "Chef")
   startTime?: string; // e.g., "09:00"
   endTime?: string;   // e.g., "17:00"
   notes?: string;     // e.g., "RDO", "Opening Shift"
