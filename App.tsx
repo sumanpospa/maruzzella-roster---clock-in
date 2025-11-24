@@ -38,12 +38,20 @@ const App: React.FC = () => {
         const remote = await apiGetState();
         if (!mounted || !remote) return;
         // Merge remote values with defaults (so missing keys don't break)
-        if (Array.isArray(remote.employees) && remote.employees.length > 0) setEmployees(remote.employees);
+        if (Array.isArray(remote.employees) && remote.employees.length > 0) {
+          console.log('✅ Loaded employees from backend:', remote.employees.length);
+          setEmployees(remote.employees);
+        }
         // Only load rosters if they contain actual shifts (prevent overwriting with empty data)
         if (remote.rosters) {
           const hasShifts = Object.values(remote.rosters.nextWeek || {}).some((day: any) => Array.isArray(day) && day.length > 0);
+          const shiftCount = Object.values(remote.rosters.nextWeek || {}).flat().length;
+          console.log('📅 Roster data received. Next Week shifts:', shiftCount);
           if (hasShifts) {
+            console.log('✅ Loading rosters from backend');
             setRosters(remote.rosters);
+          } else {
+            console.warn('⚠️ No shifts found in roster data, keeping defaults');
           }
         }
         if (Array.isArray(remote.timeLogs) && remote.timeLogs.length > 0) {
