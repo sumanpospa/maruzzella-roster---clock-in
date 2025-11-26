@@ -79,14 +79,26 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!isHydrated) return; // Skip until hydration is done
     
-    // SAFETY CHECK: Prevent saving if data looks corrupted or empty
+    // ENHANCED SAFETY CHECKS: Prevent saving corrupted or empty data
     if (employees.length === 0) {
       console.error('🚫 BLOCKED: Attempted to save empty employees list!');
       return;
     }
     
+    // Check if rosters are suspiciously empty (should have at least some shifts)
+    const totalShifts = Object.values(rosters.nextWeek || {}).flat().length + 
+                       Object.values(rosters.currentWeek || {}).flat().length;
+    
+    if (totalShifts === 0) {
+      console.warn('⚠️ WARNING: Rosters are empty. Skipping save to prevent data loss.');
+      console.warn('If this is intentional, you can manually clear rosters from the employee management page.');
+      return;
+    }
+    
     (async () => {
       try {
+        console.log(`💾 Saving state: ${employees.length} employees, ${totalShifts} shifts, ${timeLogs.length} time logs`);
+        
         // Serialize dates to ISO strings
         const serializable = {
           employees,
