@@ -37,6 +37,25 @@ const App: React.FC = () => {
       try {
         const remote = await apiGetState();
         if (!mounted || !remote) return;
+        
+        // CRITICAL SAFETY CHECK: Validate data before loading
+        const remoteEmployeeCount = remote.employees?.length || 0;
+        const remoteShiftCount = Object.values(remote.rosters?.nextWeek || {}).flat().length + 
+                                Object.values(remote.rosters?.currentWeek || {}).flat().length;
+        
+        console.log(`📥 Backend data: ${remoteEmployeeCount} employees, ${remoteShiftCount} shifts`);
+        
+        // If backend has suspiciously low data, DON'T LOAD IT
+        if (remoteEmployeeCount < 20) {
+          console.error('🚨 CRITICAL: Backend has corrupted data! Only', remoteEmployeeCount, 'employees found.');
+          console.error('🚨 Expected at least 20 employees. NOT loading from backend to prevent data loss.');
+          console.error('🚨 Please restore from backup immediately!');
+          alert('⚠️ WARNING: Database appears corrupted. Using local defaults. Please contact support.');
+          setIsHydrated(true);
+          setIsLoading(false);
+          return;
+        }
+        
         // Merge remote values with defaults (so missing keys don't break)
         if (Array.isArray(remote.employees) && remote.employees.length > 0) {
           console.log('✅ Loaded employees from backend:', remote.employees.length);
