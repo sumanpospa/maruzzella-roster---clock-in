@@ -30,6 +30,13 @@ const App: React.FC = () => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Version check to detect cached old code
+  useEffect(() => {
+    const APP_VERSION = '3.0-safety';
+    console.log(`🔧 App Version: ${APP_VERSION}`);
+    console.log('📱 User Agent:', navigator.userAgent);
+  }, []);
+
   // Hydrate from backend on mount
   useEffect(() => {
     let mounted = true;
