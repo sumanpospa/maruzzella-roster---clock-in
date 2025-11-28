@@ -29,10 +29,12 @@ const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<Employee | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaveTime, setLastSaveTime] = useState<Date | null>(null);
 
   // Version check to detect cached old code
   useEffect(() => {
-    const APP_VERSION = '3.0-safety';
+    const APP_VERSION = '3.1-save-feedback';
     console.log(`🔧 App Version: ${APP_VERSION}`);
     console.log('📱 User Agent:', navigator.userAgent);
   }, []);
@@ -121,6 +123,8 @@ const App: React.FC = () => {
       return;
     }
     
+    setIsSaving(true);
+    
     (async () => {
       try {
         console.log(`💾 Saving state: ${employees.length} employees, ${totalShifts} shifts, ${timeLogs.length} time logs`);
@@ -132,8 +136,14 @@ const App: React.FC = () => {
           timeLogs: timeLogs.map(t => ({ ...t, clockInTime: t.clockInTime?.toISOString(), clockOutTime: t.clockOutTime?.toISOString() || null })),
         };
         await apiSaveState(serializable);
+        
+        setIsSaving(false);
+        setLastSaveTime(new Date());
+        console.log('✅ Save completed successfully');
       } catch (error) {
-        console.error('Failed to save state to backend', error);
+        console.error('❌ Failed to save state to backend', error);
+        setIsSaving(false);
+        alert('⚠️ Save failed! Your changes may not be saved. Please check your internet connection.');
       }
     })();
   }, [employees, rosters, timeLogs, isHydrated]);
@@ -258,6 +268,22 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-slate-800">
+      {/* Save Status Indicator */}
+      {isSaving && (
+        <div className="fixed top-4 right-4 z-50 bg-orange-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
+          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+          <span className="font-medium">Saving...</span>
+        </div>
+      )}
+      {!isSaving && lastSaveTime && (
+        <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="font-medium">Saved {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        </div>
+      )}
+      
       {/* Only show header when NOT on dashboard */}
       {activeView !== 'dashboard' && currentUser && <Header currentUser={currentUser} onLogout={handleLogout} />}
       

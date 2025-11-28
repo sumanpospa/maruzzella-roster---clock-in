@@ -104,6 +104,11 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
       clockOutTime: null,
     };
     setTimeLogs(prev => [...prev, newLog]);
+    
+    // Show confirmation feedback
+    const employee = employees.find(e => e.id === employeeId);
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    console.log(`✅ Clock In: ${employee?.name} at ${time}`);
   };
 
   const handleClockOut = (employeeId: number) => {
@@ -128,6 +133,17 @@ const ClockInView: React.FC<ClockInViewProps> = ({ employees, timeLogs, setTimeL
             clockOutTime: new Date(),
             status: 'pending',
         };
+        
+        // Show confirmation feedback
+        const employee = employees.find(e => e.id === employeeId);
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        console.log(`✅ Clock Out: ${employee?.name} at ${time}`);
+        
+        // Visual confirmation
+        setTimeout(() => {
+          alert(`✅ ${employee?.name} clocked out at ${time}\n\nPlease wait for "Saved" confirmation before closing the app.`);
+        }, 100);
+        
         return newLogs;
     });
   };
