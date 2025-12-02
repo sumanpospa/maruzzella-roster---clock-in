@@ -72,12 +72,19 @@ const App: React.FC = () => {
         }
         // Only load rosters if they contain actual shifts (prevent overwriting with empty data)
         if (remote.rosters) {
-          const hasShifts = Object.values(remote.rosters.nextWeek || {}).some((day: any) => Array.isArray(day) && day.length > 0);
-          const shiftCount = Object.values(remote.rosters.nextWeek || {}).flat().length;
-          console.log('📅 Roster data received. Next Week shifts:', shiftCount);
-          if (hasShifts) {
+          // Handle both thisWeek/currentWeek naming (backend uses thisWeek, frontend uses currentWeek)
+          const normalizedRosters = {
+            currentWeek: remote.rosters.currentWeek || remote.rosters.thisWeek || WEEKLY_ROSTER,
+            nextWeek: remote.rosters.nextWeek || WEEKLY_ROSTER
+          };
+          
+          const currentWeekShifts = Object.values(normalizedRosters.currentWeek || {}).flat().length;
+          const nextWeekShifts = Object.values(normalizedRosters.nextWeek || {}).flat().length;
+          console.log(`📅 Roster data received. Current Week: ${currentWeekShifts} shifts, Next Week: ${nextWeekShifts} shifts`);
+          
+          if (currentWeekShifts > 0 || nextWeekShifts > 0) {
             console.log('✅ Loading rosters from backend');
-            setRosters(remote.rosters);
+            setRosters(normalizedRosters);
           } else {
             console.warn('⚠️ No shifts found in roster data, keeping defaults');
           }
@@ -130,9 +137,13 @@ const App: React.FC = () => {
         console.log(`💾 Saving state: ${employees.length} employees, ${totalShifts} shifts, ${timeLogs.length} time logs`);
         
         // Serialize dates to ISO strings
+        // Convert currentWeek to thisWeek for backend compatibility
         const serializable = {
           employees,
-          rosters,
+          rosters: {
+            thisWeek: rosters.currentWeek,
+            nextWeek: rosters.nextWeek
+          },
           timeLogs: timeLogs.map(t => ({ ...t, clockInTime: t.clockInTime?.toISOString(), clockOutTime: t.clockOutTime?.toISOString() || null })),
         };
         await apiSaveState(serializable);
