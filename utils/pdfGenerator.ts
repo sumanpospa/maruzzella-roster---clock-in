@@ -86,7 +86,7 @@ export const generateRosterPDF = (
     
     days.forEach((day, i) => {
       const x = startX + nameColWidth + (i * colWidth);
-      const employeeShifts = roster[day]?.filter(s => s.employeeIds.includes(employee.id)) || [];
+      const employeeShifts = roster[day]?.filter(s => s.employeeId === employee.id) || [];
       
       if (employeeShifts.length > 0) {
         const shiftTexts = employeeShifts.map(shift => {
