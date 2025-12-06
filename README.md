@@ -57,3 +57,15 @@ Quick summary:
 4. Set `VITE_API_BASE` env var in Vercel to your backend URL
 5. Done! ✅
 
+## ⚠️ Git Configuration Notice
+
+If you see red × (unverified) signs next to commits on GitHub, you need to configure git with valid credentials.
+
+**Quick Fix:**
+```bash
+git config --global user.name "Your GitHub Username"
+git config --global user.email "your-github-email@example.com"
+```
+
+See **[GIT_SETUP.md](./GIT_SETUP.md)** for detailed instructions on fixing unverified commits.
+
