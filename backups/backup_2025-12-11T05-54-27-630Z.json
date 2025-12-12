@@ -1,0 +1,1431 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Huda",
+      "role": "Manager",
+      "pin": "1111",
+      "department": "Kitchen"
+    },
+    {
+      "id": 2,
+      "name": "Suman",
+      "role": "Manager",
+      "pin": "2222",
+      "department": "Kitchen"
+    },
+    {
+      "id": 3,
+      "name": "Luca",
+      "role": "Chef",
+      "pin": "3333",
+      "department": "Kitchen"
+    },
+    {
+      "id": 4,
+      "name": "Dennis",
+      "role": "Chef",
+      "pin": "4444",
+      "department": "Kitchen"
+    },
+    {
+      "id": 5,
+      "name": "Enrico",
+      "role": "Chef",
+      "pin": "5555",
+      "department": "Kitchen"
+    },
+    {
+      "id": 6,
+      "name": "Sundesh",
+      "role": "Chef",
+      "pin": "6666",
+      "department": "Kitchen"
+    },
+    {
+      "id": 7,
+      "name": "Siyam",
+      "role": "Chef",
+      "pin": "7777",
+      "department": "Kitchen"
+    },
+    {
+      "id": 8,
+      "name": "Taki",
+      "role": "Chef",
+      "pin": "8888",
+      "department": "Kitchen"
+    },
+    {
+      "id": 9,
+      "name": "Tanbir",
+      "role": "Chef",
+      "pin": "9999",
+      "department": "Kitchen"
+    },
+    {
+      "id": 10,
+      "name": "Progganur",
+      "role": "Chef",
+      "pin": "1010",
+      "department": "Kitchen"
+    },
+    {
+      "id": 11,
+      "name": "Fareeq",
+      "role": "Chef",
+      "pin": "1112",
+      "department": "Kitchen"
+    },
+    {
+      "id": 12,
+      "name": "Manager FOH",
+      "role": "Manager",
+      "pin": "1212",
+      "department": "FOH"
+    },
+    {
+      "id": 13,
+      "name": "Manager STW",
+      "role": "Manager",
+      "pin": "1313",
+      "department": "Stewarding"
+    },
+    {
+      "id": 14,
+      "name": "Mushfiq",
+      "role": "Manager",
+      "pin": "1414",
+      "department": "Stewarding"
+    },
+    {
+      "id": 15,
+      "name": "Mani",
+      "role": "Kitchen Hand",
+      "pin": "1515",
+      "department": "Stewarding"
+    },
+    {
+      "id": 16,
+      "name": "Ishraq",
+      "role": "Kitchen Hand",
+      "pin": "1616",
+      "department": "Stewarding"
+    },
+    {
+      "id": 17,
+      "name": "Ashfaq",
+      "role": "Kitchen Hand",
+      "pin": "1717",
+      "department": "Stewarding"
+    },
+    {
+      "id": 18,
+      "name": "Marco",
+      "role": "Waiter",
+      "pin": "1818",
+      "department": "FOH"
+    },
+    {
+      "id": 19,
+      "name": "Sofia",
+      "role": "Waiter",
+      "pin": "1919",
+      "department": "FOH"
+    },
+    {
+      "id": 20,
+      "name": "Giovanni",
+      "role": "Bar Tender",
+      "pin": "2020",
+      "department": "FOH"
+    },
+    {
+      "id": 21,
+      "name": "Isabella",
+      "role": "Food Runner",
+      "pin": "2121",
+      "department": "FOH"
+    },
+    {
+      "id": 22,
+      "name": "Alessandro",
+      "role": "Waiter",
+      "pin": "2222",
+      "department": "FOH"
+    },
+    {
+      "id": 23,
+      "name": "Lucia",
+      "role": "Waiter",
+      "pin": "2323",
+      "department": "FOH"
+    },
+    {
+      "id": 24,
+      "name": "Anku",
+      "role": "Kitchen Hand",
+      "department": "Stewarding",
+      "pin": "1832"
+    },
+    {
+      "id": 25,
+      "name": "Araf",
+      "role": "Kitchen Hand",
+      "department": "Stewarding",
+      "pin": "2020"
+    },
+    {
+      "id": 26,
+      "name": "Sandip",
+      "role": "Kitchen Hand",
+      "department": "Stewarding",
+      "pin": "1818"
+    },
+    {
+      "id": 27,
+      "name": "Mohsin",
+      "role": "Kitchen Hand",
+      "department": "Stewarding",
+      "pin": "2121"
+    }
+  ],
+  "rosters": {
+    "thisWeek": {
+      "Monday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 2,
+          "startTime": "10:00",
+          "endTime": "14:00"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "16:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 6,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 9,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 10,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00"
+        }
+      ],
+      "Tuesday": [
+        {
+          "employeeId": 2,
+          "startTime": "16:30",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "15:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        }
+      ],
+      "Wednesday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 2,
+          "startTime": "10:00",
+          "endTime": "14:00"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        }
+      ],
+      "Thursday": [
+        {
+          "employeeId": 2,
+          "startTime": "16:30",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        }
+      ],
+      "Friday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "10:00",
+          "endTime": "21:30",
+          "breakStartTime": "14:00",
+          "breakEndTime": "16:00"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "10:00",
+          "endTime": "21:00",
+          "breakStartTime": "14:00",
+          "breakEndTime": "16:00"
+        },
+        {
+          "employeeId": 9,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 10,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00"
+        }
+      ],
+      "Saturday": [
+        {
+          "employeeId": 2,
+          "startTime": "10:00",
+          "endTime": "14:00"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "03:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "10:00",
+          "endTime": "14:00"
+        },
+        {
+          "employeeId": 6,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 10,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00"
+        }
+      ],
+      "Sunday": [
+        {
+          "employeeId": 2,
+          "startTime": "16:30",
+          "endTime": "22:00"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "10:00",
+          "endTime": "21:00",
+          "breakStartTime": "14:00",
+          "breakEndTime": "16:00"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "10:00",
+          "endTime": "21:30",
+          "breakStartTime": "14:00",
+          "breakEndTime": "16:00"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "21:30"
+        },
+        {
+          "employeeId": 9,
+          "startTime": "16:00",
+          "endTime": "22:00"
+        }
+      ]
+    },
+    "nextWeek": {
+      "Monday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 2,
+          "startTime": "10:00",
+          "endTime": "14:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "16:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        }
+      ],
+      "Tuesday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 2,
+          "startTime": "16:30",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "15:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "15:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 9,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        }
+      ],
+      "Wednesday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 2,
+          "startTime": "10:00",
+          "endTime": "14:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "16:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 6,
+          "startTime": "17:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 10,
+          "startTime": "17:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        }
+      ],
+      "Thursday": [
+        {
+          "employeeId": 2,
+          "startTime": "16:30",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "10:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 6,
+          "startTime": "17:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 9,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 10,
+          "startTime": "17:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        }
+      ],
+      "Friday": [
+        {
+          "employeeId": 1,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 2,
+          "startTime": "10:00",
+          "endTime": "14:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "14:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "10:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 5,
+          "startTime": "10:00",
+          "endTime": "14:00",
+          "role": "Chef"
+        }
+      ],
+      "Saturday": [
+        {
+          "employeeId": 2,
+          "startTime": "16:30",
+          "endTime": "22:00",
+          "role": "Manager"
+        },
+        {
+          "employeeId": 3,
+          "startTime": "10:00",
+          "endTime": "21:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 4,
+          "startTime": "15:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 7,
+          "startTime": "17:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 9,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        }
+      ],
+      "Sunday": [
+        {
+          "employeeId": 4,
+          "startTime": "10:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 6,
+          "startTime": "17:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 8,
+          "startTime": "16:00",
+          "endTime": "22:00",
+          "role": "Chef"
+        },
+        {
+          "employeeId": 10,
+          "startTime": "17:00",
+          "endTime": "21:30",
+          "role": "Chef"
+        }
+      ]
+    }
+  },
+  "timeLogs": [
+    {
+      "id": 1763984901661,
+      "employeeId": 2,
+      "clockInTime": "2025-11-24T02:00:00.000Z",
+      "clockOutTime": "2025-11-24T06:00:00.000Z",
+      "status": "pending"
+    },
+    {
+      "id": 1763984919436,
+      "employeeId": 3,
+      "clockInTime": "2025-11-24T06:30:00.000Z",
+      "clockOutTime": "2025-11-24T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1763984931675,
+      "employeeId": 4,
+      "clockInTime": "2025-11-24T08:00:00.000Z",
+      "clockOutTime": "2025-11-24T13:52:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1763984945281,
+      "employeeId": 6,
+      "clockInTime": "2025-11-24T09:00:00.000Z",
+      "clockOutTime": "2025-11-24T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1763984962499,
+      "employeeId": 9,
+      "clockInTime": "2025-11-24T08:00:00.000Z",
+      "clockOutTime": "2025-11-24T14:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764208550753,
+      "employeeId": 3,
+      "clockInTime": "2025-11-26T06:30:00.000Z",
+      "clockOutTime": "2025-11-26T13:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764208689447,
+      "employeeId": 4,
+      "clockInTime": "2025-11-25T07:00:00.000Z",
+      "clockOutTime": "2025-11-25T13:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764208783496,
+      "employeeId": 5,
+      "clockInTime": "2025-11-25T08:00:00.000Z",
+      "clockOutTime": "2025-11-25T13:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764208837085,
+      "employeeId": 5,
+      "clockInTime": "2025-11-26T07:00:00.000Z",
+      "clockOutTime": "2025-11-26T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764208957853,
+      "employeeId": 7,
+      "clockInTime": "2025-11-26T09:00:00.000Z",
+      "clockOutTime": "2025-11-26T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764208996539,
+      "employeeId": 8,
+      "clockInTime": "2025-11-25T08:00:00.000Z",
+      "clockOutTime": "2025-11-25T14:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764209071533,
+      "employeeId": 8,
+      "clockInTime": "2025-11-26T07:00:00.000Z",
+      "clockOutTime": "2025-11-26T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764209199642,
+      "employeeId": 9,
+      "clockInTime": "2025-11-25T09:00:00.000Z",
+      "clockOutTime": "2025-11-25T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764209250239,
+      "employeeId": 10,
+      "clockInTime": "2025-11-24T09:00:00.000Z",
+      "clockOutTime": "2025-11-24T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764221454635,
+      "employeeId": 3,
+      "clockInTime": "2025-11-27T05:30:00.000Z",
+      "clockOutTime": "2025-11-27T12:44:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764230291150,
+      "employeeId": 5,
+      "clockInTime": "2025-11-27T07:58:00.000Z",
+      "clockOutTime": "2025-11-27T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764230461819,
+      "employeeId": 8,
+      "clockInTime": "2025-11-27T08:01:01.819Z",
+      "clockOutTime": "2025-11-27T13:40:23.877Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764295235713,
+      "employeeId": 7,
+      "clockInTime": "2025-11-27T09:00:00.000Z",
+      "clockOutTime": "2025-11-27T13:40:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764316603967,
+      "employeeId": 5,
+      "clockInTime": "2025-11-28T08:00:00.000Z",
+      "clockOutTime": "2025-11-28T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764316773444,
+      "employeeId": 4,
+      "clockInTime": "2025-11-28T07:59:00.000Z",
+      "clockOutTime": "2025-11-28T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764316983624,
+      "employeeId": 9,
+      "clockInTime": "2025-11-28T08:03:03.624Z",
+      "clockOutTime": "2025-11-28T14:23:55.567Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764381212624,
+      "employeeId": 5,
+      "clockInTime": "2025-11-29T01:53:00.000Z",
+      "clockOutTime": "2025-11-29T06:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764392162483,
+      "employeeId": 5,
+      "clockInTime": "2025-11-28T02:00:00.000Z",
+      "clockOutTime": "2025-11-28T06:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764392490375,
+      "employeeId": 4,
+      "clockInTime": "2025-11-28T02:00:00.000Z",
+      "clockOutTime": "2025-11-28T06:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764392806661,
+      "employeeId": 7,
+      "clockInTime": "2025-11-28T09:00:00.000Z",
+      "clockOutTime": "2025-11-28T14:23:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764395162673,
+      "employeeId": 3,
+      "clockInTime": "2025-11-29T05:46:02.673Z",
+      "clockOutTime": "2025-11-29T13:45:39.953Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764399615865,
+      "employeeId": 4,
+      "clockInTime": "2025-11-29T07:00:15.865Z",
+      "clockOutTime": "2025-11-29T14:05:48.981Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764402912024,
+      "employeeId": 8,
+      "clockInTime": "2025-11-29T07:55:12.024Z",
+      "clockOutTime": "2025-11-29T14:39:52.668Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764467849332,
+      "employeeId": 3,
+      "clockInTime": "2025-11-30T01:57:29.332Z",
+      "clockOutTime": "2025-11-30T05:54:47.459Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764468265379,
+      "employeeId": 4,
+      "clockInTime": "2025-11-30T02:04:25.379Z",
+      "clockOutTime": "2025-11-30T06:03:47.295Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764488930075,
+      "employeeId": 3,
+      "clockInTime": "2025-11-30T07:48:50.075Z",
+      "clockOutTime": "2025-11-30T12:32:29.389Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764489531340,
+      "employeeId": 4,
+      "clockInTime": "2025-11-30T07:58:51.340Z",
+      "clockOutTime": "2025-11-30T12:49:03.130Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764489666686,
+      "employeeId": 9,
+      "clockInTime": "2025-11-30T08:01:00.000Z",
+      "clockOutTime": "2025-11-30T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764504581165,
+      "employeeId": 7,
+      "clockInTime": "2025-11-30T09:00:00.000Z",
+      "clockOutTime": "2025-11-30T13:29:52.889Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764504747750,
+      "employeeId": 10,
+      "clockInTime": "2025-11-29T10:00:00.000Z",
+      "clockOutTime": "2025-11-29T14:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764551877555,
+      "employeeId": 6,
+      "clockInTime": "2025-11-29T08:00:00.000Z",
+      "clockOutTime": "2025-11-29T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764572390963,
+      "employeeId": 4,
+      "clockInTime": "2025-12-01T06:59:50.963Z",
+      "clockOutTime": "2025-12-01T13:34:40.182Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764575530346,
+      "employeeId": 5,
+      "clockInTime": "2025-12-01T07:52:10.346Z",
+      "clockOutTime": "2025-12-01T13:31:53.864Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764575876129,
+      "employeeId": 9,
+      "clockInTime": "2025-12-01T07:57:56.129Z",
+      "clockOutTime": "2025-12-01T13:46:33.248Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764578368721,
+      "employeeId": 15,
+      "clockInTime": "2025-12-01T08:40:00.000Z",
+      "clockOutTime": "2025-12-01T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764580093089,
+      "employeeId": 6,
+      "clockInTime": "2025-12-01T09:08:13.089Z",
+      "clockOutTime": "2025-12-01T13:20:51.059Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764580244761,
+      "employeeId": 10,
+      "clockInTime": "2025-12-01T09:10:00.000Z",
+      "clockOutTime": "2025-12-01T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764658891459,
+      "employeeId": 4,
+      "clockInTime": "2025-12-02T07:01:31.459Z",
+      "clockOutTime": "2025-12-02T13:31:02.062Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764662194905,
+      "employeeId": 5,
+      "clockInTime": "2025-12-02T07:56:34.905Z",
+      "clockOutTime": "2025-12-02T13:41:46.292Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764662680153,
+      "employeeId": 8,
+      "clockInTime": "2025-12-02T08:04:40.153Z",
+      "clockOutTime": "2025-12-02T13:37:20.021Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764665951130,
+      "employeeId": 16,
+      "clockInTime": "2025-12-02T08:59:11.130Z",
+      "clockOutTime": "2025-12-02T14:41:13.746Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764666763946,
+      "employeeId": 7,
+      "clockInTime": "2025-12-02T09:00:00.000Z",
+      "clockOutTime": "2025-12-02T13:36:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764667502932,
+      "employeeId": 24,
+      "clockInTime": "2025-12-02T09:25:02.932Z",
+      "clockOutTime": "2025-12-02T14:42:33.873Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764741074913,
+      "employeeId": 3,
+      "clockInTime": "2025-12-03T05:51:14.913Z",
+      "clockOutTime": "2025-12-03T13:03:12.178Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764748611764,
+      "employeeId": 5,
+      "clockInTime": "2025-12-03T07:56:51.764Z",
+      "clockOutTime": "2025-12-03T13:32:27.838Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764748983419,
+      "employeeId": 7,
+      "clockInTime": "2025-12-03T08:03:03.419Z",
+      "clockOutTime": "2025-12-03T13:33:45.051Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764751714919,
+      "employeeId": 8,
+      "clockInTime": "2025-12-03T08:48:34.919Z",
+      "clockOutTime": "2025-12-03T13:39:00.824Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764827008743,
+      "employeeId": 3,
+      "clockInTime": "2025-12-04T05:43:00.000Z",
+      "clockOutTime": "2025-12-04T12:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764834954500,
+      "employeeId": 5,
+      "clockInTime": "2025-12-04T07:55:00.000Z",
+      "clockOutTime": "2025-12-04T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764835105157,
+      "employeeId": 8,
+      "clockInTime": "2025-12-04T07:58:25.157Z",
+      "clockOutTime": "2025-12-04T13:28:55.525Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764855030265,
+      "employeeId": 7,
+      "clockInTime": "2025-12-04T09:00:00.000Z",
+      "clockOutTime": "2025-12-04T13:31:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764899758795,
+      "employeeId": 5,
+      "clockInTime": "2025-12-05T01:55:58.795Z",
+      "clockOutTime": "2025-12-05T06:40:39.323Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764899945780,
+      "employeeId": 4,
+      "clockInTime": "2025-12-05T01:59:05.780Z",
+      "clockOutTime": "2025-12-05T06:12:20.615Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764914511638,
+      "employeeId": 3,
+      "clockInTime": "2025-12-05T06:01:00.000Z",
+      "clockOutTime": "2025-12-05T13:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764919787704,
+      "employeeId": 16,
+      "clockInTime": "2025-12-05T07:29:47.704Z",
+      "clockOutTime": "2025-12-05T15:01:43.998Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764921126425,
+      "employeeId": 9,
+      "clockInTime": "2025-12-05T07:52:06.425Z",
+      "clockOutTime": "2025-12-05T14:11:50.859Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764921439468,
+      "employeeId": 5,
+      "clockInTime": "2025-12-05T07:57:19.468Z",
+      "clockOutTime": "2025-12-05T13:44:33.731Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764986111188,
+      "employeeId": 5,
+      "clockInTime": "2025-12-06T01:55:11.188Z",
+      "clockOutTime": "2025-12-06T06:08:32.953Z",
+      "status": "approved"
+    },
+    {
+      "id": 1764992145726,
+      "employeeId": 3,
+      "clockInTime": "2025-12-06T03:15:00.000Z",
+      "clockOutTime": "2025-12-06T05:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765007554619,
+      "employeeId": 6,
+      "clockInTime": "2025-12-06T07:52:00.000Z",
+      "clockOutTime": "2025-12-06T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765012150587,
+      "employeeId": 10,
+      "clockInTime": "2025-12-06T09:09:10.587Z",
+      "clockOutTime": "2025-12-06T14:23:52.422Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765032352329,
+      "employeeId": 8,
+      "clockInTime": "2025-12-06T08:00:00.000Z",
+      "clockOutTime": "2025-12-06T14:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765072773046,
+      "employeeId": 4,
+      "clockInTime": "2025-12-07T01:59:33.046Z",
+      "clockOutTime": "2025-12-07T06:08:46.545Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765072732854,
+      "employeeId": 3,
+      "clockInTime": "2025-12-07T01:58:52.854Z",
+      "clockOutTime": "2025-12-07T06:40:22.220Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765092162320,
+      "employeeId": 14,
+      "clockInTime": "2025-12-03T09:30:00.000Z",
+      "clockOutTime": "2025-12-03T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765092207052,
+      "employeeId": 14,
+      "clockInTime": "2025-12-04T09:40:00.000Z",
+      "clockOutTime": "2025-12-04T13:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765092251114,
+      "employeeId": 14,
+      "clockInTime": "2025-12-05T08:30:00.000Z",
+      "clockOutTime": "2025-12-05T14:55:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765092295559,
+      "employeeId": 14,
+      "clockInTime": "2025-12-07T03:30:00.000Z",
+      "clockOutTime": "2025-12-07T07:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765092509576,
+      "employeeId": 16,
+      "clockInTime": "2025-12-04T09:00:00.000Z",
+      "clockOutTime": "2025-12-04T13:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765092943630,
+      "employeeId": 15,
+      "clockInTime": "2025-12-06T09:05:00.000Z",
+      "clockOutTime": "2025-12-06T14:50:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765093524819,
+      "employeeId": 25,
+      "clockInTime": "2025-12-01T09:30:00.000Z",
+      "clockOutTime": "2025-12-01T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765093565712,
+      "employeeId": 26,
+      "clockInTime": "2025-12-03T09:00:00.000Z",
+      "clockOutTime": "2025-12-03T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765094195088,
+      "employeeId": 9,
+      "clockInTime": "2025-12-07T07:56:35.088Z",
+      "clockOutTime": "2025-12-07T13:32:06.894Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765096438176,
+      "employeeId": 3,
+      "clockInTime": "2025-12-07T08:33:58.176Z",
+      "clockOutTime": "2025-12-07T11:54:36.844Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765098139969,
+      "employeeId": 16,
+      "clockInTime": "2025-12-07T09:02:00.000Z",
+      "clockOutTime": "2025-12-07T14:05:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765098390677,
+      "employeeId": 7,
+      "clockInTime": "2025-12-07T09:00:00.000Z",
+      "clockOutTime": "2025-12-07T13:30:22.454Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765099217659,
+      "employeeId": 3,
+      "clockInTime": "2025-12-05T02:00:00.000Z",
+      "clockOutTime": "2025-12-05T05:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765099361847,
+      "employeeId": 3,
+      "clockInTime": "2025-12-06T07:15:00.000Z",
+      "clockOutTime": "2025-12-06T14:00:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765099706380,
+      "employeeId": 4,
+      "clockInTime": "2025-12-05T08:00:00.000Z",
+      "clockOutTime": "2025-12-05T13:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765099737499,
+      "employeeId": 4,
+      "clockInTime": "2025-12-07T08:00:00.000Z",
+      "clockOutTime": "2025-12-07T12:31:17.853Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765099776989,
+      "employeeId": 4,
+      "clockInTime": "2025-12-06T07:00:00.000Z",
+      "clockOutTime": "2025-12-06T14:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765116420387,
+      "employeeId": 14,
+      "clockInTime": "2025-12-07T09:00:00.000Z",
+      "clockOutTime": "2025-12-07T14:05:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765173338272,
+      "employeeId": 17,
+      "clockInTime": "2025-12-06T08:30:00.000Z",
+      "clockOutTime": "2025-12-06T14:45:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765180235958,
+      "employeeId": 9,
+      "clockInTime": "2025-12-08T07:50:35.958Z",
+      "clockOutTime": "2025-12-08T13:32:55.515Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765180529202,
+      "employeeId": 4,
+      "clockInTime": "2025-12-08T07:55:29.202Z",
+      "clockOutTime": "2025-12-08T13:15:02.298Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765183226702,
+      "employeeId": 15,
+      "clockInTime": "2025-12-08T08:40:26.702Z",
+      "clockOutTime": "2025-12-08T13:53:38.251Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765184881561,
+      "employeeId": 10,
+      "clockInTime": "2025-12-08T09:08:01.561Z",
+      "clockOutTime": "2025-12-08T13:28:20.879Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765185168002,
+      "employeeId": 25,
+      "clockInTime": "2025-12-08T09:12:48.002Z",
+      "clockOutTime": "2025-12-08T13:53:23.952Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765186480390,
+      "employeeId": 27,
+      "clockInTime": "2025-12-06T03:00:00.000Z",
+      "clockOutTime": "2025-12-06T06:30:00.000Z",
+      "status": "approved"
+    },
+    {
+      "id": 1765200361892,
+      "employeeId": 6,
+      "clockInTime": "2025-12-08T13:26:01.892Z",
+      "clockOutTime": "2025-12-08T13:26:02.903Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765263637034,
+      "employeeId": 4,
+      "clockInTime": "2025-12-09T07:00:00.000Z",
+      "clockOutTime": "2025-12-09T13:00:00.000Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765266677211,
+      "employeeId": 5,
+      "clockInTime": "2025-12-09T07:51:17.211Z",
+      "clockOutTime": "2025-12-10T13:50:18.051Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765266861984,
+      "employeeId": 8,
+      "clockInTime": "2025-12-09T07:54:21.984Z",
+      "clockOutTime": "2025-12-09T13:54:28.743Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765290891993,
+      "employeeId": 24,
+      "clockInTime": "2025-12-09T14:34:51.993Z",
+      "clockOutTime": "2025-12-09T14:35:08.898Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765345995153,
+      "employeeId": 3,
+      "clockInTime": "2025-12-10T05:53:00.000Z",
+      "clockOutTime": "2025-12-10T13:00:00.000Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765353515849,
+      "employeeId": 8,
+      "clockInTime": "2025-12-10T07:58:35.849Z",
+      "clockOutTime": "2025-12-10T13:47:42.320Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765357288706,
+      "employeeId": 16,
+      "clockInTime": "2025-12-10T09:01:28.706Z",
+      "clockOutTime": null
+    },
+    {
+      "id": 1765360493465,
+      "employeeId": 26,
+      "clockInTime": "2025-12-10T09:54:53.465Z",
+      "clockOutTime": "2025-12-10T13:47:06.185Z",
+      "status": "pending"
+    },
+    {
+      "id": 1765431005750,
+      "employeeId": 3,
+      "clockInTime": "2025-12-11T05:30:05.750Z",
+      "clockOutTime": null
+    }
+  ]
+}

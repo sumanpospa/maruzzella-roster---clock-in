@@ -80,14 +80,14 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
 
     return (
         <div 
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 transition-opacity duration-300 animate-fade-in"
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 transition-opacity duration-300 animate-fade-in overflow-y-auto"
             onClick={onClose}
             role="dialog"
             aria-modal="true"
             aria-labelledby="timelog-modal-title"
         >
             <div 
-                className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-scale-in"
+                className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-scale-in my-8 max-h-[90vh] overflow-y-auto"
                 onClick={e => e.stopPropagation()}
             >
                 <h2 id="timelog-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Time Entry' : 'Add Time Entry'}</h2>
@@ -164,7 +164,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
                         </div>
                     )}
                     
-                    <div className="flex justify-end gap-3 pt-4">
+                    <div className="flex justify-end gap-3 pt-4 sticky bottom-0 bg-white pb-2">
                         <button
                             type="button"
                             onClick={onClose}
