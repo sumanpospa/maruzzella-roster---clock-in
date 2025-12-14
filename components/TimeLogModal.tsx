@@ -88,7 +88,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
             aria-labelledby="timelog-modal-title"
         >
             <div 
-                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[85vh] flex flex-col"
+                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[70vh] flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
