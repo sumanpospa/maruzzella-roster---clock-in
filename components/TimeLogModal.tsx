@@ -5,6 +5,7 @@ interface TimeLogModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSave: (logData: TimeLog) => void;
+    onDelete?: () => void;
     log: Partial<TimeLog> | null;
     employee: Employee;
 }
@@ -19,7 +20,7 @@ const formatTimeForInput = (date: Date) => {
     return date.toTimeString().slice(0, 5);
 };
 
-const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, log, employee }) => {
+const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, onDelete, log, employee }) => {
     const isEditing = log && log.id;
 
     const [clockInDate, setClockInDate] = useState('');

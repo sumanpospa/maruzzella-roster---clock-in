@@ -371,6 +371,7 @@ const PayrollView: React.FC<PayrollViewProps> = ({ employees, timeLogs, setTimeL
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     onSave={handleSaveLog}
+                    onDelete={editingLog.log?.id ? () => handleDeleteLog(editingLog.log!.id!) : undefined}
                     log={editingLog.log}
                     employee={editingLog.employee}
                 />
