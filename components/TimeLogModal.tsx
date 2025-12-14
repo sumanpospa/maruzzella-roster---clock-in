@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Employee, TimeLog } from '../types';
+import CustomTimePicker from './CustomTimePicker';
 
 interface TimeLogModalProps {
     isOpen: boolean;
@@ -88,7 +89,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
             aria-labelledby="timelog-modal-title"
         >
             <div 
-                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[40vh] flex flex-col"
+                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[85vh] flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
@@ -111,17 +112,13 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                     required
                                 />
                             </div>
-                            <div>
-                                <label htmlFor="clockInTime" className="block text-sm font-medium text-slate-700 mb-1">Time</label>
-                                <input
-                                    type="time"
-                                    id="clockInTime"
-                                    value={clockInTime}
-                                    onChange={(e) => setClockInTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
-                                    required
-                                />
-                            </div>
+                            <CustomTimePicker
+                                id="clockInTime"
+                                label="Time"
+                                value={clockInTime}
+                                onChange={setClockInTime}
+                                required
+                            />
                         </div>
                     </fieldset>
                     
@@ -138,16 +135,12 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                     className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
                                 />
                             </div>
-                            <div>
-                                <label htmlFor="clockOutTime" className="block text-sm font-medium text-slate-700 mb-1">Time</label>
-                                <input
-                                    type="time"
-                                    id="clockOutTime"
-                                    value={clockOutTime}
-                                    onChange={(e) => setClockOutTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
-                                />
-                            </div>
+                            <CustomTimePicker
+                                id="clockOutTime"
+                                label="Time"
+                                value={clockOutTime}
+                                onChange={setClockOutTime}
+                            />
                         </div>
                     </fieldset>
 
