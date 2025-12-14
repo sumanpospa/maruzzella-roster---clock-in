@@ -118,7 +118,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                     id="clockInTime"
                                     value={clockInTime}
                                     onChange={(e) => setClockInTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-3 py-2 text-base border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
                                     required
                                 />
                             </div>
@@ -145,7 +145,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                     id="clockOutTime"
                                     value={clockOutTime}
                                     onChange={(e) => setClockOutTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-3 py-2 text-base border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
                                 />
                             </div>
                         </div>
@@ -217,6 +217,33 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                 .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
                 .animate-scale-in { animation: scale-in 0.2s ease-out forwards; }
                 .animate-slide-up { animation: slide-up 0.3s ease-out forwards; }
+                
+                /* Fix for mobile time picker - ensure Set button is visible */
+                input[type="time"]::-webkit-calendar-picker-indicator {
+                    background: transparent;
+                    bottom: 0;
+                    color: transparent;
+                    cursor: pointer;
+                    height: auto;
+                    left: 0;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: auto;
+                }
+                
+                input[type="time"] {
+                    position: relative;
+                    min-height: 42px;
+                }
+                
+                /* Ensure mobile time picker dialog is properly sized */
+                @supports (-webkit-touch-callout: none) {
+                    input[type="time"] {
+                        min-height: 48px;
+                        font-size: 16px; /* Prevents zoom on iOS */
+                    }
+                }
             `}</style>
         </div>
     );
