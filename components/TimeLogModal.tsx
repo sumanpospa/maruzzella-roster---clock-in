@@ -91,7 +91,6 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
                 onClick={e => e.stopPropagation()}
             >
                 <div className="p-6 overflow-y-auto flex-1">
-                <div className="p-6 overflow-y-auto flex-1">
                 <h2 id="timelog-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Time Entry' : 'Add Time Entry'}</h2>
                 <p className="text-stone-500 mb-6">for {employee.name}</p>
                 
