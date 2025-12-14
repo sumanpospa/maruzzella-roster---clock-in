@@ -164,17 +164,17 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
                         </div>
                     )}
                     
-                    <div className="flex justify-end gap-3 pt-4 sticky bottom-0 bg-white pb-2">
+                    <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 sticky bottom-0 bg-white pb-2">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 text-sm font-medium text-slate-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
+                            className="w-full sm:w-auto px-4 py-3 text-sm font-medium text-slate-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors order-2 sm:order-1"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="px-5 py-2 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm transition-colors"
+                            className="w-full sm:w-auto px-5 py-3 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm transition-colors order-1 sm:order-2"
                         >
                              {isEditing ? 'Save Changes' : 'Save Entry'}
                         </button>
