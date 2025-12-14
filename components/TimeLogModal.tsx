@@ -88,7 +88,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
             aria-labelledby="timelog-modal-title"
         >
             <div 
-                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[75vh] flex flex-col"
+                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[85vh] flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
@@ -118,7 +118,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                     id="clockInTime"
                                     value={clockInTime}
                                     onChange={(e) => setClockInTime(e.target.value)}
-                                    className="w-full px-3 py-2 text-base border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
                                     required
                                 />
                             </div>
@@ -145,7 +145,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                     id="clockOutTime"
                                     value={clockOutTime}
                                     onChange={(e) => setClockOutTime(e.target.value)}
-                                    className="w-full px-3 py-2 text-base border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
                                 />
                             </div>
                         </div>
@@ -217,45 +217,6 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                 .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
                 .animate-scale-in { animation: scale-in 0.2s ease-out forwards; }
                 .animate-slide-up { animation: slide-up 0.3s ease-out forwards; }
-                
-                /* Fix for mobile time picker - ensure Set button is visible */
-                input[type="time"],
-                input[type="date"] {
-                    position: relative;
-                    min-height: 44px;
-                    font-size: 16px !important; /* Prevents zoom on iOS and ensures picker visibility */
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    appearance: none;
-                }
-                
-                input[type="time"]::-webkit-datetime-edit,
-                input[type="date"]::-webkit-datetime-edit {
-                    font-size: 16px;
-                }
-                
-                /* Make sure the picker indicator is clickable across full input */
-                input[type="time"]::-webkit-calendar-picker-indicator,
-                input[type="date"]::-webkit-calendar-picker-indicator {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    width: auto;
-                    height: auto;
-                    color: transparent;
-                    background: transparent;
-                    cursor: pointer;
-                    opacity: 1;
-                }
-                
-                /* Prevent modal overflow from clipping time/date pickers */
-                input[type="time"]:focus,
-                input[type="date"]:focus {
-                    position: relative;
-                    z-index: 9999;
-                }
             `}</style>
         </div>
     );
