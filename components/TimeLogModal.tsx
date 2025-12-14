@@ -80,20 +80,22 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
 
     return (
         <div 
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 transition-opacity duration-300 animate-fade-in overflow-y-auto"
+            className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center transition-opacity duration-300 animate-fade-in"
             onClick={onClose}
             role="dialog"
             aria-modal="true"
             aria-labelledby="timelog-modal-title"
         >
             <div 
-                className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 animate-scale-in my-8 max-h-[90vh] overflow-y-auto"
+                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[85vh] flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
+                <div className="p-6 overflow-y-auto flex-1">
+                <div className="p-6 overflow-y-auto flex-1">
                 <h2 id="timelog-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Time Entry' : 'Add Time Entry'}</h2>
                 <p className="text-stone-500 mb-6">for {employee.name}</p>
                 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form id="timelog-form" onSubmit={handleSubmit} className="space-y-4">
                     <fieldset className="p-4 border border-stone-200 rounded-lg">
                         <legend className="px-2 text-sm font-medium text-slate-600">Clock In</legend>
                         <div className="grid grid-cols-2 gap-4">
@@ -163,23 +165,25 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
                              </select>
                         </div>
                     )}
+                </form>
+                </div>
                     
-                    <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 sticky bottom-0 bg-white pb-2">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="w-full sm:w-auto px-4 py-3 text-sm font-medium text-slate-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors order-2 sm:order-1"
-                        >
-                            Cancel
-                        </button>
+                    <div className="flex flex-col sm:flex-row justify-end gap-3 p-6 pt-4 border-t border-stone-200 bg-white">
                         <button
                             type="submit"
-                            className="w-full sm:w-auto px-5 py-3 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm transition-colors order-1 sm:order-2"
+                            form="timelog-form"
+                            className="w-full sm:w-auto px-5 py-3 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg shadow-sm transition-colors"
                         >
                              {isEditing ? 'Save Changes' : 'Save Entry'}
                         </button>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="w-full sm:w-auto px-4 py-3 text-sm font-medium text-slate-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
+                        >
+                            Cancel
+                        </button>
                     </div>
-                </form>
             </div>
             <style>{`
                 @keyframes fade-in {
@@ -190,8 +194,13 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, lo
                     from { transform: scale(0.95); opacity: 0; }
                     to { transform: scale(1); opacity: 1; }
                 }
+                @keyframes slide-up {
+                    from { transform: translateY(100%); }
+                    to { transform: translateY(0); }
+                }
                 .animate-fade-in { animation: fade-in 0.2s ease-out forwards; }
                 .animate-scale-in { animation: scale-in 0.2s ease-out forwards; }
+                .animate-slide-up { animation: slide-up 0.3s ease-out forwards; }
             `}</style>
         </div>
     );
