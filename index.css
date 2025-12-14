@@ -1,20 +1,2 @@
 /* Tailwind CSS v4 single import */
 @import "tailwindcss";
-
-/* Fix for mobile time/date picker dialogs */
-@supports (-webkit-touch-callout: none) {
-  /* iOS Safari specific fixes */
-  input[type="time"],
-  input[type="date"] {
-    -webkit-appearance: none;
-    appearance: none;
-    min-height: 44px;
-    font-size: 16px;
-  }
-}
-
-/* Ensure picker dialogs have proper z-index and aren't clipped */
-input[type="time"]:focus,
-input[type="date"]:focus {
-  z-index: 10000;
-}
