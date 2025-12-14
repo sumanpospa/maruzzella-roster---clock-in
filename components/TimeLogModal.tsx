@@ -88,7 +88,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
             aria-labelledby="timelog-modal-title"
         >
             <div 
-                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[85vh] flex flex-col"
+                className="bg-white rounded-t-2xl sm:rounded-2xl shadow-xl w-full sm:max-w-md animate-slide-up sm:animate-scale-in max-h-[75vh] flex flex-col"
                 onClick={e => e.stopPropagation()}
             >
                 <form onSubmit={handleSubmit} className="flex flex-col h-full">
@@ -219,30 +219,42 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                 .animate-slide-up { animation: slide-up 0.3s ease-out forwards; }
                 
                 /* Fix for mobile time picker - ensure Set button is visible */
-                input[type="time"]::-webkit-calendar-picker-indicator {
-                    background: transparent;
-                    bottom: 0;
-                    color: transparent;
-                    cursor: pointer;
-                    height: auto;
-                    left: 0;
-                    position: absolute;
-                    right: 0;
-                    top: 0;
-                    width: auto;
-                }
-                
-                input[type="time"] {
+                input[type="time"],
+                input[type="date"] {
                     position: relative;
-                    min-height: 42px;
+                    min-height: 44px;
+                    font-size: 16px !important; /* Prevents zoom on iOS and ensures picker visibility */
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
                 }
                 
-                /* Ensure mobile time picker dialog is properly sized */
-                @supports (-webkit-touch-callout: none) {
-                    input[type="time"] {
-                        min-height: 48px;
-                        font-size: 16px; /* Prevents zoom on iOS */
-                    }
+                input[type="time"]::-webkit-datetime-edit,
+                input[type="date"]::-webkit-datetime-edit {
+                    font-size: 16px;
+                }
+                
+                /* Make sure the picker indicator is clickable across full input */
+                input[type="time"]::-webkit-calendar-picker-indicator,
+                input[type="date"]::-webkit-calendar-picker-indicator {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: auto;
+                    height: auto;
+                    color: transparent;
+                    background: transparent;
+                    cursor: pointer;
+                    opacity: 1;
+                }
+                
+                /* Prevent modal overflow from clipping time/date pickers */
+                input[type="time"]:focus,
+                input[type="date"]:focus {
+                    position: relative;
+                    z-index: 9999;
                 }
             `}</style>
         </div>
