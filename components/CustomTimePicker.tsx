@@ -54,8 +54,8 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({ value, onChange, la
                         className="fixed inset-0 bg-black/30 z-[9998]"
                         onClick={handleCancel}
                     />
-                    <div className="fixed inset-x-0 bottom-0 bg-white rounded-t-3xl shadow-2xl z-[9999] animate-slide-up">
-                        <div className="p-6">
+                    <div className="fixed inset-x-0 bottom-0 bg-white rounded-t-3xl shadow-2xl z-[9999] pb-safe">
+                        <div className="p-6 pb-8 max-h-[80vh] overflow-y-auto">
                             <h3 className="text-lg font-semibold text-center mb-6">Select Time</h3>
                             
                             <div className="flex justify-center items-center gap-4 mb-8">
@@ -68,17 +68,9 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({ value, onChange, la
                                     >
                                         ▲
                                     </button>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        max="23"
-                                        value={hours}
-                                        onChange={(e) => {
-                                            const val = parseInt(e.target.value) || 0;
-                                            setHours(String(Math.min(23, Math.max(0, val))).padStart(2, '0'));
-                                        }}
-                                        className="w-20 h-20 text-4xl font-bold text-center border-2 border-orange-600 rounded-xl my-2"
-                                    />
+                                    <div className="w-20 h-20 text-4xl font-bold text-center border-2 border-orange-600 rounded-xl my-2 flex items-center justify-center bg-orange-50">
+                                        {hours}
+                                    </div>
                                     <button
                                         type="button"
                                         onClick={() => setHours(String((parseInt(hours) - 1 + 24) % 24).padStart(2, '0'))}
@@ -99,17 +91,9 @@ const CustomTimePicker: React.FC<CustomTimePickerProps> = ({ value, onChange, la
                                     >
                                         ▲
                                     </button>
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        max="59"
-                                        value={minutes}
-                                        onChange={(e) => {
-                                            const val = parseInt(e.target.value) || 0;
-                                            setMinutes(String(Math.min(59, Math.max(0, val))).padStart(2, '0'));
-                                        }}
-                                        className="w-20 h-20 text-4xl font-bold text-center border-2 border-orange-600 rounded-xl my-2"
-                                    />
+                                    <div className="w-20 h-20 text-4xl font-bold text-center border-2 border-orange-600 rounded-xl my-2 flex items-center justify-center bg-orange-50">
+                                        {minutes}
+                                    </div>
                                     <button
                                         type="button"
                                         onClick={() => setMinutes(String((parseInt(minutes) - 1 + 60) % 60).padStart(2, '0'))}
