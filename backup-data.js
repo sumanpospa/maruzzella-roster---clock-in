@@ -40,14 +40,15 @@ async function createBackup() {
     console.log(`\n💾 Backup saved to: ${filepath}`);
 
     // Keep only last 30 backups
-    const files = fs.readdirSync(BACKUP_DIR)
-      .filter(f => f.startsWith('backup_'))
+    const files = fs
+      .readdirSync(BACKUP_DIR)
+      .filter((f) => f.startsWith('backup_'))
       .sort()
       .reverse();
-    
+
     if (files.length > 30) {
       console.log('\n🧹 Cleaning old backups...');
-      files.slice(30).forEach(oldFile => {
+      files.slice(30).forEach((oldFile) => {
         fs.unlinkSync(path.join(BACKUP_DIR, oldFile));
         console.log(`   Deleted: ${oldFile}`);
       });

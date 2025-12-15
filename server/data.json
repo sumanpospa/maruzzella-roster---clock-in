@@ -71,96 +71,72 @@
     "currentWeek": {
       "Monday": [
         {
-          "employeeIds": [
-            1
-          ],
+          "employeeIds": [1],
           "startTime": "09:00",
           "endTime": "17:00"
         },
         {
-          "employeeIds": [
-            3
-          ],
+          "employeeIds": [3],
           "startTime": "09:00",
           "endTime": "17:00"
         }
       ],
       "Tuesday": [
         {
-          "employeeIds": [
-            1
-          ],
+          "employeeIds": [1],
           "startTime": "09:00",
           "endTime": "17:00"
         },
         {
-          "employeeIds": [
-            3
-          ],
+          "employeeIds": [3],
           "startTime": "09:00",
           "endTime": "17:00"
         }
       ],
       "Wednesday": [
         {
-          "employeeIds": [
-            1
-          ],
+          "employeeIds": [1],
           "startTime": "09:00",
           "endTime": "17:00"
         },
         {
-          "employeeIds": [
-            3
-          ],
+          "employeeIds": [3],
           "startTime": "09:00",
           "endTime": "17:00"
         }
       ],
       "Thursday": [
         {
-          "employeeIds": [
-            1
-          ],
+          "employeeIds": [1],
           "startTime": "09:00",
           "endTime": "17:00"
         },
         {
-          "employeeIds": [
-            3
-          ],
+          "employeeIds": [3],
           "startTime": "09:00",
           "endTime": "17:00"
         }
       ],
       "Friday": [
         {
-          "employeeIds": [
-            1
-          ],
+          "employeeIds": [1],
           "startTime": "09:00",
           "endTime": "17:00"
         },
         {
-          "employeeIds": [
-            3
-          ],
+          "employeeIds": [3],
           "startTime": "09:00",
           "endTime": "17:00"
         }
       ],
       "Saturday": [
         {
-          "employeeIds": [
-            1
-          ],
+          "employeeIds": [1],
           "startTime": "09:00",
           "endTime": "17:00"
         },
         {
-          "employeeIds": [
-            3
-          ],
+          "employeeIds": [3],
           "startTime": "09:00",
           "endTime": "17:00"
         }

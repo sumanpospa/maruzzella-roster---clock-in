@@ -8,7 +8,7 @@ export default prisma;
 export async function initializeDatabase() {
   try {
     const employeeCount = await prisma.employee.count();
-    
+
     if (employeeCount === 0) {
       console.log('[DB] Seeding default employees...');
       const defaultEmployees = [
@@ -27,7 +27,7 @@ export async function initializeDatabase() {
       await prisma.employee.createMany({
         data: defaultEmployees,
       });
-      
+
       console.log('[DB] ✅ Default employees seeded');
     } else {
       console.log(`[DB] Found ${employeeCount} employees in database`);
@@ -42,20 +42,30 @@ export async function initializeDatabase() {
 export function convertShiftsToRoster(shifts) {
   const roster = {
     currentWeek: {
-      Monday: [], Tuesday: [], Wednesday: [], Thursday: [],
-      Friday: [], Saturday: [], Sunday: []
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+      Sunday: [],
     },
     nextWeek: {
-      Monday: [], Tuesday: [], Wednesday: [], Thursday: [],
-      Friday: [], Saturday: [], Sunday: []
-    }
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+      Sunday: [],
+    },
   };
 
-  shifts.forEach(shift => {
+  shifts.forEach((shift) => {
     const week = shift.week === 'currentWeek' ? roster.currentWeek : roster.nextWeek;
     if (week[shift.day]) {
       week[shift.day].push({
-        employeeIds: shift.employees.map(assignment => assignment.employeeId),
+        employeeIds: shift.employees.map((assignment) => assignment.employeeId),
         startTime: shift.startTime,
         endTime: shift.endTime,
         notes: shift.notes,
@@ -78,10 +88,10 @@ export async function saveRosterToDatabase(rosters) {
     for (const [weekKey, weekRoster] of Object.entries(rosters)) {
       for (const [day, dayShifts] of Object.entries(weekRoster)) {
         if (!Array.isArray(dayShifts)) continue;
-        
+
         for (const shift of dayShifts) {
           if (!shift.employeeIds || shift.employeeIds.length === 0) continue;
-          
+
           // Create the shift first
           const createdShift = await prisma.shift.create({
             data: {
@@ -90,7 +100,7 @@ export async function saveRosterToDatabase(rosters) {
               startTime: shift.startTime || null,
               endTime: shift.endTime || null,
               notes: shift.notes || null,
-            }
+            },
           });
 
           // Then create assignments for each employee
@@ -98,8 +108,8 @@ export async function saveRosterToDatabase(rosters) {
             await prisma.shiftAssignment.create({
               data: {
                 employeeId: employeeId,
-                shiftId: createdShift.id
-              }
+                shiftId: createdShift.id,
+              },
             });
           }
 

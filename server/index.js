@@ -18,7 +18,7 @@ const app = express();
 // CORS configuration - allow frontend URL(s) from env or localhost
 const envOrigins = [
   process.env.FRONTEND_URL,
-  ...(process.env.FRONTEND_URLS ? process.env.FRONTEND_URLS.split(',').map(s => s.trim()) : [])
+  ...(process.env.FRONTEND_URLS ? process.env.FRONTEND_URLS.split(',').map((s) => s.trim()) : []),
 ].filter(Boolean);
 
 const allowedOrigins = [
@@ -26,32 +26,34 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
-  ...envOrigins
+  ...envOrigins,
 ];
 
 const vercelPattern = /^https?:\/\/([a-z0-9-]+\.)*vercel\.app$/i; // allow preview/prod Vercel URLs
 
-app.use(cors({
-  origin: function (origin, callback) {
-    const isDev = process.env.NODE_ENV !== 'production';
-    const allowLan = /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin || '');
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      const isDev = process.env.NODE_ENV !== 'production';
+      const allowLan = /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin || '');
 
-    if (
-      !origin || // curl/postman
-      isDev || // anything in dev
-      allowedOrigins.includes(origin) || // explicit allows
-      allowLan || // local LAN testing
-      vercelPattern.test(origin || '') // any *.vercel.app (previews + prod)
-    ) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
-  optionsSuccessStatus: 204
-}));
+      if (
+        !origin || // curl/postman
+        isDev || // anything in dev
+        allowedOrigins.includes(origin) || // explicit allows
+        allowLan || // local LAN testing
+        vercelPattern.test(origin || '') // any *.vercel.app (previews + prod)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    optionsSuccessStatus: 204,
+  }),
+);
 
 // Ensure preflight requests are handled
 app.options('*', cors());
@@ -94,7 +96,7 @@ function readData() {
             Thursday: [],
             Friday: [],
             Saturday: [],
-            Sunday: []
+            Sunday: [],
           },
           nextWeek: {
             Monday: [],
@@ -103,11 +105,11 @@ function readData() {
             Thursday: [],
             Friday: [],
             Saturday: [],
-            Sunday: []
-          }
+            Sunday: [],
+          },
         },
         timeLogs: [],
-        _seeded: true
+        _seeded: true,
       };
       writeData(initialData);
       return initialData;
@@ -136,7 +138,7 @@ function readData() {
           Thursday: [],
           Friday: [],
           Saturday: [],
-          Sunday: []
+          Sunday: [],
         },
         nextWeek: {
           Monday: [],
@@ -145,11 +147,11 @@ function readData() {
           Thursday: [],
           Friday: [],
           Saturday: [],
-          Sunday: []
-        }
+          Sunday: [],
+        },
       },
       timeLogs: [],
-      _seeded: true
+      _seeded: true,
     };
     writeData(initialData);
     return initialData;
@@ -191,7 +193,11 @@ const HOST = '0.0.0.0';
 
 function startServer(port, remainingAttempts) {
   const server = app.listen(port, HOST, () => {
-    console.log(`[LISTEN] Maruzzella backend running on http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${port}`);
+    console.log(
+      `[LISTEN] Maruzzella backend running on http://${
+        HOST === '0.0.0.0' ? 'localhost' : HOST
+      }:${port}`,
+    );
     if (port !== BASE_PORT) {
       console.log(`[INFO] Original PORT ${BASE_PORT} was busy; using fallback ${port}.`);
     }

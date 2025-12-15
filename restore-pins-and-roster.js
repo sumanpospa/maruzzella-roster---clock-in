@@ -7,7 +7,7 @@ async function main() {
     console.log('🔍 Getting current state...');
     const response = await fetch(API_URL);
     const currentState = await response.json();
-    
+
     // Update PINs to correct values
     const updatedEmployees = [
       { id: 1, name: 'Huda', role: 'Manager', pin: '1111', department: 'Kitchen' },
@@ -26,34 +26,33 @@ async function main() {
       { id: 14, name: 'mushfiq', role: 'Staff', pin: '1414', department: 'Stewarding' },
       { id: 15, name: 'mani', role: 'Staff', pin: '1515', department: 'Stewarding' },
       { id: 16, name: 'Ishraq', role: 'Staff', pin: '1616', department: 'Stewarding' },
-      { id: 17, name: 'Ashfaq', role: 'Staff', pin: '1717', department: 'Stewarding' }
+      { id: 17, name: 'Ashfaq', role: 'Staff', pin: '1717', department: 'Stewarding' },
     ];
-    
+
     // Keep existing rosters and timeLogs
     const updatedState = {
       employees: updatedEmployees,
       rosters: currentState.rosters,
-      timeLogs: currentState.timeLogs || []
+      timeLogs: currentState.timeLogs || [],
     };
-    
+
     console.log('💾 Saving updated state with correct PINs...');
     const saveResponse = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedState)
+      body: JSON.stringify(updatedState),
     });
-    
+
     if (!saveResponse.ok) {
       throw new Error(`Failed to save: ${saveResponse.status}`);
     }
-    
+
     console.log('\n✅ PINs restored successfully!');
     console.log('   Huda: 1111');
     console.log('   Suman: 2222');
     console.log('   Others: Sequential PINs');
     console.log('\n✅ Roster data preserved (43 shifts)');
     console.log('\n💡 Now refresh your browser with Ctrl+Shift+R');
-    
   } catch (error) {
     console.error('\n❌ Error:', error.message);
   }

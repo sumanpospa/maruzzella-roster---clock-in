@@ -13,10 +13,10 @@ export const INITIAL_EMPLOYEES: Employee[] = [
   { id: 9, name: 'Tanbir', role: 'Chef', pin: '9999', department: 'Kitchen' },
   { id: 10, name: 'Progganur', role: 'Chef', pin: '1010', department: 'Kitchen' },
   { id: 11, name: 'Fareeq', role: 'Chef', pin: '1112', department: 'Kitchen' },
-  
+
   // FOH Team (1 manager)
   { id: 12, name: 'Manager FOH', role: 'Manager', pin: '1212', department: 'FOH' },
-  
+
   // Stewarding Team (5 employees - 1 manager + 4 staff)
   { id: 13, name: 'Manager STW', role: 'Manager', pin: '1313', department: 'Stewarding' },
   { id: 14, name: 'mushfiq', role: 'Staff', pin: '1414', department: 'Stewarding' },

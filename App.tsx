@@ -24,7 +24,10 @@ const App: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
   const [showLoginForDepartment, setShowLoginForDepartment] = useState<Department | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(INITIAL_EMPLOYEES);
-  const [rosters, setRosters] = useState<Rosters>({ currentWeek: WEEKLY_ROSTER, nextWeek: WEEKLY_ROSTER });
+  const [rosters, setRosters] = useState<Rosters>({
+    currentWeek: WEEKLY_ROSTER,
+    nextWeek: WEEKLY_ROSTER,
+  });
   const [timeLogs, setTimeLogs] = useState<TimeLog[]>([]);
   const [currentUser, setCurrentUser] = useState<Employee | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
@@ -46,25 +49,36 @@ const App: React.FC = () => {
       try {
         const remote = await apiGetState();
         if (!mounted || !remote) return;
-        
+
         // CRITICAL SAFETY CHECK: Validate data before loading
         const remoteEmployeeCount = remote.employees?.length || 0;
-        const remoteShiftCount = Object.values(remote.rosters?.nextWeek || {}).flat().length + 
-                                Object.values(remote.rosters?.currentWeek || {}).flat().length;
-        
-        console.log(`📥 Backend data: ${remoteEmployeeCount} employees, ${remoteShiftCount} shifts`);
-        
+        const remoteShiftCount =
+          Object.values(remote.rosters?.nextWeek || {}).flat().length +
+          Object.values(remote.rosters?.currentWeek || {}).flat().length;
+
+        console.log(
+          `📥 Backend data: ${remoteEmployeeCount} employees, ${remoteShiftCount} shifts`,
+        );
+
         // If backend has suspiciously low data, DON'T LOAD IT
         if (remoteEmployeeCount < 20) {
-          console.error('🚨 CRITICAL: Backend has corrupted data! Only', remoteEmployeeCount, 'employees found.');
-          console.error('🚨 Expected at least 20 employees. NOT loading from backend to prevent data loss.');
+          console.error(
+            '🚨 CRITICAL: Backend has corrupted data! Only',
+            remoteEmployeeCount,
+            'employees found.',
+          );
+          console.error(
+            '🚨 Expected at least 20 employees. NOT loading from backend to prevent data loss.',
+          );
           console.error('🚨 Please restore from backup immediately!');
-          alert('⚠️ WARNING: Database appears corrupted. Using local defaults. Please contact support.');
+          alert(
+            '⚠️ WARNING: Database appears corrupted. Using local defaults. Please contact support.',
+          );
           setIsHydrated(true);
           setIsLoading(false);
           return;
         }
-        
+
         // Merge remote values with defaults (so missing keys don't break)
         if (Array.isArray(remote.employees) && remote.employees.length > 0) {
           console.log('✅ Loaded employees from backend:', remote.employees.length);
@@ -75,13 +89,16 @@ const App: React.FC = () => {
           // Handle both thisWeek/currentWeek naming (backend uses thisWeek, frontend uses currentWeek)
           const normalizedRosters = {
             currentWeek: remote.rosters.currentWeek || remote.rosters.thisWeek || WEEKLY_ROSTER,
-            nextWeek: remote.rosters.nextWeek || WEEKLY_ROSTER
+            nextWeek: remote.rosters.nextWeek || WEEKLY_ROSTER,
           };
-          
-          const currentWeekShifts = Object.values(normalizedRosters.currentWeek || {}).flat().length;
+
+          const currentWeekShifts = Object.values(normalizedRosters.currentWeek || {}).flat()
+            .length;
           const nextWeekShifts = Object.values(normalizedRosters.nextWeek || {}).flat().length;
-          console.log(`📅 Roster data received. Current Week: ${currentWeekShifts} shifts, Next Week: ${nextWeekShifts} shifts`);
-          
+          console.log(
+            `📅 Roster data received. Current Week: ${currentWeekShifts} shifts, Next Week: ${nextWeekShifts} shifts`,
+          );
+
           if (currentWeekShifts > 0 || nextWeekShifts > 0) {
             console.log('✅ Loading rosters from backend');
             setRosters(normalizedRosters);
@@ -107,62 +124,74 @@ const App: React.FC = () => {
         }
       }
     })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // Persist to backend whenever core state changes (but only after initial hydration)
   useEffect(() => {
     if (!isHydrated) return; // Skip until hydration is done
-    
+
     // ENHANCED SAFETY CHECKS: Prevent saving corrupted or empty data
     if (employees.length === 0) {
       console.error('🚫 BLOCKED: Attempted to save empty employees list!');
       return;
     }
-    
+
     // Check if rosters are suspiciously empty (should have at least some shifts)
-    const totalShifts = Object.values(rosters.nextWeek || {}).flat().length + 
-                       Object.values(rosters.currentWeek || {}).flat().length;
-    
+    const totalShifts =
+      Object.values(rosters.nextWeek || {}).flat().length +
+      Object.values(rosters.currentWeek || {}).flat().length;
+
     if (totalShifts === 0) {
       console.warn('⚠️ WARNING: Rosters are empty. Skipping save to prevent data loss.');
-      console.warn('If this is intentional, you can manually clear rosters from the employee management page.');
+      console.warn(
+        'If this is intentional, you can manually clear rosters from the employee management page.',
+      );
       return;
     }
-    
+
     setIsSaving(true);
-    
+
     (async () => {
       try {
-        console.log(`💾 Saving state: ${employees.length} employees, ${totalShifts} shifts, ${timeLogs.length} time logs`);
-        
+        console.log(
+          `💾 Saving state: ${employees.length} employees, ${totalShifts} shifts, ${timeLogs.length} time logs`,
+        );
+
         // Serialize dates to ISO strings
         // Convert currentWeek to thisWeek for backend compatibility
         const serializable = {
           employees,
           rosters: {
             thisWeek: rosters.currentWeek,
-            nextWeek: rosters.nextWeek
+            nextWeek: rosters.nextWeek,
           },
-          timeLogs: timeLogs.map(t => ({ ...t, clockInTime: t.clockInTime?.toISOString(), clockOutTime: t.clockOutTime?.toISOString() || null })),
+          timeLogs: timeLogs.map((t) => ({
+            ...t,
+            clockInTime: t.clockInTime?.toISOString(),
+            clockOutTime: t.clockOutTime?.toISOString() || null,
+          })),
         };
         await apiSaveState(serializable);
-        
+
         setIsSaving(false);
         setLastSaveTime(new Date());
         console.log('✅ Save completed successfully');
       } catch (error) {
         console.error('❌ Failed to save state to backend', error);
         setIsSaving(false);
-        alert('⚠️ Save failed! Your changes may not be saved. Please check your internet connection.');
+        alert(
+          '⚠️ Save failed! Your changes may not be saved. Please check your internet connection.',
+        );
       }
     })();
   }, [employees, rosters, timeLogs, isHydrated]);
 
-
   useEffect(() => {
     // If the current user is deleted from the employee list, log them out.
-    if (currentUser && !employees.some(e => e.id === currentUser.id)) {
+    if (currentUser && !employees.some((e) => e.id === currentUser.id)) {
       setCurrentUser(null);
     }
   }, [employees, currentUser]);
@@ -173,7 +202,7 @@ const App: React.FC = () => {
     // After login, route based on department and role
     if (showLoginForDepartment) {
       setSelectedDepartment(showLoginForDepartment);
-      
+
       // Managers go to their department management view
       if (employee.role === 'Manager') {
         if (showLoginForDepartment === 'Kitchen') {
@@ -224,11 +253,13 @@ const App: React.FC = () => {
     }
     setActiveView(view);
   };
-  
+
   const AccessDenied = () => (
     <div className="text-center p-8 bg-white rounded-xl shadow-sm border border-stone-200">
-        <h2 className="text-xl font-bold text-slate-700">Access Denied</h2>
-        <p className="text-stone-500 mt-2">You do not have permission to view this page. Please contact a manager.</p>
+      <h2 className="text-xl font-bold text-slate-700">Access Denied</h2>
+      <p className="text-stone-500 mt-2">
+        You do not have permission to view this page. Please contact a manager.
+      </p>
     </div>
   );
 
@@ -236,9 +267,11 @@ const App: React.FC = () => {
     // Show dashboard without login
     if (activeView === 'dashboard') {
       return (
-        <DashboardView 
-          currentUser={currentUser || { id: 0, name: 'Guest', role: 'Manager', pin: '', department: 'Kitchen' }} 
-          employees={employees} 
+        <DashboardView
+          currentUser={
+            currentUser || { id: 0, name: 'Guest', role: 'Manager', pin: '', department: 'Kitchen' }
+          }
+          employees={employees}
           onSelectDepartment={handleSelectDepartment}
           showBackButton={!!currentUser}
           onBackToDashboard={currentUser ? handleBackToDashboard : undefined}
@@ -253,17 +286,55 @@ const App: React.FC = () => {
 
     switch (activeView) {
       case 'roster':
-        return isKitchenDepartment ? <RosterView employees={employees} rosters={rosters} setRosters={setRosters} setEmployees={setEmployees} currentUser={currentUser} onNavigateToEmployees={() => setActiveView('employees')} onNavigateToClockIn={() => setActiveView('clock-in')} /> : <AccessDenied />;
+        return isKitchenDepartment ? (
+          <RosterView
+            employees={employees}
+            rosters={rosters}
+            setRosters={setRosters}
+            setEmployees={setEmployees}
+            currentUser={currentUser}
+            onNavigateToEmployees={() => setActiveView('employees')}
+            onNavigateToClockIn={() => setActiveView('clock-in')}
+          />
+        ) : (
+          <AccessDenied />
+        );
       case 'clock-in':
-        return <ClockInView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} onNavigateToPayroll={() => setActiveView('payroll')} onNavigateToRoster={() => setActiveView('roster')} />;
+        return (
+          <ClockInView
+            employees={employees}
+            timeLogs={timeLogs}
+            setTimeLogs={setTimeLogs}
+            currentUser={currentUser}
+            onNavigateToPayroll={() => setActiveView('payroll')}
+            onNavigateToRoster={() => setActiveView('roster')}
+          />
+        );
       case 'employees':
-        return isManager ? <EmployeeView employees={employees} setEmployees={setEmployees} setRosters={setRosters} currentUser={currentUser} onNavigateToClockIn={() => setActiveView('clock-in')} /> : <AccessDenied />;
+        return isManager ? (
+          <EmployeeView
+            employees={employees}
+            setEmployees={setEmployees}
+            setRosters={setRosters}
+            currentUser={currentUser}
+            onNavigateToClockIn={() => setActiveView('clock-in')}
+          />
+        ) : (
+          <AccessDenied />
+        );
       case 'payroll':
-        return <PayrollView employees={employees} timeLogs={timeLogs} setTimeLogs={setTimeLogs} currentUser={currentUser} />;
+        return (
+          <PayrollView
+            employees={employees}
+            timeLogs={timeLogs}
+            setTimeLogs={setTimeLogs}
+            currentUser={currentUser}
+          />
+        );
       default:
         return null;
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -291,27 +362,45 @@ const App: React.FC = () => {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <span className="font-medium">Saved {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          <span className="font-medium">
+            Saved {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
         </div>
       )}
-      
+
       {/* Only show header when NOT on dashboard */}
-      {activeView !== 'dashboard' && currentUser && <Header currentUser={currentUser} onLogout={handleLogout} />}
-      
-      <main className={`p-4 sm:p-6 md:p-8 max-w-7xl mx-auto ${activeView === 'dashboard' ? 'pt-8' : 'pb-24'}`}>
+      {activeView !== 'dashboard' && currentUser && (
+        <Header currentUser={currentUser} onLogout={handleLogout} />
+      )}
+
+      <main
+        className={`p-4 sm:p-6 md:p-8 max-w-7xl mx-auto ${
+          activeView === 'dashboard' ? 'pt-8' : 'pb-24'
+        }`}
+      >
         {/* Back to Dashboard button for non-dashboard views */}
         {activeView !== 'dashboard' && currentUser && (
           <button
             onClick={handleBackToDashboard}
             className="mb-6 flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold transition-colors group"
           >
-            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <svg
+              className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"
+              />
             </svg>
             Back to Dashboard
           </button>
         )}
-        
+
         {/* Logout button on dashboard when logged in */}
         {activeView === 'dashboard' && currentUser && (
           <div className="flex justify-end mb-4">
@@ -323,7 +412,7 @@ const App: React.FC = () => {
             </button>
           </div>
         )}
-        
+
         {renderContent()}
       </main>
 
@@ -333,17 +422,27 @@ const App: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-slate-800">Login to {showLoginForDepartment}</h2>
+                <h2 className="text-2xl font-bold text-slate-800">
+                  Login to {showLoginForDepartment}
+                </h2>
                 <button
                   onClick={() => setShowLoginForDepartment(null)}
                   className="text-stone-400 hover:text-stone-600"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
-              <LoginView employees={employees.filter(e => e.department === showLoginForDepartment)} onLogin={handleLogin} />
+              <LoginView
+                employees={employees.filter((e) => e.department === showLoginForDepartment)}
+                onLogin={handleLogin}
+              />
             </div>
           </div>
         </div>

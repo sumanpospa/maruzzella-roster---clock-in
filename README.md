@@ -10,8 +10,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1zOE0rDXNV9uqPUiDmDCCjA
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
    `npm install`
@@ -51,9 +50,9 @@ Then run the frontend as before (`npm run dev`). The app will fetch/save state t
 See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for step-by-step deployment instructions.
 
 Quick summary:
+
 1. Push code to GitHub
 2. Deploy frontend to Vercel (auto-detects Vite config)
 3. Deploy backend to Railway/Render (auto-detects Procfile)
 4. Set `VITE_API_BASE` env var in Vercel to your backend URL
 5. Done! ✅
-

@@ -11,10 +11,12 @@ Use **cron-job.org** (100% free, no credit card required) to ping your backend e
 ### Setup Instructions:
 
 1. **Go to cron-job.org**
+
    - Visit: https://cron-job.org/
    - Click "Sign up" (free account)
 
 2. **Create a Cron Job**
+
    - After login, click "Create cronjob"
    - **Title:** `Maruzzella Backend Keep-Alive`
    - **URL:** `https://maruzzella-roster-clock-in.onrender.com/health`
@@ -32,6 +34,7 @@ Use **cron-job.org** (100% free, no credit card required) to ping your backend e
 If you prefer other services:
 
 - **UptimeRobot** (https://uptimerobot.com/)
+
   - Free: 50 monitors, 5-minute intervals
   - Monitor Type: HTTP(s)
   - URL: `https://maruzzella-roster-clock-in.onrender.com/health`
@@ -51,6 +54,7 @@ If you prefer other services:
 ## Health Check Endpoint:
 
 Your backend now has two endpoints:
+
 - `/` - Main status check
 - `/health` - Detailed uptime monitoring (shows process uptime)
 

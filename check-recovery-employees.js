@@ -1,20 +1,21 @@
 import pkg from 'pg';
 const { Pool } = pkg;
 
-const recoveryConnectionString = 'postgresql://neondb_owner:npg_b3FTnjuqoxH1@ep-restless-bush-ad0fzat2-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require';
+const recoveryConnectionString =
+  'postgresql://neondb_owner:npg_b3FTnjuqoxH1@ep-restless-bush-ad0fzat2-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require';
 
 async function checkRecoveryData() {
   const pool = new Pool({
     connectionString: recoveryConnectionString,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
   });
 
   try {
     // Check all employees
     const employees = await pool.query('SELECT * FROM "Employee" ORDER BY id');
     console.log(`\n📊 Found ${employees.rows.length} employees in recovery branch:\n`);
-    
-    employees.rows.forEach(emp => {
+
+    employees.rows.forEach((emp) => {
       console.log(`   ID: ${emp.id}`);
       console.log(`   Name: ${emp.name || 'N/A'}`);
       console.log(`   Department: ${emp.department || 'N/A'}`);
@@ -32,10 +33,9 @@ async function checkRecoveryData() {
     const timeLogCount = await pool.query('SELECT COUNT(*) as count FROM "TimeLog"');
     console.log(`\n⏰ Time Logs: ${timeLogCount.rows[0].count}`);
 
-    // Check shifts count  
+    // Check shifts count
     const shiftCount = await pool.query('SELECT COUNT(*) as count FROM "Shift"');
     console.log(`📅 Shifts: ${shiftCount.rows[0].count}\n`);
-
   } catch (error) {
     console.error('❌ Error:', error.message);
   } finally {

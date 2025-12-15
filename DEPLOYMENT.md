@@ -3,6 +3,7 @@
 This guide walks you through deploying the Maruzzella Roster & Clock-In app to production.
 
 **Architecture:**
+
 - **Frontend**: Vite React app → **Vercel**
 - **Backend**: Express Node.js server → **Railway** or **Render**
 - **Data**: JSON file stored on backend
@@ -29,6 +30,7 @@ git push origin main
 ```
 
 Make sure these files are committed:
+
 - ✅ `vercel.json` (frontend config)
 - ✅ `Procfile` (backend config)
 - ✅ `server/.env.example` (backend env vars)
@@ -50,9 +52,10 @@ In Vercel dashboard for your project:
 
 1. Go to **Settings → Environment Variables**
 2. Add:
+
    - **Name**: `VITE_API_BASE`
    - **Value**: `https://your-backend-url.com` (you'll set this after deploying backend)
-   
+
    For now, use a placeholder like `https://maruzzella-backend.railway.app`
 
 3. Click **Save**
@@ -81,6 +84,7 @@ In Vercel dashboard for your project:
 1. In Railway dashboard, go to your project
 2. Click the **"Variables"** tab
 3. Add:
+
    - **FRONTEND_URL**: Your Vercel frontend URL (e.g., `https://maruzzella-roster.vercel.app`)
    - **PORT**: `4000` (or leave empty for Railway's default)
 
@@ -142,17 +146,20 @@ Same as Railway (Step 4 above).
 ## 5. Test Deployment
 
 ### Frontend
+
 1. Open your Vercel URL: `https://your-app.vercel.app`
 2. Verify you can log in and see all 10 employees
 3. Check browser console for any errors
 
 ### Backend
+
 ```bash
 curl https://your-backend.railway.app/api/state
 # Should return: {"employees":[...], "rosters":{...}, "timeLogs":[]}
 ```
 
 ### End-to-End
+
 1. Log in to the frontend
 2. Add a new employee or modify a roster
 3. Refresh the page — data should persist
@@ -163,6 +170,7 @@ curl https://your-backend.railway.app/api/state
 ## 6. Future Updates
 
 ### Push code changes:
+
 ```bash
 git add .
 git commit -m "Your changes"
@@ -205,10 +213,12 @@ Both Vercel and Railway/Render will **auto-redeploy** when you push to main.
 For production, consider:
 
 1. **Database**: Replace `server/data.json` with PostgreSQL
+
    - Railway and Render both offer free PostgreSQL
    - Update `server/index.js` to use database instead of file
 
 2. **Authentication**: Add user login/permissions
+
    - Currently anyone can modify any data
 
 3. **SSL/TLS**: Already included (HTTPS) via Vercel/Railway/Render

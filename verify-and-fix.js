@@ -21,7 +21,7 @@ const COMPLETE_DATA = {
     { id: 14, name: 'mushfiq', role: 'Staff', pin: '1414', department: 'Stewarding' },
     { id: 15, name: 'mani', role: 'Staff', pin: '1515', department: 'Stewarding' },
     { id: 16, name: 'Ishraq', role: 'Staff', pin: '1616', department: 'Stewarding' },
-    { id: 17, name: 'Ashfaq', role: 'Staff', pin: '1717', department: 'Stewarding' }
+    { id: 17, name: 'Ashfaq', role: 'Staff', pin: '1717', department: 'Stewarding' },
   ],
   rosters: {
     currentWeek: {
@@ -31,7 +31,7 @@ const COMPLETE_DATA = {
       Thursday: [],
       Friday: [],
       Saturday: [],
-      Sunday: []
+      Sunday: [],
     },
     nextWeek: {
       Monday: [
@@ -40,7 +40,7 @@ const COMPLETE_DATA = {
         { employeeId: 4, startTime: '16:00', endTime: '21:30', role: 'Chef' },
         { employeeId: 5, startTime: '16:00', endTime: '21:00', role: 'Chef' },
         { employeeId: 7, startTime: '17:00', endTime: '22:00', role: 'Chef' },
-        { employeeId: 8, startTime: '16:00', endTime: '22:00', role: 'Chef' }
+        { employeeId: 8, startTime: '16:00', endTime: '22:00', role: 'Chef' },
       ],
       Tuesday: [
         { employeeId: 1, startTime: '17:00', endTime: '22:00', role: 'Manager' },
@@ -50,7 +50,7 @@ const COMPLETE_DATA = {
         { employeeId: 5, startTime: '16:00', endTime: '21:00', role: 'Chef' },
         { employeeId: 7, startTime: '17:00', endTime: '22:00', role: 'Chef' },
         { employeeId: 8, startTime: '16:00', endTime: '22:00', role: 'Chef' },
-        { employeeId: 9, startTime: '16:00', endTime: '22:00', role: 'Chef' }
+        { employeeId: 9, startTime: '16:00', endTime: '22:00', role: 'Chef' },
       ],
       Wednesday: [
         { employeeId: 1, startTime: '17:00', endTime: '22:00', role: 'Manager' },
@@ -60,7 +60,7 @@ const COMPLETE_DATA = {
         { employeeId: 6, startTime: '17:00', endTime: '21:30', role: 'Chef' },
         { employeeId: 7, startTime: '17:00', endTime: '22:00', role: 'Chef' },
         { employeeId: 8, startTime: '16:00', endTime: '22:00', role: 'Chef' },
-        { employeeId: 10, startTime: '17:00', endTime: '21:30', role: 'Chef' }
+        { employeeId: 10, startTime: '17:00', endTime: '21:30', role: 'Chef' },
       ],
       Thursday: [
         { employeeId: 2, startTime: '16:30', endTime: '22:00', role: 'Manager' },
@@ -69,31 +69,31 @@ const COMPLETE_DATA = {
         { employeeId: 6, startTime: '17:00', endTime: '21:30', role: 'Chef' },
         { employeeId: 8, startTime: '16:00', endTime: '22:00', role: 'Chef' },
         { employeeId: 9, startTime: '16:00', endTime: '22:00', role: 'Chef' },
-        { employeeId: 10, startTime: '17:00', endTime: '21:30', role: 'Chef' }
+        { employeeId: 10, startTime: '17:00', endTime: '21:30', role: 'Chef' },
       ],
       Friday: [
         { employeeId: 1, startTime: '17:00', endTime: '22:00', role: 'Manager' },
         { employeeId: 2, startTime: '10:00', endTime: '14:00', role: 'Manager' },
         { employeeId: 3, startTime: '14:00', endTime: '21:00', role: 'Chef' },
         { employeeId: 4, startTime: '10:00', endTime: '21:30', role: 'Chef' },
-        { employeeId: 5, startTime: '10:00', endTime: '14:00', role: 'Chef' }
+        { employeeId: 5, startTime: '10:00', endTime: '14:00', role: 'Chef' },
       ],
       Saturday: [
         { employeeId: 2, startTime: '16:30', endTime: '22:00', role: 'Manager' },
         { employeeId: 3, startTime: '10:00', endTime: '21:00', role: 'Chef' },
         { employeeId: 4, startTime: '15:00', endTime: '21:30', role: 'Chef' },
         { employeeId: 7, startTime: '17:00', endTime: '22:00', role: 'Chef' },
-        { employeeId: 9, startTime: '16:00', endTime: '22:00', role: 'Chef' }
+        { employeeId: 9, startTime: '16:00', endTime: '22:00', role: 'Chef' },
       ],
       Sunday: [
         { employeeId: 4, startTime: '10:00', endTime: '21:30', role: 'Chef' },
         { employeeId: 6, startTime: '17:00', endTime: '21:30', role: 'Chef' },
         { employeeId: 8, startTime: '16:00', endTime: '22:00', role: 'Chef' },
-        { employeeId: 10, startTime: '17:00', endTime: '21:30', role: 'Chef' }
-      ]
-    }
+        { employeeId: 10, startTime: '17:00', endTime: '21:30', role: 'Chef' },
+      ],
+    },
   },
-  timeLogs: []
+  timeLogs: [],
 };
 
 async function main() {
@@ -101,37 +101,38 @@ async function main() {
     console.log('🔍 Checking current state...');
     const response = await fetch(API_URL);
     const currentState = await response.json();
-    
+
     console.log('\n📊 Current State:');
     console.log(`  Employees: ${currentState.employees?.length || 0}`);
-    console.log(`  Next Week Shifts: ${Object.values(currentState.rosters?.nextWeek || {}).flat().length}`);
-    
+    console.log(
+      `  Next Week Shifts: ${Object.values(currentState.rosters?.nextWeek || {}).flat().length}`,
+    );
+
     const nextWeekShifts = Object.values(currentState.rosters?.nextWeek || {}).flat().length;
-    
+
     if (nextWeekShifts === 43) {
       console.log('\n✅ Data looks good! All 43 shifts are present.');
       console.log('   The issue is likely browser cache.');
       console.log('\n💡 Solution: Press Ctrl+Shift+R in your browser to hard refresh.');
       return;
     }
-    
+
     console.log('\n⚠️  Data is missing or incomplete. Restoring...');
-    
+
     const saveResponse = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(COMPLETE_DATA)
+      body: JSON.stringify(COMPLETE_DATA),
     });
-    
+
     if (!saveResponse.ok) {
       throw new Error(`Failed to save: ${saveResponse.status}`);
     }
-    
+
     console.log('\n✅ Database restored successfully!');
     console.log(`   Employees: ${COMPLETE_DATA.employees.length}`);
     console.log(`   Next Week Shifts: 43`);
     console.log('\n💡 Now press Ctrl+Shift+R in your browser to reload.');
-    
   } catch (error) {
     console.error('\n❌ Error:', error.message);
   }

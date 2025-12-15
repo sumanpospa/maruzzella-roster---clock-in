@@ -14,21 +14,27 @@ async function restoreBackup(backupFile) {
 
     console.log('\n📊 Backup contains:');
     console.log(`   - Employees: ${backupData.employees?.length || 0}`);
-    console.log(`   - Current Week Shifts: ${Object.values(backupData.rosters?.currentWeek || {}).flat().length}`);
-    console.log(`   - Next Week Shifts: ${Object.values(backupData.rosters?.nextWeek || {}).flat().length}`);
+    console.log(
+      `   - Current Week Shifts: ${
+        Object.values(backupData.rosters?.currentWeek || {}).flat().length
+      }`,
+    );
+    console.log(
+      `   - Next Week Shifts: ${Object.values(backupData.rosters?.nextWeek || {}).flat().length}`,
+    );
     console.log(`   - Time Logs: ${backupData.timeLogs?.length || 0}`);
 
     console.log('\n⚠️  This will OVERWRITE the current database!');
     console.log('Press Ctrl+C within 5 seconds to cancel...\n');
 
     // 5 second delay to allow cancellation
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     console.log('📤 Restoring backup to database...');
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(backupData)
+      body: JSON.stringify(backupData),
     });
 
     if (!response.ok) {
@@ -37,7 +43,6 @@ async function restoreBackup(backupFile) {
 
     console.log('\n✅ Backup restored successfully!');
     console.log('💡 Refresh your browser to see the restored data.');
-
   } catch (error) {
     console.error('\n❌ Restore failed:', error.message);
     throw error;

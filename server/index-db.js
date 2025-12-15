@@ -16,7 +16,7 @@ const app = express();
 // CORS configuration
 const envOrigins = [
   process.env.FRONTEND_URL,
-  ...(process.env.FRONTEND_URLS ? process.env.FRONTEND_URLS.split(',').map(s => s.trim()) : [])
+  ...(process.env.FRONTEND_URLS ? process.env.FRONTEND_URLS.split(',').map((s) => s.trim()) : []),
 ].filter(Boolean);
 
 const allowedOrigins = [
@@ -24,32 +24,34 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
-  ...envOrigins
+  ...envOrigins,
 ];
 
 const vercelPattern = /^https?:\/\/([a-z0-9-]+\.)*vercel\.app$/i;
 
-app.use(cors({
-  origin: function (origin, callback) {
-    const isDev = process.env.NODE_ENV !== 'production';
-    const allowLan = /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin || '');
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      const isDev = process.env.NODE_ENV !== 'production';
+      const allowLan = /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin || '');
 
-    if (
-      !origin ||
-      isDev ||
-      allowedOrigins.includes(origin) ||
-      allowLan ||
-      vercelPattern.test(origin || '')
-    ) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
-  optionsSuccessStatus: 204
-}));
+      if (
+        !origin ||
+        isDev ||
+        allowedOrigins.includes(origin) ||
+        allowLan ||
+        vercelPattern.test(origin || '')
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    optionsSuccessStatus: 204,
+  }),
+);
 
 app.options('*', cors());
 app.use(express.json());
@@ -64,7 +66,7 @@ app.get('/api/state', async (req, res) => {
   try {
     // Get employees
     const employees = await prisma.employee.findMany({
-      orderBy: { id: 'asc' }
+      orderBy: { id: 'asc' },
     });
 
     // Get shifts with their employees
@@ -72,24 +74,24 @@ app.get('/api/state', async (req, res) => {
       include: {
         employees: {
           include: {
-            employee: true
-          }
-        }
-      }
+            employee: true,
+          },
+        },
+      },
     });
 
     // Get time logs
     const timeLogs = await prisma.timeLog.findMany({
       include: {
-        employee: true
+        employee: true,
       },
-      orderBy: { clockIn: 'desc' }
+      orderBy: { clockIn: 'desc' },
     });
 
     // Convert to frontend format
     const rosters = convertShiftsToRoster(shifts);
 
-    const formattedTimeLogs = timeLogs.map(log => ({
+    const formattedTimeLogs = timeLogs.map((log) => ({
       id: log.id,
       employeeId: log.employeeId,
       clockInTime: log.clockIn,
@@ -99,7 +101,7 @@ app.get('/api/state', async (req, res) => {
     res.json({
       employees,
       rosters,
-      timeLogs: formattedTimeLogs
+      timeLogs: formattedTimeLogs,
     });
   } catch (error) {
     console.error('[API ERROR] /api/state:', error);
@@ -120,14 +122,14 @@ app.post('/api/state', async (req, res) => {
           update: {
             name: emp.name,
             role: emp.role,
-            pin: emp.pin
+            pin: emp.pin,
           },
           create: {
             id: emp.id,
             name: emp.name,
             role: emp.role,
-            pin: emp.pin
-          }
+            pin: emp.pin,
+          },
         });
       }
     }
@@ -146,47 +148,47 @@ app.post('/api/state', async (req, res) => {
             update: {
               clockIn: new Date(log.clockInTime),
               clockOut: log.clockOutTime ? new Date(log.clockOutTime) : null,
-              date: new Date(log.clockInTime).toISOString().split('T')[0]
+              date: new Date(log.clockInTime).toISOString().split('T')[0],
             },
             create: {
               id: log.id,
               employeeId: log.employeeId,
               clockIn: new Date(log.clockInTime),
               clockOut: log.clockOutTime ? new Date(log.clockOutTime) : null,
-              date: new Date(log.clockInTime).toISOString().split('T')[0]
-            }
+              date: new Date(log.clockInTime).toISOString().split('T')[0],
+            },
           });
         }
       }
     }
 
     console.log('[DB] State saved successfully');
-    
+
     // Return updated state
     const updatedEmployees = await prisma.employee.findMany({ orderBy: { id: 'asc' } });
-    const updatedShifts = await prisma.shift.findMany({ 
-      include: { 
+    const updatedShifts = await prisma.shift.findMany({
+      include: {
         employees: {
           include: {
-            employee: true
-          }
-        }
-      } 
+            employee: true,
+          },
+        },
+      },
     });
-    const updatedTimeLogs = await prisma.timeLog.findMany({ 
+    const updatedTimeLogs = await prisma.timeLog.findMany({
       include: { employee: true },
-      orderBy: { clockIn: 'desc' }
+      orderBy: { clockIn: 'desc' },
     });
 
     res.json({
       employees: updatedEmployees,
       rosters: convertShiftsToRoster(updatedShifts),
-      timeLogs: updatedTimeLogs.map(log => ({
+      timeLogs: updatedTimeLogs.map((log) => ({
         id: log.id,
         employeeId: log.employeeId,
         clockInTime: log.clockIn,
         clockOutTime: log.clockOut,
-      }))
+      })),
     });
   } catch (error) {
     console.error('[API ERROR] /api/state POST:', error);
@@ -208,7 +210,11 @@ async function startServer(port, remainingAttempts) {
   }
 
   const server = app.listen(port, HOST, () => {
-    console.log(`[LISTEN] Maruzzella backend running on http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${port}`);
+    console.log(
+      `[LISTEN] Maruzzella backend running on http://${
+        HOST === '0.0.0.0' ? 'localhost' : HOST
+      }:${port}`,
+    );
     if (port !== BASE_PORT) {
       console.log(`[INFO] Original PORT ${BASE_PORT} was busy; using fallback ${port}.`);
     }

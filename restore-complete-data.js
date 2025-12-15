@@ -15,10 +15,10 @@ const allEmployees = [
   { id: 9, name: 'Tanbir', role: 'Chef', pin: '1234', department: 'Kitchen' },
   { id: 10, name: 'Progganur', role: 'Chef', pin: '1234', department: 'Kitchen' },
   { id: 11, name: 'Fareeq', role: 'Chef', pin: '1234', department: 'Kitchen' },
-  
+
   // FOH Team
   { id: 12, name: 'Manager FOH', role: 'Manager', pin: '1234', department: 'FOH' },
-  
+
   // Stewarding Team
   { id: 13, name: 'Manager STW', role: 'Manager', pin: '1234', department: 'Stewarding' },
   { id: 14, name: 'mushfiq', role: 'Dishwasher', pin: '1234', department: 'Stewarding' },
@@ -98,13 +98,13 @@ const rosters = {
     Saturday: [],
     Sunday: [],
   },
-  nextWeek: nextWeekRoster
+  nextWeek: nextWeekRoster,
 };
 
 async function restoreDatabase() {
   try {
     console.log('Restoring complete database with roster data...');
-    
+
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -113,8 +113,8 @@ async function restoreDatabase() {
       body: JSON.stringify({
         employees: allEmployees,
         rosters: rosters,
-        timeLogs: []
-      })
+        timeLogs: [],
+      }),
     });
 
     if (!response.ok) {
@@ -124,9 +124,15 @@ async function restoreDatabase() {
     const result = await response.json();
     console.log('✅ Database restored successfully!');
     console.log(`\n📊 Employees by Department:`);
-    console.log(`   - Kitchen: ${result.employees.filter(e => e.department === 'Kitchen').length} (includes Fareeq)`);
-    console.log(`   - FOH: ${result.employees.filter(e => e.department === 'FOH').length}`);
-    console.log(`   - Stewarding: ${result.employees.filter(e => e.department === 'Stewarding').length}`);
+    console.log(
+      `   - Kitchen: ${
+        result.employees.filter((e) => e.department === 'Kitchen').length
+      } (includes Fareeq)`,
+    );
+    console.log(`   - FOH: ${result.employees.filter((e) => e.department === 'FOH').length}`);
+    console.log(
+      `   - Stewarding: ${result.employees.filter((e) => e.department === 'Stewarding').length}`,
+    );
     console.log(`\n📅 Next Week Roster:`);
     Object.entries(result.rosters.nextWeek).forEach(([day, shifts]) => {
       console.log(`   - ${day}: ${shifts.length} shifts`);
