@@ -89,9 +89,7 @@ const ShiftModal: React.FC<ShiftModalProps> = ({
     });
   };
 
-  const handleEmployeeSelection = (selectedId: number) => {
-    setEmployeeId(selectedId);
-  };
+  // handleEmployeeSelection removed (not used)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

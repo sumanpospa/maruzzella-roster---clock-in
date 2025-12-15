@@ -5,17 +5,9 @@ interface DashboardViewProps {
   currentUser: Employee;
   employees: Employee[];
   onSelectDepartment: (department: 'Kitchen' | 'FOH' | 'Stewarding') => void;
-  showBackButton?: boolean;
-  onBackToDashboard?: () => void;
 }
 
-const DashboardView: React.FC<DashboardViewProps> = ({
-  currentUser,
-  employees,
-  onSelectDepartment,
-  showBackButton = false,
-  onBackToDashboard,
-}) => {
+const DashboardView: React.FC<DashboardViewProps> = ({ currentUser, employees, onSelectDepartment }) => {
   const isManager = currentUser.role === 'Manager';
   const isGuest = currentUser.id === 0;
 

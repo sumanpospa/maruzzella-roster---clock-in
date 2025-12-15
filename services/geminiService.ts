@@ -2,7 +2,8 @@ import { GoogleGenAI } from '@google/genai';
 import { Shift, Employee } from '../types';
 
 // Support Vite define() injection and optional key
-const API_KEY = (process.env as any)?.API_KEY || (process.env as any)?.GEMINI_API_KEY;
+const env = process.env as Record<string, string | undefined>;
+const API_KEY = env.API_KEY || env.GEMINI_API_KEY;
 const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
 
 export const generateDailyBriefing = async (

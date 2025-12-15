@@ -101,8 +101,8 @@ const EmployeeModal: React.FC<EmployeeModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           {showRoleWarning && (
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-              <p className="text-sm text-amber-800">
-                ⚠️ This employee's role has been updated to match their department's available
+                <p className="text-sm text-amber-800">
+                ⚠️ This employee&apos;s role has been updated to match their department&apos;s available
                 roles.
               </p>
             </div>

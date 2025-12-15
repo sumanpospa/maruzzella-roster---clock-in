@@ -36,7 +36,7 @@ const AiBriefing: React.FC<AiBriefingProps> = ({ todaysShifts, employees, curren
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
           <h3 className="text-xl font-bold text-slate-800">AI Daily Briefing</h3>
-          <p className="text-stone-600 mt-1">Get a motivational summary for today's team.</p>
+          <p className="text-stone-600 mt-1">Get a motivational summary for today&apos;s team.</p>
         </div>
         <button
           onClick={handleGenerateBriefing}
@@ -45,7 +45,7 @@ const AiBriefing: React.FC<AiBriefingProps> = ({ todaysShifts, employees, curren
           title={
             !isManager
               ? 'Only managers can generate briefings.'
-              : "Generate a briefing for today's shift"
+              : "Generate a briefing for today&apos;s shift"
           }
         >
           {isLoading ? 'Generating...' : 'Generate Briefing'}

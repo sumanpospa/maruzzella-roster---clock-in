@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Fix: Corrected import path to be relative.
-import { Employee, Roster, DayOfWeek, Shift, Rosters } from '../types';
+import { Employee, DayOfWeek, Rosters } from '../types';
 import EmployeeModal from './EmployeeModal';
 
 interface EmployeeCardProps {
@@ -211,7 +211,7 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({
           <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
             <p className="text-stone-600">No employees have been added yet.</p>
 
-            <p className="text-sm text-stone-500 mt-2">Click "Add Employee" to get started.</p>
+            <p className="text-sm text-stone-500 mt-2">Click &quot;Add Employee&quot; to get started.</p>
           </div>
         )}
       </div>

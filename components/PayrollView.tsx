@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Fix: Corrected import path to be relative.
-import { Employee, TimeLog, Department } from '../types';
+import { Employee, TimeLog } from '../types';
 import TimeLogModal from './TimeLogModal';
 
 const formatDuration = (milliseconds: number): string => {
@@ -425,7 +425,7 @@ const PayrollView: React.FC<PayrollViewProps> = ({
           <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
             <p className="text-stone-600">No employees found.</p>
             <p className="text-sm text-stone-500 mt-2">
-              Add employees in the "Employees" tab to start tracking time.
+              Add employees in the &quot;Employees&quot; tab to start tracking time.
             </p>
           </div>
         )}

@@ -8,7 +8,7 @@ import PayrollView from './components/PayrollView';
 import LoginView from './components/LoginView';
 // Fix: Corrected import paths to be relative.
 import { INITIAL_EMPLOYEES, WEEKLY_ROSTER } from './constants';
-import { Employee, Roster, TimeLog, Shift, Rosters, Department } from './types';
+import { Employee, TimeLog, Rosters, Department } from './types';
 import { getState as apiGetState, saveState as apiSaveState } from './services/api';
 
 type View = 'dashboard' | 'roster' | 'clock-in' | 'employees' | 'payroll';
@@ -21,7 +21,7 @@ type View = 'dashboard' | 'roster' | 'clock-in' | 'employees' | 'payroll';
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<View>('dashboard');
-  const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
+  const [, setSelectedDepartment] = useState<Department | null>(null);
   const [showLoginForDepartment, setShowLoginForDepartment] = useState<Department | null>(null);
   const [employees, setEmployees] = useState<Employee[]>(INITIAL_EMPLOYEES);
   const [rosters, setRosters] = useState<Rosters>({
@@ -108,12 +108,15 @@ const App: React.FC = () => {
         }
         if (Array.isArray(remote.timeLogs) && remote.timeLogs.length > 0) {
           // Rehydrate dates
-          const parsed = remote.timeLogs.map((log: any) => ({
-            ...log,
-            clockInTime: new Date(log.clockInTime),
-            clockOutTime: log.clockOutTime ? new Date(log.clockOutTime) : null,
-          }));
-          setTimeLogs(parsed);
+          const parsed = remote.timeLogs.map((log) => {
+            const l = log as Record<string, unknown>;
+            return {
+              ...(l as Record<string, unknown>),
+              clockInTime: new Date(String(l['clockInTime'])),
+              clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
+            } as unknown as TimeLog;
+          });
+          setTimeLogs(parsed as TimeLog[]);
         }
       } catch (error) {
         console.warn('Could not load remote state; continuing with local defaults.', error);
@@ -237,22 +240,7 @@ const App: React.FC = () => {
   const isManager = currentUser?.role === 'Manager';
   const isKitchenDepartment = currentUser?.department === 'Kitchen';
 
-  const navButtonClasses = (view: View) =>
-    `px-4 py-3 text-sm font-medium rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ${
-      activeView === view
-        ? 'bg-orange-600 text-white shadow-lg'
-        : 'bg-white text-slate-700 hover:bg-stone-100'
-    }`;
-
-  const handleNavClick = (view: View) => {
-    if (view === 'roster' && !isKitchenDepartment) {
-      return; // FOH and Stewarding can't access roster
-    }
-    if (view === 'employees' && !isManager) {
-      return; // Only managers can access employee management
-    }
-    setActiveView(view);
-  };
+  // nav helpers removed (not used)
 
   const AccessDenied = () => (
     <div className="text-center p-8 bg-white rounded-xl shadow-sm border border-stone-200">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 // Fix: Corrected import path to be relative.
-import { Employee, TimeLog, ClockStatus, Department } from '../types';
+import { Employee, TimeLog, ClockStatus } from '../types';
 
 interface EmployeeClockCardProps {
   employee: Employee;

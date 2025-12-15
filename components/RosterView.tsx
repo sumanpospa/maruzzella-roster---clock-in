@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Fix: Corrected import path to be relative.
-import { DayOfWeek, Shift, Roster, Employee, Rosters } from '../types';
+import { DayOfWeek, Shift, Employee, Rosters } from '../types';
 import ShiftModal from './ShiftModal';
 import AiBriefing from './AiBriefing';
 import { generateRosterPDF } from '../utils/pdfGenerator';
@@ -38,7 +38,6 @@ interface RosterViewProps {
   employees: Employee[];
   rosters: Rosters;
   setRosters: React.Dispatch<React.SetStateAction<Rosters>>;
-  setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
   currentUser: Employee;
   onNavigateToEmployees: () => void;
   onNavigateToClockIn: () => void;
@@ -48,7 +47,6 @@ const RosterView: React.FC<RosterViewProps> = ({
   employees,
   rosters,
   setRosters,
-  setEmployees,
   currentUser,
   onNavigateToEmployees,
   onNavigateToClockIn,

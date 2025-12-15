@@ -105,7 +105,7 @@ export const generateRosterPDF = (
         });
 
         let yOffset = 0;
-        shiftTexts.forEach((text, idx) => {
+        shiftTexts.forEach((text) => {
           pdf.text(text, x + 2, currentY + 5 + yOffset);
           yOffset += 4;
         });

@@ -30,8 +30,6 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({
   employee,
 }) => {
   const isEditing = log && log.id;
-  const isMobile =
-    typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   const [clockInDate, setClockInDate] = useState('');
   const [clockInTime, setClockInTime] = useState('');

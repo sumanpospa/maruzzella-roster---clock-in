@@ -5,16 +5,10 @@ interface CustomTimePickerProps {
   onChange: (value: string) => void;
   label: string;
   id: string;
-  required?: boolean;
+  // `required` prop removed — not used by the component
 }
 
-const CustomTimePicker: React.FC<CustomTimePickerProps> = ({
-  value,
-  onChange,
-  label,
-  id,
-  required,
-}) => {
+const CustomTimePicker: React.FC<CustomTimePickerProps> = ({ value, onChange, label, id }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [hours, setHours] = useState(value ? value.split(':')[0] : '12');
   const [minutes, setMinutes] = useState(value ? value.split(':')[1] : '00');

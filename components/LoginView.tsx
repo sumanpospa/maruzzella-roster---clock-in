@@ -40,7 +40,7 @@ const LoginView: React.FC<LoginViewProps> = ({ employees, onLogin }) => {
         </h1>
         <p className="text-center text-lg text-stone-500 mb-8">Roster & Time Clock</p>
         <div className="bg-white p-6 rounded-2xl shadow-lg border border-stone-200">
-          <h2 className="text-xl font-bold text-center text-slate-800 mb-6">Who's Clocking In?</h2>
+          <h2 className="text-xl font-bold text-center text-slate-800 mb-6">Who&apos;s Clocking In?</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {employees.map((employee) => (
               <button
