@@ -141,37 +141,52 @@ const App: React.FC = () => {
     const socket = io(API_BASE, { transports: ['websocket', 'polling'] });
     socket.on('connect', () => console.log('[IO] connected', socket.id));
 
-    socket.on('stateUpdated', (newState: any) => {
+    socket.on('stateUpdated', (newState: unknown) => {
       try {
-        if (newState?.employees && Array.isArray(newState.employees)) {
-          setEmployees(newState.employees);
+        if (!newState || typeof newState !== 'object') return;
+        const s = newState as {
+          employees?: unknown;
+          rosters?: unknown;
+          timeLogs?: unknown;
+        };
+
+        if (Array.isArray(s.employees)) {
+          setEmployees(s.employees as Employee[]);
         }
-        if (newState?.rosters) {
+
+        if (s.rosters && typeof s.rosters === 'object') {
+          const r = s.rosters as any;
           const normalizedRosters = {
-            currentWeek: newState.rosters.currentWeek || newState.rosters.thisWeek || WEEKLY_ROSTER,
-            nextWeek: newState.rosters.nextWeek || WEEKLY_ROSTER,
+            currentWeek: r.currentWeek || r.thisWeek || WEEKLY_ROSTER,
+            nextWeek: r.nextWeek || WEEKLY_ROSTER,
           };
           setRosters(normalizedRosters);
         }
-        if (Array.isArray(newState?.timeLogs)) {
-          const parsed = newState.timeLogs.map((log: any) => ({
-            ...log,
-            clockInTime: new Date(String(log.clockInTime)),
-            clockOutTime: log.clockOutTime ? new Date(String(log.clockOutTime)) : null,
-          })) as TimeLog[];
-          setTimeLogs(parsed);
+
+        if (Array.isArray(s.timeLogs)) {
+          const parsed = (s.timeLogs as unknown[]).map((log) => {
+            const l = log as Record<string, unknown>;
+            return {
+              ...(l as Record<string, any>),
+              clockInTime: new Date(String(l['clockInTime'])),
+              clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
+            } as TimeLog;
+          });
+          setTimeLogs(parsed as TimeLog[]);
         }
       } catch (err) {
         console.warn('[IO] stateUpdated handler error', err);
       }
     });
 
-    socket.on('timeLogCreated', (log: any) => {
+    socket.on('timeLogCreated', (log: unknown) => {
       try {
+        if (!log || typeof log !== 'object') return;
+        const l = log as Record<string, unknown>;
         const parsed: TimeLog = {
-          ...log,
-          clockInTime: new Date(String(log.clockInTime)),
-          clockOutTime: log.clockOutTime ? new Date(String(log.clockOutTime)) : null,
+          ...(l as Record<string, any>),
+          clockInTime: new Date(String(l['clockInTime'])),
+          clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
         } as TimeLog;
         setTimeLogs((prev) => {
           if (prev.some((t) => String(t.id) === String(parsed.id))) return prev;
@@ -182,12 +197,14 @@ const App: React.FC = () => {
       }
     });
 
-    socket.on('timeLogUpdated', (log: any) => {
+    socket.on('timeLogUpdated', (log: unknown) => {
       try {
+        if (!log || typeof log !== 'object') return;
+        const l = log as Record<string, unknown>;
         const parsed: TimeLog = {
-          ...log,
-          clockInTime: new Date(String(log.clockInTime)),
-          clockOutTime: log.clockOutTime ? new Date(String(log.clockOutTime)) : null,
+          ...(l as Record<string, any>),
+          clockInTime: new Date(String(l['clockInTime'])),
+          clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
         } as TimeLog;
         setTimeLogs((prev) => prev.map((t) => (String(t.id) === String(parsed.id) ? parsed : t)));
       } catch (err) {
