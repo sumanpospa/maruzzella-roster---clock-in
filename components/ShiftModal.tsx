@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 // Fix: Corrected import path to be relative.
 import { DayOfWeek, Shift, Employee } from '../types';
+import CustomTimePicker from './CustomTimePicker';
 
 interface ShiftModalProps {
     isOpen: boolean;
@@ -152,11 +153,16 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
                 className="bg-white rounded-2xl shadow-xl w-full max-w-md flex flex-col max-h-[calc(100vh-2rem)] animate-scale-in"
                 onClick={e => e.stopPropagation()}
             >
-                {/* Header */}
-                <div className="p-6 pb-4 border-b border-stone-200 shrink-0">
-                  <h2 id="shift-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Entry' : 'Add Entry'}</h2>
-                  <p className="text-stone-500">for {day}</p>
-                </div>
+                                {/* Header */}
+                                <div className="p-6 pb-4 border-b border-stone-200 shrink-0">
+                                    <h2 id="shift-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Entry' : 'Add Entry'}</h2>
+                                    <p className="text-stone-500">for {day}</p>
+                                    {isEditing && (
+                                            <div className="mt-2">
+                                                    <span className="inline-block px-3 py-1 rounded-md bg-amber-50 text-amber-800 text-sm font-medium border border-amber-100">Using custom time picker</span>
+                                            </div>
+                                    )}
+                                </div>
                 
                 {/* Scrollable Form Body */}
                 <form id="shift-modal-form" onSubmit={handleSubmit} className="space-y-4 p-6 flex-1 overflow-y-auto">
@@ -191,45 +197,37 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
                     
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="startTime" className="block text-sm font-medium text-slate-700 mb-1">Start Time</label>
-                            <input
-                                type="time"
+                            <CustomTimePicker
                                 id="startTime"
+                                label="Start Time"
                                 value={startTime}
-                                onChange={(e) => setStartTime(e.target.value)}
-                                className="w-full px-3 py-2 bg-white border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 text-slate-900"
+                                onChange={setStartTime}
                             />
                         </div>
                         <div>
-                            <label htmlFor="endTime" className="block text-sm font-medium text-slate-700 mb-1">End Time</label>
-                            <input
-                                type="time"
+                            <CustomTimePicker
                                 id="endTime"
+                                label="End Time"
                                 value={endTime}
-                                onChange={(e) => setEndTime(e.target.value)}
-                                className="w-full px-3 py-2 bg-white border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 text-slate-900"
+                                onChange={setEndTime}
                             />
                         </div>
                     </div>
                      <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="breakStartTime" className="block text-sm font-medium text-slate-700 mb-1">Break Start (Optional)</label>
-                            <input
-                                type="time"
+                            <CustomTimePicker
                                 id="breakStartTime"
+                                label="Break Start (Optional)"
                                 value={breakStartTime}
-                                onChange={(e) => setBreakStartTime(e.target.value)}
-                                className="w-full px-3 py-2 bg-white border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 text-slate-900"
+                                onChange={setBreakStartTime}
                             />
                         </div>
                         <div>
-                            <label htmlFor="breakEndTime" className="block text-sm font-medium text-slate-700 mb-1">Break End (Optional)</label>
-                            <input
-                                type="time"
+                            <CustomTimePicker
                                 id="breakEndTime"
+                                label="Break End (Optional)"
                                 value={breakEndTime}
-                                onChange={(e) => setBreakEndTime(e.target.value)}
-                                className="w-full px-3 py-2 bg-white border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 text-slate-900"
+                                onChange={setBreakEndTime}
                             />
                         </div>
                     </div>
