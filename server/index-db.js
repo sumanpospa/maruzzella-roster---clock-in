@@ -72,11 +72,8 @@ app.get('/api/state', async (req, res) => {
     // Get shifts with their employees
     const shifts = await prisma.shift.findMany({
       include: {
-        employees: {
-          include: {
-            employee: true,
-          },
-        },
+        // With implicit many-to-many, include the employee objects directly
+        employees: true,
       },
     });
 
@@ -168,11 +165,7 @@ app.post('/api/state', async (req, res) => {
     const updatedEmployees = await prisma.employee.findMany({ orderBy: { id: 'asc' } });
     const updatedShifts = await prisma.shift.findMany({
       include: {
-        employees: {
-          include: {
-            employee: true,
-          },
-        },
+        employees: true,
       },
     });
     const updatedTimeLogs = await prisma.timeLog.findMany({
