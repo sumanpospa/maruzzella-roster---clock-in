@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Employee, TimeLog } from '../types';
+import CustomTimePicker from './CustomTimePicker';
 
 interface TimeLogModalProps {
     isOpen: boolean;
@@ -22,6 +23,7 @@ const formatTimeForInput = (date: Date) => {
 
 const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, onDelete, log, employee }) => {
     const isEditing = log && log.id;
+    const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     const [clockInDate, setClockInDate] = useState('');
     const [clockInTime, setClockInTime] = useState('');
@@ -112,15 +114,27 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                 />
                             </div>
                             <div>
-                                <label htmlFor="clockInTime" className="block text-sm font-medium text-slate-700 mb-1">Time</label>
-                                <input
-                                    type="time"
-                                    id="clockInTime"
-                                    value={clockInTime}
-                                    onChange={(e) => setClockInTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
-                                    required
-                                />
+                                {isMobile || isEditing ? (
+                                    <CustomTimePicker
+                                        id="clockInTime"
+                                        label="Time"
+                                        value={clockInTime}
+                                        onChange={setClockInTime}
+                                        required
+                                    />
+                                ) : (
+                                    <>
+                                        <label htmlFor="clockInTime" className="block text-sm font-medium text-slate-700 mb-1">Time</label>
+                                        <input
+                                            type="time"
+                                            id="clockInTime"
+                                            value={clockInTime}
+                                            onChange={(e) => setClockInTime(e.target.value)}
+                                            className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                            required
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </fieldset>
@@ -139,14 +153,25 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                                 />
                             </div>
                             <div>
-                                <label htmlFor="clockOutTime" className="block text-sm font-medium text-slate-700 mb-1">Time</label>
-                                <input
-                                    type="time"
-                                    id="clockOutTime"
-                                    value={clockOutTime}
-                                    onChange={(e) => setClockOutTime(e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
-                                />
+                                {isMobile || isEditing ? (
+                                    <CustomTimePicker
+                                        id="clockOutTime"
+                                        label="Time"
+                                        value={clockOutTime}
+                                        onChange={setClockOutTime}
+                                    />
+                                ) : (
+                                    <>
+                                        <label htmlFor="clockOutTime" className="block text-sm font-medium text-slate-700 mb-1">Time</label>
+                                        <input
+                                            type="time"
+                                            id="clockOutTime"
+                                            value={clockOutTime}
+                                            onChange={(e) => setClockOutTime(e.target.value)}
+                                            className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500"
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </fieldset>
