@@ -157,11 +157,7 @@ const ShiftModal: React.FC<ShiftModalProps> = ({ isOpen, onClose, onSave, onDele
                                 <div className="p-6 pb-4 border-b border-stone-200 shrink-0">
                                     <h2 id="shift-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Entry' : 'Add Entry'}</h2>
                                     <p className="text-stone-500">for {day}</p>
-                                    {isEditing && (
-                                            <div className="mt-2">
-                                                    <span className="inline-block px-3 py-1 rounded-md bg-amber-50 text-amber-800 text-sm font-medium border border-amber-100">Using custom time picker</span>
-                                            </div>
-                                    )}
+                                        {/* Debug/banner removed for production */}
                                 </div>
                 
                 {/* Scrollable Form Body */}

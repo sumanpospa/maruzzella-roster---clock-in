@@ -97,18 +97,7 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                 <div className="p-6 overflow-y-auto flex-1">
                 <h2 id="timelog-modal-title" className="text-2xl font-bold text-slate-800 mb-2">{isEditing ? 'Edit Time Entry' : 'Add Time Entry'}</h2>
                 <p className="text-stone-500 mb-2">for {employee.name}</p>
-                {isEditing && (
-                    <div className="mb-4 inline-block px-3 py-1 rounded-md bg-amber-50 text-amber-800 text-sm font-medium border border-amber-100">
-                        Using custom time picker
-                    </div>
-                )}
-
-                {/* Debug panel - temporary: shows picker selection state */}
-                {isEditing && (
-                    <pre className="mt-2 p-2 text-xs text-slate-600 bg-stone-50 rounded border border-stone-100">
-{`debug: isEditing=${Boolean(isEditing)} | isMobile=${Boolean(isMobile)}\nuserAgent=${(typeof navigator !== 'undefined' && navigator.userAgent) || 'n/a'}\nlogId=${log?.id ?? 'null'}`}
-                    </pre>
-                )}
+                {/* Debug/banner removed for production */}
                 
                 <div className="space-y-4">
                     <fieldset className="p-4 border border-stone-200 rounded-lg">
