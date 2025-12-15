@@ -112,6 +112,8 @@ run().catch((err) => {
   console.error('[EDGE TEST] ERROR', err);
   try {
     socket.close();
-  } catch (e) {}
+  } catch (e) {
+    console.warn('[EDGE TEST] socket close error', e);
+  }
   process.exit(3);
 });

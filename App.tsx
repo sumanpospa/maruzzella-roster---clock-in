@@ -155,7 +155,7 @@ const App: React.FC = () => {
         }
 
         if (s.rosters && typeof s.rosters === 'object') {
-          const r = s.rosters as any;
+          const r = s.rosters as Record<string, unknown>;
           const normalizedRosters = {
             currentWeek: r.currentWeek || r.thisWeek || WEEKLY_ROSTER,
             nextWeek: r.nextWeek || WEEKLY_ROSTER,
@@ -167,7 +167,7 @@ const App: React.FC = () => {
           const parsed = (s.timeLogs as unknown[]).map((log) => {
             const l = log as Record<string, unknown>;
             return {
-              ...(l as Record<string, any>),
+              ...l,
               clockInTime: new Date(String(l['clockInTime'])),
               clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
             } as TimeLog;
@@ -184,7 +184,7 @@ const App: React.FC = () => {
         if (!log || typeof log !== 'object') return;
         const l = log as Record<string, unknown>;
         const parsed: TimeLog = {
-          ...(l as Record<string, any>),
+          ...l,
           clockInTime: new Date(String(l['clockInTime'])),
           clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
         } as TimeLog;
