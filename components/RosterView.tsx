@@ -329,7 +329,11 @@ const RosterView: React.FC<RosterViewProps> = ({
                     </td>
                     {days.map((day) => {
                       const employeeShifts =
-                        roster[day]?.filter((s) => s.employeeId === employee.id) || [];
+                        roster[day]?.filter(
+                          (s) =>
+                            s.employeeId === employee.id ||
+                            (Array.isArray(s.employeeIds) && s.employeeIds.includes(employee.id)),
+                        ) || [];
                       const todayClass =
                         viewingWeek === 'currentWeek' && day === today
                           ? 'bg-orange-50'
@@ -352,9 +356,16 @@ const RosterView: React.FC<RosterViewProps> = ({
                           <div className="space-y-1.5">
                             {employeeShifts.map((shift) => {
                               const originalIndex = roster[day].findIndex((s) => s === shift);
-                              const colorIndex = (shift.employeeId || 0) % COLORS.length;
-                              // Single employee per shift, no other employees
-                              const otherEmployeesOnShift: Employee[] = [];
+                              const primaryId =
+                                shift.employeeId ?? (Array.isArray(shift.employeeIds) ? shift.employeeIds[0] : 0) ?? 0;
+                              const colorIndex = primaryId % COLORS.length;
+                              const otherEmployeesOnShift: Employee[] =
+                                Array.isArray(shift.employeeIds) && shift.employeeIds.length > 0
+                                  ? shift.employeeIds
+                                      .filter((id) => id !== primaryId)
+                                      .map((id) => employees.find((e) => e.id === id))
+                                      .filter((e): e is Employee => !!e)
+                                  : [];
 
                               return (
                                 <div

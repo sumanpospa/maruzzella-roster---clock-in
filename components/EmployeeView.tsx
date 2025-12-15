@@ -145,7 +145,11 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({
           const dayKey = day as DayOfWeek;
           // Filter out any shifts belonging to the deleted employee
           newRoster[dayKey] = newRoster[dayKey].filter(
-            (shift) => shift.employeeId !== employeeToDelete.id,
+            (shift) =>
+              !(
+                shift.employeeId === employeeToDelete.id ||
+                (Array.isArray(shift.employeeIds) && shift.employeeIds.includes(employeeToDelete.id))
+              ),
           );
         }
         return newRoster;
