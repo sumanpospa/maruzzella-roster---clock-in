@@ -18,4 +18,33 @@ model Employee {
   department String   @default("Kitchen")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  
+  // Relation fields
+  // Use implicit many-to-many relation for shifts (existing DB has an implicit join table `_EmployeeToShift`).
+  shifts   Shift[]
+  timeLogs TimeLog[]
+}
+
+model Shift {
+  id        Int               @id @default(autoincrement())
+  week      String
+  day       String
+  startTime String?
+  endTime   String?
+  notes     String?
+  // Implicit many-to-many relation to `Employee` (Prisma will use the existing join table if present).
+  employees Employee[]
+}
+
+model TimeLog {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  clockIn    DateTime
+  clockOut   DateTime?
+  status     String?
+  date       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  employee   Employee @relation(fields: [employeeId], references: [id])
 }

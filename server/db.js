@@ -65,7 +65,8 @@ export function convertShiftsToRoster(shifts) {
     const week = shift.week === 'currentWeek' ? roster.currentWeek : roster.nextWeek;
     if (week[shift.day]) {
       week[shift.day].push({
-        employeeIds: shift.employees.map((assignment) => assignment.employeeId),
+        // With implicit many-to-many, `shift.employees` is an array of `Employee`
+        employeeIds: shift.employees.map((e) => e.id),
         startTime: shift.startTime,
         endTime: shift.endTime,
         notes: shift.notes,
@@ -79,8 +80,7 @@ export function convertShiftsToRoster(shifts) {
 // Convert frontend roster format to database format
 export async function saveRosterToDatabase(rosters) {
   try {
-    // Delete all existing shifts and assignments
-    await prisma.shiftAssignment.deleteMany();
+    // Delete all existing shifts (the implicit join table rows will be removed automatically)
     await prisma.shift.deleteMany();
 
     const shiftsCreated = [];
@@ -103,12 +103,14 @@ export async function saveRosterToDatabase(rosters) {
             },
           });
 
-          // Then create assignments for each employee
-          for (const employeeId of shift.employeeIds) {
-            await prisma.shiftAssignment.create({
+          // Connect employees to the shift using implicit many-to-many relation
+          if (Array.isArray(shift.employeeIds) && shift.employeeIds.length > 0) {
+            await prisma.shift.update({
+              where: { id: createdShift.id },
               data: {
-                employeeId: employeeId,
-                shiftId: createdShift.id,
+                employees: {
+                  connect: shift.employeeIds.map((employeeId) => ({ id: employeeId })),
+                },
               },
             });
           }

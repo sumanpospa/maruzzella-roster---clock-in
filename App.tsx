@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 import Header from './components/Header';
 import DashboardView from './components/DashboardView';
 import RosterView from './components/RosterView';
@@ -129,6 +130,73 @@ const App: React.FC = () => {
     })();
     return () => {
       mounted = false;
+    };
+  }, []);
+
+  // Real-time sync: listen for server-sent socket events and merge updates
+  useEffect(() => {
+    const API_BASE = (import.meta as { env?: Record<string, string> }).env?.VITE_API_BASE ||
+      'http://localhost:4000';
+
+    const socket = io(API_BASE, { transports: ['websocket', 'polling'] });
+    socket.on('connect', () => console.log('[IO] connected', socket.id));
+
+    socket.on('stateUpdated', (newState: any) => {
+      try {
+        if (newState?.employees && Array.isArray(newState.employees)) {
+          setEmployees(newState.employees);
+        }
+        if (newState?.rosters) {
+          const normalizedRosters = {
+            currentWeek: newState.rosters.currentWeek || newState.rosters.thisWeek || WEEKLY_ROSTER,
+            nextWeek: newState.rosters.nextWeek || WEEKLY_ROSTER,
+          };
+          setRosters(normalizedRosters);
+        }
+        if (Array.isArray(newState?.timeLogs)) {
+          const parsed = newState.timeLogs.map((log: any) => ({
+            ...log,
+            clockInTime: new Date(String(log.clockInTime)),
+            clockOutTime: log.clockOutTime ? new Date(String(log.clockOutTime)) : null,
+          })) as TimeLog[];
+          setTimeLogs(parsed);
+        }
+      } catch (err) {
+        console.warn('[IO] stateUpdated handler error', err);
+      }
+    });
+
+    socket.on('timeLogCreated', (log: any) => {
+      try {
+        const parsed: TimeLog = {
+          ...log,
+          clockInTime: new Date(String(log.clockInTime)),
+          clockOutTime: log.clockOutTime ? new Date(String(log.clockOutTime)) : null,
+        } as TimeLog;
+        setTimeLogs((prev) => {
+          if (prev.some((t) => String(t.id) === String(parsed.id))) return prev;
+          return [...prev, parsed];
+        });
+      } catch (err) {
+        console.warn('[IO] timeLogCreated handler error', err);
+      }
+    });
+
+    socket.on('timeLogUpdated', (log: any) => {
+      try {
+        const parsed: TimeLog = {
+          ...log,
+          clockInTime: new Date(String(log.clockInTime)),
+          clockOutTime: log.clockOutTime ? new Date(String(log.clockOutTime)) : null,
+        } as TimeLog;
+        setTimeLogs((prev) => prev.map((t) => (String(t.id) === String(parsed.id) ? parsed : t)));
+      } catch (err) {
+        console.warn('[IO] timeLogUpdated handler error', err);
+      }
+    });
+
+    return () => {
+      socket.disconnect();
     };
   }, []);
 
