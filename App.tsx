@@ -202,7 +202,7 @@ const App: React.FC = () => {
         if (!log || typeof log !== 'object') return;
         const l = log as Record<string, unknown>;
         const parsed: TimeLog = {
-          ...(l as Record<string, any>),
+          ...l,
           clockInTime: new Date(String(l['clockInTime'])),
           clockOutTime: l['clockOutTime'] ? new Date(String(l['clockOutTime'])) : null,
         } as TimeLog;
