@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const fetch = global.fetch || require('node-fetch');
+import fs from 'fs';
+import path from 'path';
+import nodeFetch from 'node-fetch';
+
+const fetch = globalThis.fetch ?? nodeFetch;
 
 const API = process.env.API_BASE || 'http://localhost:4000';
 const STATE_URL = `${API}/api/state`;
 
-(async function main() {
+;(async function main() {
   try {
     console.log('[INFO] Fetching state from', STATE_URL);
     const res = await fetch(STATE_URL);
@@ -16,7 +18,10 @@ const STATE_URL = `${API}/api/state`;
     // Backup current state
     const backupDir = path.join(process.cwd(), 'backups');
     if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
-    const backupPath = path.join(backupDir, `clockout-backup-${new Date().toISOString().replace(/[:.]/g,'-')}.json`);
+    const backupPath = path.join(
+      backupDir,
+      `clockout-backup-${new Date().toISOString().replace(/[:.]/g, '-')}.json`,
+    );
     fs.writeFileSync(backupPath, JSON.stringify(state, null, 2), 'utf8');
     console.log('[INFO] Backup written to', backupPath);
 
@@ -28,7 +33,9 @@ const STATE_URL = `${API}/api/state`;
     if (!Array.isArray(state.timeLogs)) state.timeLogs = [];
     state.timeLogs = state.timeLogs.map((log) => {
       if (idsToFix.includes(log.employeeId) && (log.clockOutTime === null || log.clockOutTime === undefined)) {
-        console.log(`[PATCH] Setting clockOutTime for employeeId=${log.employeeId} (log id=${log.id}) to ${fourteenHoursAgo}`);
+        console.log(
+          `[PATCH] Setting clockOutTime for employeeId=${log.employeeId} (log id=${log.id}) to ${fourteenHoursAgo}`,
+        );
         changed++;
         return { ...log, clockOutTime: fourteenHoursAgo };
       }
@@ -48,8 +55,8 @@ const STATE_URL = `${API}/api/state`;
       body: JSON.stringify(state),
     });
     if (!saveRes.ok) throw new Error(`POST failed: ${saveRes.status}`);
-    const saved = await saveRes.json();
-    console.log('[OK] Updated state saved. Changed entries:', changed);
+    const saveJson = await saveRes.json();
+    console.log('[OK] Updated state saved. Changed entries:', changed, 'response:', saveJson);
     process.exit(0);
   } catch (err) {
     console.error('[ERROR]', err.message || err);
