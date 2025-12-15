@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Fix: Corrected import path to be relative.
-import { Employee, DayOfWeek, Rosters } from '../types';
+import { Employee, DayOfWeek, Rosters, Roster } from '../types';
 import EmployeeModal from './EmployeeModal';
 
 interface EmployeeCardProps {

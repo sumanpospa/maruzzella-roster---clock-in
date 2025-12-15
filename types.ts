@@ -6,7 +6,8 @@ export type EmployeeRole =
   | 'Supervisor'
   | 'Bar Tender'
   | 'Food Runner'
-  | 'Waiter';
+  | 'Waiter'
+  | 'Staff';
 
 export type Department = 'Kitchen' | 'FOH' | 'Stewarding';
 
@@ -19,7 +20,8 @@ export interface Employee {
 }
 
 export interface Shift {
-  employeeId: number; // Single employee per shift
+  employeeId?: number; // Single employee per shift (optional to allow multi-employee shifts)
+  employeeIds?: number[]; // Optional list of employee IDs for multi-employee shifts
   role?: string; // Role for this shift (e.g., "Manager", "Chef")
   startTime?: string; // e.g., "09:00"
   endTime?: string; // e.g., "17:00"
