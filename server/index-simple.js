@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
+import { createServer } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 
 const prisma = new PrismaClient();
 
@@ -66,6 +68,20 @@ process.on('unhandledRejection', (reason) => {
 });
 
 const app = express();
+
+// Create HTTP server and attach Socket.IO
+const httpServer = createServer(app);
+const io = new SocketIOServer(httpServer, {
+  cors: {
+    origin: true,
+    methods: ['GET', 'POST'],
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('[IO] Client connected', socket.id);
+  socket.on('disconnect', () => console.log('[IO] Client disconnected', socket.id));
+});
 
 // CORS configuration
 const envOrigins = [
@@ -233,11 +249,96 @@ app.post('/api/state', async (req, res) => {
       },
     });
 
+    // Broadcast updated state to connected clients
+    try {
+      io.emit('stateUpdated', state);
+      if (state && state.timeLogs) io.emit('timeLogsUpdated', state.timeLogs);
+    } catch (err) {
+      console.warn('[IO] Failed to emit stateUpdated', err?.message || err);
+    }
+
     console.log('[DB] State saved successfully');
     res.json(state);
   } catch (error) {
     console.error('[API ERROR] /api/state POST:', error);
     res.status(500).json({ error: 'Failed to save state' });
+  }
+});
+
+// Helper to read current persisted state (from special employee record)
+async function readPersistedState() {
+  try {
+    const stateRecord = await prisma.employee.findFirst({ where: { id: 999999 } });
+    if (stateRecord && stateRecord.pin) {
+      return JSON.parse(stateRecord.pin);
+    }
+  } catch (err) {
+    console.warn('[DB] readPersistedState error', err?.message || err);
+  }
+  // fallback to default
+  return getDefaultState();
+}
+
+// Helper to save state (upsert)
+async function savePersistedState(state) {
+  await prisma.employee.upsert({
+    where: { id: 999999 },
+    update: { name: '_STATE_', role: 'System', pin: JSON.stringify(state) },
+    create: { id: 999999, name: '_STATE_', role: 'System', pin: JSON.stringify(state) },
+  });
+}
+
+// Fine-grained API: create a timeLog (clock-in)
+app.post('/api/timeLogs', async (req, res) => {
+  try {
+    const payload = req.body || {};
+    const state = await readPersistedState();
+    state.timeLogs = Array.isArray(state.timeLogs) ? state.timeLogs : [];
+
+    const newLog = {
+      id: Date.now(),
+      employeeId: payload.employeeId,
+      clockInTime: new Date().toISOString(),
+      clockOutTime: null,
+      status: payload.status || 'pending',
+    };
+
+    state.timeLogs.push(newLog);
+    await savePersistedState(state);
+
+    // Broadcast the new log and updated state
+    io.emit('timeLogCreated', newLog);
+    io.emit('stateUpdated', state);
+
+    res.status(201).json(newLog);
+  } catch (err) {
+    console.error('[API ERROR] /api/timeLogs POST:', err);
+    res.status(500).json({ error: 'Failed to create timeLog' });
+  }
+});
+
+// Fine-grained API: update a timeLog (patch fields like clockOutTime)
+app.patch('/api/timeLogs/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const changes = req.body || {};
+    const state = await readPersistedState();
+    state.timeLogs = Array.isArray(state.timeLogs) ? state.timeLogs : [];
+
+    const idx = state.timeLogs.findIndex((t) => Number(t.id) === id);
+    if (idx === -1) return res.status(404).json({ error: 'timeLog not found' });
+
+    const updated = { ...state.timeLogs[idx], ...changes };
+    state.timeLogs[idx] = updated;
+    await savePersistedState(state);
+
+    io.emit('timeLogUpdated', updated);
+    io.emit('stateUpdated', state);
+
+    res.json(updated);
+  } catch (err) {
+    console.error('[API ERROR] /api/timeLogs PATCH:', err);
+    res.status(500).json({ error: 'Failed to update timeLog' });
   }
 });
 
@@ -256,7 +357,7 @@ async function startServer(port, remainingAttempts) {
     console.error('[DB WARN] Database connection failed:', error.message);
   }
 
-  const server = app.listen(port, HOST, () => {
+  const server = httpServer.listen(port, HOST, () => {
     console.log(
       `[LISTEN] Maruzzella backend running on http://${
         HOST === '0.0.0.0' ? 'localhost' : HOST

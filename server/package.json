@@ -2,6 +2,7 @@
   "name": "maruzzella-backend",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "node index-db.js",
     "build": "prisma generate",

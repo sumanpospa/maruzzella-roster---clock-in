@@ -118,13 +118,34 @@ const ClockInView: React.FC<ClockInViewProps> = ({
       alert('This employee is already clocked in.');
       return;
     }
-    const newLog: TimeLog = {
+
+    // Optimistic UI: add local log immediately
+    const optimisticLog: TimeLog = {
       id: Date.now(),
       employeeId,
       clockInTime: new Date(),
       clockOutTime: null,
     };
-    setTimeLogs((prev) => [...prev, newLog]);
+    setTimeLogs((prev) => [...prev, optimisticLog]);
+
+    // Persist via fine-grained API
+    (async () => {
+      try {
+        const API_BASE = (import.meta as { env?: Record<string, string> }).env?.VITE_API_BASE ||
+          'http://localhost:4000';
+        const res = await fetch(`${API_BASE}/api/timeLogs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ employeeId }),
+        });
+        if (!res.ok) throw new Error(`Clock-in failed: ${res.status}`);
+        const created = await res.json();
+        // replace optimistic id with server id
+        setTimeLogs((prev) => prev.map((t) => (t.id === optimisticLog.id ? { ...created, clockInTime: new Date(String(created.clockInTime)), clockOutTime: null } as TimeLog : t)));
+      } catch (err) {
+        console.error('Clock-in API error', err);
+      }
+    })();
 
     // Show confirmation feedback
     const employee = employees.find((e) => e.id === employeeId);
@@ -133,42 +154,47 @@ const ClockInView: React.FC<ClockInViewProps> = ({
   };
 
   const handleClockOut = (employeeId: number) => {
-    setTimeLogs((prev) => {
-      const newLogs = [...prev];
-      // Fix: Replaced `findLastIndex` with a manual reverse loop for broader JS environment compatibility.
-      let activeLogIndex = -1;
-      for (let i = newLogs.length - 1; i >= 0; i--) {
-        if (newLogs[i].employeeId === employeeId && newLogs[i].clockOutTime === null) {
-          activeLogIndex = i;
-          break;
-        }
+    // Find active log id
+    const active = timeLogs
+      .slice()
+      .reverse()
+      .find((l) => l.employeeId === employeeId && l.clockOutTime === null);
+    if (!active) {
+      alert('Error: Cannot find an active shift to clock out from.');
+      return;
+    }
+
+    // Optimistic UI update
+    setTimeLogs((prev) =>
+      prev.map((t) => (String(t.id) === String(active.id) ? { ...t, clockOutTime: new Date(), status: 'pending' } : t)),
+    );
+
+    // Persist via PATCH to fine-grained API
+    (async () => {
+      try {
+        const API_BASE = (import.meta as { env?: Record<string, string> }).env?.VITE_API_BASE ||
+          'http://localhost:4000';
+        const res = await fetch(`${API_BASE}/api/timeLogs/${active.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clockOutTime: new Date().toISOString(), status: 'pending' }),
+        });
+        if (!res.ok) throw new Error(`Clock-out failed: ${res.status}`);
+        const updated = await res.json();
+        setTimeLogs((prev) => prev.map((t) => (String(t.id) === String(updated.id) ? { ...t, clockOutTime: new Date(String(updated.clockOutTime)), status: updated.status || 'pending' } : t)));
+      } catch (err) {
+        console.error('Clock-out API error', err);
       }
+    })();
 
-      if (activeLogIndex === -1) {
-        alert('Error: Cannot find an active shift to clock out from.');
-        return prev;
-      }
-
-      newLogs[activeLogIndex] = {
-        ...newLogs[activeLogIndex],
-        clockOutTime: new Date(),
-        status: 'pending',
-      };
-
-      // Show confirmation feedback
-      const employee = employees.find((e) => e.id === employeeId);
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      console.log(`✅ Clock Out: ${employee?.name} at ${time}`);
-
-      // Visual confirmation
-      setTimeout(() => {
-        alert(
-          `✅ ${employee?.name} clocked out at ${time}\n\nPlease wait for "Saved" confirmation before closing the app.`,
-        );
-      }, 100);
-
-      return newLogs;
-    });
+    // Visual confirmation
+    const employee = employees.find((e) => e.id === employeeId);
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setTimeout(() => {
+      alert(
+        `✅ ${employee?.name} clocked out at ${time}\n\nPlease wait for "Saved" confirmation before closing the app.`,
+      );
+    }, 100);
   };
 
   return (
