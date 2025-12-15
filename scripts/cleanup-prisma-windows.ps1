@@ -19,7 +19,7 @@ foreach ($p in $paths) {
       Remove-Item -LiteralPath $full -Force -ErrorAction Stop
       Write-Output "Removed: $p"
     } catch {
-      Write-Warning "Failed to remove $p: $($_.Exception.Message)"
+      Write-Warning ("Failed to remove {0}: {1}" -f ${p}, $_.Exception.Message)
     }
   } else {
     Write-Output "Not found: $p"
