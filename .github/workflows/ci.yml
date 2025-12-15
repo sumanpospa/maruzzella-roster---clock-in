@@ -27,7 +27,7 @@ jobs:
           npm run lint
 
       - name: Type-check
-        run: npx -y typescript tsc --noEmit
+        run: npm run typecheck
 
       - name: Build
         run: npm run build
