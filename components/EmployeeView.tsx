@@ -164,6 +164,13 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({
 
   // Filter employees to show only current user's department
   const departmentEmployees = employees.filter((e) => e.department === currentUser.department);
+  
+  // Sort employees: Managers first, then by name
+  const sortedEmployees = [...departmentEmployees].sort((a, b) => {
+    if (a.role === 'Manager' && b.role !== 'Manager') return -1;
+    if (a.role !== 'Manager' && b.role === 'Manager') return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <div>
@@ -200,9 +207,18 @@ const EmployeeView: React.FC<EmployeeViewProps> = ({
         </div>
       </div>
 
-      <div className="space-y-4">
-        {departmentEmployees.length > 0 ? (
-          departmentEmployees.map((employee) => (
+      <div 
+        style={{ 
+          maxHeight: '600px', 
+          overflowY: 'scroll',
+          border: '2px solid #e5e7eb',
+          borderRadius: '8px',
+          padding: '8px'
+        }} 
+        className="space-y-4"
+      >
+        {sortedEmployees.length > 0 ? (
+          sortedEmployees.map((employee) => (
             <EmployeeCard
               key={employee.id}
               employee={employee}
