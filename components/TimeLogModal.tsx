@@ -102,6 +102,13 @@ const TimeLogModal: React.FC<TimeLogModalProps> = ({ isOpen, onClose, onSave, on
                         Using custom time picker
                     </div>
                 )}
+
+                {/* Debug panel - temporary: shows picker selection state */}
+                {isEditing && (
+                    <pre className="mt-2 p-2 text-xs text-slate-600 bg-stone-50 rounded border border-stone-100">
+{`debug: isEditing=${Boolean(isEditing)} | isMobile=${Boolean(isMobile)}\nuserAgent=${(typeof navigator !== 'undefined' && navigator.userAgent) || 'n/a'}\nlogId=${log?.id ?? 'null'}`}
+                    </pre>
+                )}
                 
                 <div className="space-y-4">
                     <fieldset className="p-4 border border-stone-200 rounded-lg">
