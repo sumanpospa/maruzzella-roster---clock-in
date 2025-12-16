@@ -1,0 +1,189 @@
+﻿2025-12-15T02:39:08.9422241Z Current runner version: '2.329.0'
+2025-12-15T02:39:08.9448329Z ##[group]Runner Image Provisioner
+2025-12-15T02:39:08.9449663Z Hosted Compute Agent
+2025-12-15T02:39:08.9450405Z Version: 20251202.455
+2025-12-15T02:39:08.9451273Z Commit: 6c10caca4910e198df60de23adf20ad317c474e3
+2025-12-15T02:39:08.9452339Z Build Date: 2025-12-02T15:56:59Z
+2025-12-15T02:39:08.9453218Z Worker ID: {337e8745-757f-4408-b700-11f390891221}
+2025-12-15T02:39:08.9454223Z ##[endgroup]
+2025-12-15T02:39:08.9454940Z ##[group]Operating System
+2025-12-15T02:39:08.9455759Z Ubuntu
+2025-12-15T02:39:08.9456398Z 24.04.3
+2025-12-15T02:39:08.9457042Z LTS
+2025-12-15T02:39:08.9457647Z ##[endgroup]
+2025-12-15T02:39:08.9458390Z ##[group]Runner Image
+2025-12-15T02:39:08.9459182Z Image: ubuntu-24.04
+2025-12-15T02:39:08.9459974Z Version: 20251208.163.1
+2025-12-15T02:39:08.9461514Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251208.163/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-15T02:39:08.9463887Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251208.163
+2025-12-15T02:39:08.9465348Z ##[endgroup]
+2025-12-15T02:39:08.9466348Z ##[group]GITHUB_TOKEN Permissions
+2025-12-15T02:39:08.9468159Z Contents: read
+2025-12-15T02:39:08.9468617Z Metadata: read
+2025-12-15T02:39:08.9469119Z Packages: read
+2025-12-15T02:39:08.9469746Z ##[endgroup]
+2025-12-15T02:39:08.9471725Z Secret source: Actions
+2025-12-15T02:39:08.9472706Z Prepare workflow directory
+2025-12-15T02:39:08.9768868Z Prepare all required actions
+2025-12-15T02:39:08.9805364Z Getting action download info
+2025-12-15T02:39:09.3966825Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-15T02:39:09.4953681Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-15T02:39:10.2755970Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-15T02:39:11.0662482Z Complete job name: build
+2025-12-15T02:39:11.1276372Z ##[group]Run actions/checkout@v4
+2025-12-15T02:39:11.1277024Z with:
+2025-12-15T02:39:11.1277413Z   repository: sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:39:11.1278192Z   token: ***
+2025-12-15T02:39:11.1278479Z   ssh-strict: true
+2025-12-15T02:39:11.1278808Z   ssh-user: git
+2025-12-15T02:39:11.1279158Z   persist-credentials: true
+2025-12-15T02:39:11.1279860Z   clean: true
+2025-12-15T02:39:11.1280173Z   sparse-checkout-cone-mode: true
+2025-12-15T02:39:11.1280587Z   fetch-depth: 1
+2025-12-15T02:39:11.1280907Z   fetch-tags: false
+2025-12-15T02:39:11.1281228Z   show-progress: true
+2025-12-15T02:39:11.1281568Z   lfs: false
+2025-12-15T02:39:11.1281836Z   submodules: false
+2025-12-15T02:39:11.1282163Z   set-safe-directory: true
+2025-12-15T02:39:11.1282755Z ##[endgroup]
+2025-12-15T02:39:11.2299655Z Syncing repository: sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:39:11.2301316Z ##[group]Getting Git version info
+2025-12-15T02:39:11.2302191Z Working directory is '/home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in'
+2025-12-15T02:39:11.2303244Z [command]/usr/bin/git version
+2025-12-15T02:39:11.2348330Z git version 2.52.0
+2025-12-15T02:39:11.2370835Z ##[endgroup]
+2025-12-15T02:39:11.2390976Z Temporarily overriding HOME='/home/runner/work/_temp/125a780d-202d-4531-91a3-4dbaf0693b06' before making global git config changes
+2025-12-15T02:39:11.2391867Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-15T02:39:11.2395839Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T02:39:11.2431915Z Deleting the contents of '/home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in'
+2025-12-15T02:39:11.2434076Z ##[group]Initializing the repository
+2025-12-15T02:39:11.2437911Z [command]/usr/bin/git init /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T02:39:11.2530899Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-15T02:39:11.2531820Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-15T02:39:11.2532452Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-15T02:39:11.2532928Z hint: call:
+2025-12-15T02:39:11.2533485Z hint:
+2025-12-15T02:39:11.2534103Z hint: 	git config --global init.defaultBranch <name>
+2025-12-15T02:39:11.2638877Z hint:
+2025-12-15T02:39:11.2639917Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-15T02:39:11.2640827Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-15T02:39:11.2641526Z hint:
+2025-12-15T02:39:11.2641938Z hint: 	git branch -m <name>
+2025-12-15T02:39:11.2642335Z hint:
+2025-12-15T02:39:11.2642873Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-15T02:39:11.2644001Z Initialized empty Git repository in /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/.git/
+2025-12-15T02:39:11.2645875Z [command]/usr/bin/git remote add origin https://github.com/sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:39:11.2647470Z ##[endgroup]
+2025-12-15T02:39:11.2648246Z ##[group]Disabling automatic garbage collection
+2025-12-15T02:39:11.2648863Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-15T02:39:11.2650404Z ##[endgroup]
+2025-12-15T02:39:11.2651061Z ##[group]Setting up auth
+2025-12-15T02:39:11.2651777Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-15T02:39:11.2653811Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-15T02:39:11.2941470Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-15T02:39:11.2966601Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-15T02:39:11.3137180Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-15T02:39:11.3164248Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-15T02:39:11.3338724Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-15T02:39:11.3367937Z ##[endgroup]
+2025-12-15T02:39:11.3368873Z ##[group]Fetching the repository
+2025-12-15T02:39:11.3377746Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +60f6a421c058e0f2b9241dbce1d5f5f2d3941d21:refs/remotes/origin/main
+2025-12-15T02:39:11.8123125Z From https://github.com/sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:39:11.8124624Z  * [new ref]         60f6a421c058e0f2b9241dbce1d5f5f2d3941d21 -> origin/main
+2025-12-15T02:39:11.8149902Z ##[endgroup]
+2025-12-15T02:39:11.8150522Z ##[group]Determining the checkout info
+2025-12-15T02:39:11.8152149Z ##[endgroup]
+2025-12-15T02:39:11.8157932Z [command]/usr/bin/git sparse-checkout disable
+2025-12-15T02:39:11.8195781Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-15T02:39:11.8218410Z ##[group]Checking out the ref
+2025-12-15T02:39:11.8223069Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-15T02:39:11.8314883Z Switched to a new branch 'main'
+2025-12-15T02:39:11.8316695Z branch 'main' set up to track 'origin/main'.
+2025-12-15T02:39:11.8321456Z ##[endgroup]
+2025-12-15T02:39:11.8355011Z [command]/usr/bin/git log -1 --format=%H
+2025-12-15T02:39:11.8374930Z 60f6a421c058e0f2b9241dbce1d5f5f2d3941d21
+2025-12-15T02:39:11.8572608Z ##[group]Run actions/setup-node@v4
+2025-12-15T02:39:11.8572860Z with:
+2025-12-15T02:39:11.8573034Z   node-version: 20.x
+2025-12-15T02:39:11.8573214Z   cache: npm
+2025-12-15T02:39:11.8573497Z   always-auth: false
+2025-12-15T02:39:11.8573682Z   check-latest: false
+2025-12-15T02:39:11.8574028Z   token: ***
+2025-12-15T02:39:11.8574211Z ##[endgroup]
+2025-12-15T02:39:12.0244425Z Found in cache @ /opt/hostedtoolcache/node/20.19.6/x64
+2025-12-15T02:39:12.0250654Z ##[group]Environment details
+2025-12-15T02:39:14.2751802Z node: v20.19.6
+2025-12-15T02:39:14.2752267Z npm: 10.8.2
+2025-12-15T02:39:14.2753404Z yarn: 1.22.22
+2025-12-15T02:39:14.2754345Z ##[endgroup]
+2025-12-15T02:39:14.2773738Z [command]/opt/hostedtoolcache/node/20.19.6/x64/bin/npm config get cache
+2025-12-15T02:39:14.5050904Z /home/runner/.npm
+2025-12-15T02:39:14.7690772Z npm cache is not found
+2025-12-15T02:39:14.7771171Z ##[group]Run npm ci
+2025-12-15T02:39:14.7771456Z [36;1mnpm ci[0m
+2025-12-15T02:39:14.7802737Z shell: /usr/bin/bash -e {0}
+2025-12-15T02:39:14.7802995Z ##[endgroup]
+2025-12-15T02:39:17.5054047Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2025-12-15T02:39:19.0410587Z 
+2025-12-15T02:39:19.0411377Z > maruzzella-roster-clock-in@0.0.0 postinstall
+2025-12-15T02:39:19.0412018Z > cd server && npm ci
+2025-12-15T02:39:19.0412281Z 
+2025-12-15T02:39:24.4202048Z 
+2025-12-15T02:39:24.4202800Z > maruzzella-backend@0.0.0 postinstall
+2025-12-15T02:39:24.4203349Z > prisma generate
+2025-12-15T02:39:24.4203562Z 
+2025-12-15T02:39:25.1760118Z Environment variables loaded from .env
+2025-12-15T02:39:25.1769122Z Prisma schema loaded from prisma/schema.prisma
+2025-12-15T02:39:25.3314348Z ┌─────────────────────────────────────────────────────────┐
+2025-12-15T02:39:25.3314909Z 
+2025-12-15T02:39:25.3316052Z ✔ Generated Prisma Client (v6.19.0) to ./node_modules/@prisma/client in 57ms
+2025-12-15T02:39:25.3316996Z │  Update available 6.19.0 -> 7.1.0                       │
+2025-12-15T02:39:25.3317920Z │                                                         │
+2025-12-15T02:39:25.3319820Z │  This is a major update - please follow the guide at    │
+2025-12-15T02:39:25.3320659Z │  https://pris.ly/d/major-version-upgrade                │
+2025-12-15T02:39:25.3321420Z │                                                         │
+2025-12-15T02:39:25.3322116Z │  Run the following to update                            │
+2025-12-15T02:39:25.3322826Z │    npm i --save-dev prisma@latest                       │
+2025-12-15T02:39:25.3323520Z │    npm i @prisma/client@latest                          │
+2025-12-15T02:39:25.3324189Z └─────────────────────────────────────────────────────────┘
+2025-12-15T02:39:25.3326068Z 
+2025-12-15T02:39:25.3553186Z Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+2025-12-15T02:39:25.3553772Z 
+2025-12-15T02:39:25.3554580Z Tip: Interested in query caching in just a few lines of code? Try Accelerate today! https://pris.ly/tip-3-accelerate
+2025-12-15T02:39:25.3555184Z 
+2025-12-15T02:39:25.3555205Z 
+2025-12-15T02:39:25.3559255Z added 119 packages, and audited 120 packages in 6s
+2025-12-15T02:39:25.3559823Z 
+2025-12-15T02:39:25.3560063Z 19 packages are looking for funding
+2025-12-15T02:39:25.3560534Z   run `npm fund` for details
+2025-12-15T02:39:25.3565497Z 
+2025-12-15T02:39:25.3566928Z found 0 vulnerabilities
+2025-12-15T02:39:25.3699609Z 
+2025-12-15T02:39:25.3701649Z added 191 packages, and audited 192 packages in 11s
+2025-12-15T02:39:25.3702075Z 
+2025-12-15T02:39:25.3702335Z 36 packages are looking for funding
+2025-12-15T02:39:25.3702840Z   run `npm fund` for details
+2025-12-15T02:39:25.3713563Z 
+2025-12-15T02:39:25.3714595Z found 0 vulnerabilities
+2025-12-15T02:39:25.3865186Z ##[group]Run npx -y typescript tsc --noEmit
+2025-12-15T02:39:25.3865502Z [36;1mnpx -y typescript tsc --noEmit[0m
+2025-12-15T02:39:25.3884167Z shell: /usr/bin/bash -e {0}
+2025-12-15T02:39:25.3884389Z ##[endgroup]
+2025-12-15T02:39:25.7195410Z npm error could not determine executable to run
+2025-12-15T02:39:25.7207812Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-12-15T02_39_25_447Z-debug-0.log
+2025-12-15T02:39:25.7254821Z ##[error]Process completed with exit code 1.
+2025-12-15T02:39:25.7347047Z Post job cleanup.
+2025-12-15T02:39:25.8219068Z [command]/usr/bin/git version
+2025-12-15T02:39:25.8255339Z git version 2.52.0
+2025-12-15T02:39:25.8294297Z Temporarily overriding HOME='/home/runner/work/_temp/d0a0e16e-1d70-46a7-b3ed-c2d194653fb0' before making global git config changes
+2025-12-15T02:39:25.8295846Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-15T02:39:25.8307248Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T02:39:25.8337214Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-15T02:39:25.8366939Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-15T02:39:25.8601137Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-15T02:39:25.8622329Z http.https://github.com/.extraheader
+2025-12-15T02:39:25.8633425Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-15T02:39:25.8659180Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-15T02:39:25.8841379Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-15T02:39:25.8868519Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-15T02:39:25.9140488Z Cleaning up orphan processes

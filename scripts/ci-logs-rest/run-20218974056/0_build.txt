@@ -1,0 +1,263 @@
+﻿2025-12-15T02:56:20.6496551Z Current runner version: '2.329.0'
+2025-12-15T02:56:20.6518358Z ##[group]Runner Image Provisioner
+2025-12-15T02:56:20.6519545Z Hosted Compute Agent
+2025-12-15T02:56:20.6520193Z Version: 20251202.455
+2025-12-15T02:56:20.6520827Z Commit: 6c10caca4910e198df60de23adf20ad317c474e3
+2025-12-15T02:56:20.6521489Z Build Date: 2025-12-02T15:56:59Z
+2025-12-15T02:56:20.6522178Z Worker ID: {0fc50bee-99bd-47c2-815f-f87f47508efc}
+2025-12-15T02:56:20.6522869Z ##[endgroup]
+2025-12-15T02:56:20.6523389Z ##[group]Operating System
+2025-12-15T02:56:20.6523974Z Ubuntu
+2025-12-15T02:56:20.6524434Z 24.04.3
+2025-12-15T02:56:20.6524891Z LTS
+2025-12-15T02:56:20.6525296Z ##[endgroup]
+2025-12-15T02:56:20.6525876Z ##[group]Runner Image
+2025-12-15T02:56:20.6526372Z Image: ubuntu-24.04
+2025-12-15T02:56:20.6526902Z Version: 20251208.163.1
+2025-12-15T02:56:20.6527899Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251208.163/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-15T02:56:20.6529773Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251208.163
+2025-12-15T02:56:20.6530891Z ##[endgroup]
+2025-12-15T02:56:20.6531916Z ##[group]GITHUB_TOKEN Permissions
+2025-12-15T02:56:20.6533737Z Contents: read
+2025-12-15T02:56:20.6534257Z Metadata: read
+2025-12-15T02:56:20.6534740Z Packages: read
+2025-12-15T02:56:20.6535379Z ##[endgroup]
+2025-12-15T02:56:20.6537616Z Secret source: Actions
+2025-12-15T02:56:20.6538390Z Prepare workflow directory
+2025-12-15T02:56:20.6848056Z Prepare all required actions
+2025-12-15T02:56:20.6885558Z Getting action download info
+2025-12-15T02:56:20.9908788Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-15T02:56:21.1043095Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-15T02:56:21.1933349Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-15T02:56:21.3811368Z Complete job name: build
+2025-12-15T02:56:21.4467534Z ##[group]Run actions/checkout@v4
+2025-12-15T02:56:21.4468340Z with:
+2025-12-15T02:56:21.4468815Z   repository: sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:56:21.4469788Z   token: ***
+2025-12-15T02:56:21.4470176Z   ssh-strict: true
+2025-12-15T02:56:21.4470560Z   ssh-user: git
+2025-12-15T02:56:21.4470959Z   persist-credentials: true
+2025-12-15T02:56:21.4471392Z   clean: true
+2025-12-15T02:56:21.4471793Z   sparse-checkout-cone-mode: true
+2025-12-15T02:56:21.4472272Z   fetch-depth: 1
+2025-12-15T02:56:21.4472652Z   fetch-tags: false
+2025-12-15T02:56:21.4473046Z   show-progress: true
+2025-12-15T02:56:21.4473441Z   lfs: false
+2025-12-15T02:56:21.4473809Z   submodules: false
+2025-12-15T02:56:21.4474207Z   set-safe-directory: true
+2025-12-15T02:56:21.4474879Z ##[endgroup]
+2025-12-15T02:56:21.5506684Z Syncing repository: sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:56:21.5508447Z ##[group]Getting Git version info
+2025-12-15T02:56:21.5509751Z Working directory is '/home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in'
+2025-12-15T02:56:21.5510957Z [command]/usr/bin/git version
+2025-12-15T02:56:21.5576712Z git version 2.52.0
+2025-12-15T02:56:21.5601905Z ##[endgroup]
+2025-12-15T02:56:21.5622132Z Temporarily overriding HOME='/home/runner/work/_temp/d604b299-2f85-4696-8550-bec0f0c9ffb3' before making global git config changes
+2025-12-15T02:56:21.5623485Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-15T02:56:21.5627502Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T02:56:21.5662428Z Deleting the contents of '/home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in'
+2025-12-15T02:56:21.5665440Z ##[group]Initializing the repository
+2025-12-15T02:56:21.5669804Z [command]/usr/bin/git init /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T02:56:21.5762466Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-15T02:56:21.5764030Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-15T02:56:21.5765345Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-15T02:56:21.5766381Z hint: call:
+2025-12-15T02:56:21.5767041Z hint:
+2025-12-15T02:56:21.5767930Z hint: 	git config --global init.defaultBranch <name>
+2025-12-15T02:56:21.5769224Z hint:
+2025-12-15T02:56:21.5770270Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-15T02:56:21.5772010Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-15T02:56:21.5773306Z hint:
+2025-12-15T02:56:21.5773943Z hint: 	git branch -m <name>
+2025-12-15T02:56:21.5774696Z hint:
+2025-12-15T02:56:21.5775675Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-15T02:56:21.5777952Z Initialized empty Git repository in /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/.git/
+2025-12-15T02:56:21.5781621Z [command]/usr/bin/git remote add origin https://github.com/sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:56:21.5812666Z ##[endgroup]
+2025-12-15T02:56:21.5813845Z ##[group]Disabling automatic garbage collection
+2025-12-15T02:56:21.5817417Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-15T02:56:21.5846068Z ##[endgroup]
+2025-12-15T02:56:21.5847256Z ##[group]Setting up auth
+2025-12-15T02:56:21.5853388Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-15T02:56:21.5883592Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-15T02:56:21.6181340Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-15T02:56:21.6211981Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-15T02:56:21.6440844Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-15T02:56:21.6474704Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-15T02:56:21.6716032Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-15T02:56:21.6753710Z ##[endgroup]
+2025-12-15T02:56:21.6765129Z ##[group]Fetching the repository
+2025-12-15T02:56:21.6766433Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +da3653491b5e39aafdbc4a93a4f845684821dc41:refs/remotes/origin/main
+2025-12-15T02:56:21.8568495Z From https://github.com/sumanpospa/maruzzella-roster---clock-in
+2025-12-15T02:56:21.8569973Z  * [new ref]         da3653491b5e39aafdbc4a93a4f845684821dc41 -> origin/main
+2025-12-15T02:56:21.8599667Z ##[endgroup]
+2025-12-15T02:56:21.8600349Z ##[group]Determining the checkout info
+2025-12-15T02:56:21.8601845Z ##[endgroup]
+2025-12-15T02:56:21.8606477Z [command]/usr/bin/git sparse-checkout disable
+2025-12-15T02:56:21.8645844Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-15T02:56:21.8671330Z ##[group]Checking out the ref
+2025-12-15T02:56:21.8675768Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-15T02:56:21.8798516Z Switched to a new branch 'main'
+2025-12-15T02:56:21.8801788Z branch 'main' set up to track 'origin/main'.
+2025-12-15T02:56:21.8808149Z ##[endgroup]
+2025-12-15T02:56:21.8841424Z [command]/usr/bin/git log -1 --format=%H
+2025-12-15T02:56:21.8862509Z da3653491b5e39aafdbc4a93a4f845684821dc41
+2025-12-15T02:56:21.9087737Z ##[group]Run actions/setup-node@v4
+2025-12-15T02:56:21.9088263Z with:
+2025-12-15T02:56:21.9088625Z   node-version: 20.x
+2025-12-15T02:56:21.9089305Z   cache: npm
+2025-12-15T02:56:21.9089927Z   always-auth: false
+2025-12-15T02:56:21.9090326Z   check-latest: false
+2025-12-15T02:56:21.9090886Z   token: ***
+2025-12-15T02:56:21.9091248Z ##[endgroup]
+2025-12-15T02:56:22.0837197Z Found in cache @ /opt/hostedtoolcache/node/20.19.6/x64
+2025-12-15T02:56:22.0844095Z ##[group]Environment details
+2025-12-15T02:56:22.4103551Z node: v20.19.6
+2025-12-15T02:56:22.4104211Z npm: 10.8.2
+2025-12-15T02:56:22.4104676Z yarn: 1.22.22
+2025-12-15T02:56:22.4105778Z ##[endgroup]
+2025-12-15T02:56:22.4126566Z [command]/opt/hostedtoolcache/node/20.19.6/x64/bin/npm config get cache
+2025-12-15T02:56:22.5228464Z /home/runner/.npm
+2025-12-15T02:56:22.6273438Z npm cache is not found
+2025-12-15T02:56:22.6378406Z ##[group]Run npm ci
+2025-12-15T02:56:22.6378744Z [36;1mnpm ci[0m
+2025-12-15T02:56:22.6424409Z shell: /usr/bin/bash -e {0}
+2025-12-15T02:56:22.6424725Z ##[endgroup]
+2025-12-15T02:56:25.2005856Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-15T02:56:25.6608829Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2025-12-15T02:56:25.8917492Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-15T02:56:25.9123074Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-15T02:56:25.9788049Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-15T02:56:25.9794364Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-15T02:56:27.3297979Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-15T02:56:28.3210699Z 
+2025-12-15T02:56:28.3211854Z > maruzzella-roster-clock-in@0.0.0 postinstall
+2025-12-15T02:56:28.3216822Z > cd server && npm ci
+2025-12-15T02:56:28.3217145Z 
+2025-12-15T02:56:33.7607417Z 
+2025-12-15T02:56:33.7608153Z > maruzzella-backend@0.0.0 postinstall
+2025-12-15T02:56:33.7609172Z > prisma generate
+2025-12-15T02:56:33.7609438Z 
+2025-12-15T02:56:34.5806860Z Environment variables loaded from .env
+2025-12-15T02:56:34.5816567Z Prisma schema loaded from prisma/schema.prisma
+2025-12-15T02:56:34.7260781Z ┌─────────────────────────────────────────────────────────┐
+2025-12-15T02:56:34.7261880Z │  Update available 6.19.0 -> 7.1.0                       │
+2025-12-15T02:56:34.7262686Z │                                                         │
+2025-12-15T02:56:34.7263710Z │  This is a major update - please follow the guide at    │
+2025-12-15T02:56:34.7264211Z 
+2025-12-15T02:56:34.7264869Z ✔ Generated Prisma Client (v6.19.0) to ./node_modules/@prisma/client in 57ms
+2025-12-15T02:56:34.7265351Z 
+2025-12-15T02:56:34.7265919Z Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+2025-12-15T02:56:34.7266483Z 
+2025-12-15T02:56:34.7266977Z Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+2025-12-15T02:56:34.7267426Z 
+2025-12-15T02:56:34.7267931Z │  https://pris.ly/d/major-version-upgrade                │
+2025-12-15T02:56:34.7268526Z │                                                         │
+2025-12-15T02:56:34.7269197Z │  Run the following to update                            │
+2025-12-15T02:56:34.7269702Z │    npm i --save-dev prisma@latest                       │
+2025-12-15T02:56:34.7270125Z │    npm i @prisma/client@latest                          │
+2025-12-15T02:56:34.7270559Z └─────────────────────────────────────────────────────────┘
+2025-12-15T02:56:34.7516154Z 
+2025-12-15T02:56:34.7516617Z added 119 packages, and audited 120 packages in 6s
+2025-12-15T02:56:34.7517119Z 
+2025-12-15T02:56:34.7517420Z 19 packages are looking for funding
+2025-12-15T02:56:34.7517926Z   run `npm fund` for details
+2025-12-15T02:56:34.7527437Z 
+2025-12-15T02:56:34.7527791Z found 0 vulnerabilities
+2025-12-15T02:56:34.7762997Z 
+2025-12-15T02:56:34.7763956Z added 432 packages, and audited 433 packages in 12s
+2025-12-15T02:56:34.7764395Z 
+2025-12-15T02:56:34.7764648Z 150 packages are looking for funding
+2025-12-15T02:56:34.7765109Z   run `npm fund` for details
+2025-12-15T02:56:34.7775747Z 
+2025-12-15T02:56:34.7775995Z found 0 vulnerabilities
+2025-12-15T02:56:34.8116042Z ##[group]Run npm run lint
+2025-12-15T02:56:34.8116313Z [36;1mnpm run lint[0m
+2025-12-15T02:56:34.8150130Z shell: /usr/bin/bash -e {0}
+2025-12-15T02:56:34.8150378Z ##[endgroup]
+2025-12-15T02:56:34.9235811Z 
+2025-12-15T02:56:34.9236211Z > maruzzella-roster-clock-in@0.0.0 lint
+2025-12-15T02:56:34.9236935Z > eslint "**/*.{ts,tsx,js,jsx}" --max-warnings=0 --ignore-path .eslintignore
+2025-12-15T02:56:34.9237235Z 
+2025-12-15T02:56:36.8738620Z 
+2025-12-15T02:56:36.8739652Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/App.tsx
+2025-12-15T02:56:36.8764540Z ##[error]   11:20  error  'Roster' is defined but never used                       @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8772430Z ##[error]   11:37  error  'Shift' is defined but never used                        @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8773814Z ##[error]   24:10  error  'selectedDepartment' is assigned a value but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8775186Z ##[error]  111:52  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+2025-12-15T02:56:36.8776505Z ##[error]  240:9   error  'navButtonClasses' is assigned a value but never used    @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8777850Z ##[error]  247:9   error  'handleNavClick' is assigned a value but never used      @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8778663Z 
+2025-12-15T02:56:36.8779360Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/AiBriefing.tsx
+2025-12-15T02:56:36.8780505Z ##[error]  39:82  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8781292Z 
+2025-12-15T02:56:36.8781732Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/ClockInView.tsx
+2025-12-15T02:56:36.8782638Z ##[error]  3:42  error  'Department' is defined but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8783356Z 
+2025-12-15T02:56:36.8783816Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/CustomTimePicker.tsx
+2025-12-15T02:56:36.8784718Z ##[error]  16:3  error  'required' is defined but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8785478Z 
+2025-12-15T02:56:36.8785921Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/DashboardView.tsx
+2025-12-15T02:56:36.8786880Z ##[error]  16:3  error  'showBackButton' is assigned a value but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8788201Z ##[error]  17:3  error  'onBackToDashboard' is defined but never used        @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8789216Z 
+2025-12-15T02:56:36.8789801Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/EmployeeModal.tsx
+2025-12-15T02:56:36.8790837Z ##[error]  105:33  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8792121Z ##[error]  105:83  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8792857Z 
+2025-12-15T02:56:36.8793299Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/EmployeeView.tsx
+2025-12-15T02:56:36.8794236Z ##[error]    3:39  error  'Shift' is defined but never used                                @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8795486Z ##[error]  214:62  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8796707Z ##[error]  214:75  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8797727Z 
+2025-12-15T02:56:36.8798151Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/LoginView.tsx
+2025-12-15T02:56:36.8799548Z ##[error]  43:80  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8800369Z 
+2025-12-15T02:56:36.8800810Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/PayrollView.tsx
+2025-12-15T02:56:36.8801827Z ##[error]    3:29  error  'Department' is defined but never used                           @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8803106Z ##[error]  428:36  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8804338Z ##[error]  428:46  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+2025-12-15T02:56:36.8805069Z 
+2025-12-15T02:56:36.8805583Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/RosterView.tsx
+2025-12-15T02:56:36.8806575Z ##[error]   3:28  error  'Roster' is defined but never used        @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8807890Z ##[error]  51:3   error  'setEmployees' is defined but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8808633Z 
+2025-12-15T02:56:36.8809296Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/ShiftModal.tsx
+2025-12-15T02:56:36.8810342Z ##[error]  92:9  error  'handleEmployeeSelection' is assigned a value but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8811169Z 
+2025-12-15T02:56:36.8811615Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/components/TimeLogModal.tsx
+2025-12-15T02:56:36.8812507Z ##[error]  33:9  error  'isMobile' is assigned a value but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8813277Z 
+2025-12-15T02:56:36.8813697Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/server/index-simple.js
+2025-12-15T02:56:36.8814599Z ##[error]  3:8  error  'fs' is defined but never used    @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8815733Z ##[error]  4:8  error  'path' is defined but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8816611Z 
+2025-12-15T02:56:36.8816980Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/services/api.ts
+2025-12-15T02:56:36.8817908Z ##[error]   1:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T02:56:36.8819386Z ##[error]  11:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T02:56:36.8820179Z 
+2025-12-15T02:56:36.8820620Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/services/geminiService.ts
+2025-12-15T02:56:36.8821520Z ##[error]  5:33  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T02:56:36.8822746Z ##[error]  5:66  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T02:56:36.8823480Z 
+2025-12-15T02:56:36.8823898Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/utils/pdfGenerator.ts
+2025-12-15T02:56:36.8824781Z ##[error]  108:35  error  'idx' is defined but never used  @typescript-eslint/no-unused-vars
+2025-12-15T02:56:36.8825489Z 
+2025-12-15T02:56:36.8825872Z ✖ 31 problems (31 errors, 0 warnings)
+2025-12-15T02:56:36.8826056Z 
+2025-12-15T02:56:36.9032847Z ##[error]Process completed with exit code 1.
+2025-12-15T02:56:36.9127344Z Post job cleanup.
+2025-12-15T02:56:37.0051655Z [command]/usr/bin/git version
+2025-12-15T02:56:37.0086145Z git version 2.52.0
+2025-12-15T02:56:37.0129254Z Temporarily overriding HOME='/home/runner/work/_temp/34730d2f-a18c-46d6-b90d-088338711be5' before making global git config changes
+2025-12-15T02:56:37.0131070Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-15T02:56:37.0135986Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T02:56:37.0174532Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-15T02:56:37.0206056Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-15T02:56:37.0426943Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-15T02:56:37.0447106Z http.https://github.com/.extraheader
+2025-12-15T02:56:37.0460042Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-15T02:56:37.0491433Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-15T02:56:37.0704584Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-15T02:56:37.0736438Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-15T02:56:37.1067869Z Cleaning up orphan processes

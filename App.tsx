@@ -35,6 +35,8 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaveTime, setLastSaveTime] = useState<Date | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   // Version check to detect cached old code
   useEffect(() => {
@@ -133,6 +135,23 @@ const App: React.FC = () => {
     };
   }, []);
 
+  // SAFETY: Auto-backup to localStorage on every change
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      const backup = {
+        employees,
+        rosters,
+        timeLogs,
+        timestamp: new Date().toISOString(),
+      };
+      localStorage.setItem('roster-backup', JSON.stringify(backup));
+      console.log('💾 Local backup saved at', backup.timestamp);
+    } catch (error) {
+      console.error('Failed to save local backup:', error);
+    }
+  }, [employees, rosters, timeLogs, isHydrated]);
+
   // Real-time sync: listen for server-sent socket events and merge updates
   useEffect(() => {
     const API_BASE = (import.meta as { env?: Record<string, string> }).env?.VITE_API_BASE ||
@@ -227,20 +246,19 @@ const App: React.FC = () => {
       return;
     }
 
-    // Check if rosters are suspiciously empty (should have at least some shifts)
+    // Check total data being saved
     const totalShifts =
       Object.values(rosters.nextWeek || {}).flat().length +
       Object.values(rosters.currentWeek || {}).flat().length;
 
-    if (totalShifts === 0) {
-      console.warn('⚠️ WARNING: Rosters are empty. Skipping save to prevent data loss.');
-      console.warn(
-        'If this is intentional, you can manually clear rosters from the employee management page.',
-      );
-      return;
+    // CHANGED: Allow saving even with 0 shifts (but warn user)
+    if (totalShifts === 0 && timeLogs.length === 0) {
+      console.warn('⚠️ WARNING: Saving empty rosters and time logs');
     }
 
     setIsSaving(true);
+    setSaveError(null);
+    setSaveSuccess(false);
 
     (async () => {
       try {
@@ -266,12 +284,17 @@ const App: React.FC = () => {
 
         setIsSaving(false);
         setLastSaveTime(new Date());
+        setSaveSuccess(true);
+        setSaveError(null);
         console.log('✅ Save completed successfully');
+        setTimeout(() => setSaveSuccess(false), 3000);
       } catch (error) {
+        const errMsg = error instanceof Error ? error.message : 'Unknown error';
         console.error('❌ Failed to save state to backend', error);
         setIsSaving(false);
+        setSaveError(errMsg);
         alert(
-          '⚠️ Save failed! Your changes may not be saved. Please check your internet connection.',
+          `⚠️ SAVE FAILED: ${errMsg}\n\nYour data is backed up locally in your browser. Please check your internet connection and refresh the page.`,
         );
       }
     })();
@@ -430,14 +453,25 @@ const App: React.FC = () => {
           <span className="font-medium">Saving...</span>
         </div>
       )}
-      {!isSaving && lastSaveTime && (
+      {saveError && (
+        <div className="fixed top-4 right-4 z-50 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <span className="font-medium">Save failed - Backed up locally</span>
+        </div>
+      )}
+      {!isSaving && !saveError && saveSuccess && (
         <div className="fixed top-4 right-4 z-50 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 animate-fade-in">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <span className="font-medium">
-            Saved {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </span>
+          <span className="font-medium">Saved successfully!</span>
+        </div>
+      )}
+      {!isSaving && !saveError && !saveSuccess && lastSaveTime && (
+        <div className="fixed top-4 right-4 z-50 bg-slate-500 text-white px-3 py-1 rounded-lg shadow text-sm opacity-75">
+          Last saved: {lastSaveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
       )}
 

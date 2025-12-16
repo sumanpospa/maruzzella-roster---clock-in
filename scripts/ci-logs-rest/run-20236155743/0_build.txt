@@ -1,0 +1,214 @@
+﻿2025-12-15T14:40:21.8881518Z Current runner version: '2.329.0'
+2025-12-15T14:40:21.8914177Z ##[group]Runner Image Provisioner
+2025-12-15T14:40:21.8915661Z Hosted Compute Agent
+2025-12-15T14:40:21.8916549Z Version: 20251202.455
+2025-12-15T14:40:21.8917457Z Commit: 6c10caca4910e198df60de23adf20ad317c474e3
+2025-12-15T14:40:21.8918846Z Build Date: 2025-12-02T15:56:59Z
+2025-12-15T14:40:21.8920169Z Worker ID: {ebdb005a-db7b-409e-94c4-2a8ccf28e20f}
+2025-12-15T14:40:21.8921381Z ##[endgroup]
+2025-12-15T14:40:21.8922399Z ##[group]Operating System
+2025-12-15T14:40:21.8923411Z Ubuntu
+2025-12-15T14:40:21.8924150Z 24.04.3
+2025-12-15T14:40:21.8925122Z LTS
+2025-12-15T14:40:21.8925922Z ##[endgroup]
+2025-12-15T14:40:21.8926792Z ##[group]Runner Image
+2025-12-15T14:40:21.8927881Z Image: ubuntu-24.04
+2025-12-15T14:40:21.8928721Z Version: 20251208.163.1
+2025-12-15T14:40:21.8930742Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251208.163/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-15T14:40:21.8933484Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251208.163
+2025-12-15T14:40:21.8935331Z ##[endgroup]
+2025-12-15T14:40:21.8937205Z ##[group]GITHUB_TOKEN Permissions
+2025-12-15T14:40:21.8940052Z Contents: read
+2025-12-15T14:40:21.8940860Z Metadata: read
+2025-12-15T14:40:21.8941700Z Packages: read
+2025-12-15T14:40:21.8942645Z ##[endgroup]
+2025-12-15T14:40:21.8945966Z Secret source: Actions
+2025-12-15T14:40:21.8947202Z Prepare workflow directory
+2025-12-15T14:40:21.9413393Z Prepare all required actions
+2025-12-15T14:40:21.9471918Z Getting action download info
+2025-12-15T14:40:22.2291901Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-15T14:40:22.3264391Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2025-12-15T14:40:22.4152666Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-15T14:40:22.6086054Z Complete job name: build
+2025-12-15T14:40:22.6756631Z ##[group]Run actions/checkout@v4
+2025-12-15T14:40:22.6757433Z with:
+2025-12-15T14:40:22.6757906Z   repository: sumanpospa/maruzzella-roster---clock-in
+2025-12-15T14:40:22.6758644Z   token: ***
+2025-12-15T14:40:22.6759015Z   ssh-strict: true
+2025-12-15T14:40:22.6759579Z   ssh-user: git
+2025-12-15T14:40:22.6759978Z   persist-credentials: true
+2025-12-15T14:40:22.6760420Z   clean: true
+2025-12-15T14:40:22.6760812Z   sparse-checkout-cone-mode: true
+2025-12-15T14:40:22.6761299Z   fetch-depth: 1
+2025-12-15T14:40:22.6761678Z   fetch-tags: false
+2025-12-15T14:40:22.6762071Z   show-progress: true
+2025-12-15T14:40:22.6762473Z   lfs: false
+2025-12-15T14:40:22.6762853Z   submodules: false
+2025-12-15T14:40:22.6763299Z   set-safe-directory: true
+2025-12-15T14:40:22.6763985Z ##[endgroup]
+2025-12-15T14:40:22.7821606Z Syncing repository: sumanpospa/maruzzella-roster---clock-in
+2025-12-15T14:40:22.7823524Z ##[group]Getting Git version info
+2025-12-15T14:40:22.7824525Z Working directory is '/home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in'
+2025-12-15T14:40:22.7825695Z [command]/usr/bin/git version
+2025-12-15T14:40:22.7911679Z git version 2.52.0
+2025-12-15T14:40:22.7936929Z ##[endgroup]
+2025-12-15T14:40:22.7956528Z Temporarily overriding HOME='/home/runner/work/_temp/d8d4c316-caf2-4642-8b47-bf9e18173563' before making global git config changes
+2025-12-15T14:40:22.7957894Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-15T14:40:22.7961954Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T14:40:22.7999713Z Deleting the contents of '/home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in'
+2025-12-15T14:40:22.8002824Z ##[group]Initializing the repository
+2025-12-15T14:40:22.8006828Z [command]/usr/bin/git init /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T14:40:22.8133861Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-15T14:40:22.8135126Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-15T14:40:22.8136200Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-15T14:40:22.8136881Z hint: call:
+2025-12-15T14:40:22.8137365Z hint:
+2025-12-15T14:40:22.8137860Z hint: 	git config --global init.defaultBranch <name>
+2025-12-15T14:40:22.8138434Z hint:
+2025-12-15T14:40:22.8139437Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-15T14:40:22.8140693Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-15T14:40:22.8141372Z hint:
+2025-12-15T14:40:22.8141756Z hint: 	git branch -m <name>
+2025-12-15T14:40:22.8142203Z hint:
+2025-12-15T14:40:22.8142780Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-15T14:40:22.8144020Z Initialized empty Git repository in /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/.git/
+2025-12-15T14:40:22.8150363Z [command]/usr/bin/git remote add origin https://github.com/sumanpospa/maruzzella-roster---clock-in
+2025-12-15T14:40:22.8182290Z ##[endgroup]
+2025-12-15T14:40:22.8183009Z ##[group]Disabling automatic garbage collection
+2025-12-15T14:40:22.8186211Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-15T14:40:22.8215003Z ##[endgroup]
+2025-12-15T14:40:22.8216187Z ##[group]Setting up auth
+2025-12-15T14:40:22.8222513Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-15T14:40:22.8252977Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-15T14:40:22.8631821Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-15T14:40:22.8660157Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-15T14:40:22.8902103Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-15T14:40:22.8945760Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-15T14:40:22.9196666Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-15T14:40:22.9238232Z ##[endgroup]
+2025-12-15T14:40:22.9239525Z ##[group]Fetching the repository
+2025-12-15T14:40:22.9250565Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +24b4deb59534e6b39311577f65b05f37c9cbc808:refs/remotes/origin/main
+2025-12-15T14:40:23.1334915Z From https://github.com/sumanpospa/maruzzella-roster---clock-in
+2025-12-15T14:40:23.1335929Z  * [new ref]         24b4deb59534e6b39311577f65b05f37c9cbc808 -> origin/main
+2025-12-15T14:40:23.1366462Z ##[endgroup]
+2025-12-15T14:40:23.1367160Z ##[group]Determining the checkout info
+2025-12-15T14:40:23.1369661Z ##[endgroup]
+2025-12-15T14:40:23.1376038Z [command]/usr/bin/git sparse-checkout disable
+2025-12-15T14:40:23.1414321Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-15T14:40:23.1440476Z ##[group]Checking out the ref
+2025-12-15T14:40:23.1444823Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-15T14:40:23.1593444Z Switched to a new branch 'main'
+2025-12-15T14:40:23.1594753Z branch 'main' set up to track 'origin/main'.
+2025-12-15T14:40:23.1597372Z ##[endgroup]
+2025-12-15T14:40:23.1612725Z [command]/usr/bin/git log -1 --format=%H
+2025-12-15T14:40:23.1635381Z 24b4deb59534e6b39311577f65b05f37c9cbc808
+2025-12-15T14:40:23.1888994Z ##[group]Run actions/setup-node@v4
+2025-12-15T14:40:23.1889812Z with:
+2025-12-15T14:40:23.1890213Z   node-version: 20.x
+2025-12-15T14:40:23.1890662Z   cache: npm
+2025-12-15T14:40:23.1891270Z   always-auth: false
+2025-12-15T14:40:23.1891748Z   check-latest: false
+2025-12-15T14:40:23.1892385Z   token: ***
+2025-12-15T14:40:23.1892793Z ##[endgroup]
+2025-12-15T14:40:23.3639815Z Found in cache @ /opt/hostedtoolcache/node/20.19.6/x64
+2025-12-15T14:40:23.3646180Z ##[group]Environment details
+2025-12-15T14:40:25.3845762Z node: v20.19.6
+2025-12-15T14:40:25.3846228Z npm: 10.8.2
+2025-12-15T14:40:25.3846603Z yarn: 1.22.22
+2025-12-15T14:40:25.3847555Z ##[endgroup]
+2025-12-15T14:40:25.3877655Z [command]/opt/hostedtoolcache/node/20.19.6/x64/bin/npm config get cache
+2025-12-15T14:40:25.6094660Z /home/runner/.npm
+2025-12-15T14:40:25.7348939Z npm cache is not found
+2025-12-15T14:40:25.7470510Z ##[group]Run npm ci
+2025-12-15T14:40:25.7470799Z [36;1mnpm ci[0m
+2025-12-15T14:40:25.7515323Z shell: /usr/bin/bash -e {0}
+2025-12-15T14:40:25.7515583Z ##[endgroup]
+2025-12-15T14:40:29.2204635Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-12-15T14:40:29.8922485Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2025-12-15T14:40:30.0192851Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2025-12-15T14:40:30.0408899Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2025-12-15T14:40:30.1222774Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-12-15T14:40:30.1300705Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-12-15T14:40:31.5845377Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2025-12-15T14:40:32.5950881Z 
+2025-12-15T14:40:32.5951881Z > maruzzella-roster-clock-in@0.0.0 postinstall
+2025-12-15T14:40:32.5952438Z > cd server && npm ci
+2025-12-15T14:40:32.5952715Z 
+2025-12-15T14:40:38.0956597Z 
+2025-12-15T14:40:38.0957295Z > maruzzella-backend@0.0.0 postinstall
+2025-12-15T14:40:38.0957993Z > prisma generate
+2025-12-15T14:40:38.0958241Z 
+2025-12-15T14:40:38.8994379Z Environment variables loaded from .env
+2025-12-15T14:40:38.9003692Z Prisma schema loaded from prisma/schema.prisma
+2025-12-15T14:40:39.0950836Z ┌─────────────────────────────────────────────────────────┐
+2025-12-15T14:40:39.0951824Z │  Update available 6.19.0 -> 7.1.0                       │
+2025-12-15T14:40:39.0952546Z │                                                         │
+2025-12-15T14:40:39.0953301Z │  This is a major update - please follow the guide at    │
+2025-12-15T14:40:39.0954093Z │  https://pris.ly/d/major-version-upgrade                │
+2025-12-15T14:40:39.0954830Z │                                                         │
+2025-12-15T14:40:39.0955571Z │  Run the following to update                            │
+2025-12-15T14:40:39.0956423Z │    npm i --save-dev prisma@latest                       │
+2025-12-15T14:40:39.0957232Z │    npm i @prisma/client@latest                          │
+2025-12-15T14:40:39.0958034Z └─────────────────────────────────────────────────────────┘
+2025-12-15T14:40:39.0958501Z 
+2025-12-15T14:40:39.0959401Z ✔ Generated Prisma Client (v6.19.0) to ./node_modules/@prisma/client in 78ms
+2025-12-15T14:40:39.0959949Z 
+2025-12-15T14:40:39.0960549Z Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+2025-12-15T14:40:39.0961078Z 
+2025-12-15T14:40:39.0961549Z Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+2025-12-15T14:40:39.0962031Z 
+2025-12-15T14:40:39.1192093Z 
+2025-12-15T14:40:39.1192706Z added 146 packages, and audited 147 packages in 6s
+2025-12-15T14:40:39.1194228Z 
+2025-12-15T14:40:39.1194568Z 19 packages are looking for funding
+2025-12-15T14:40:39.1195064Z   run `npm fund` for details
+2025-12-15T14:40:39.1204990Z 
+2025-12-15T14:40:39.1205525Z found 0 vulnerabilities
+2025-12-15T14:40:39.1459899Z 
+2025-12-15T14:40:39.1460603Z added 459 packages, and audited 460 packages in 13s
+2025-12-15T14:40:39.1461065Z 
+2025-12-15T14:40:39.1461233Z 150 packages are looking for funding
+2025-12-15T14:40:39.1461521Z   run `npm fund` for details
+2025-12-15T14:40:39.1471887Z 
+2025-12-15T14:40:39.1472061Z found 0 vulnerabilities
+2025-12-15T14:40:39.1833368Z ##[group]Run npm run lint
+2025-12-15T14:40:39.1833639Z [36;1mnpm run lint[0m
+2025-12-15T14:40:39.1867323Z shell: /usr/bin/bash -e {0}
+2025-12-15T14:40:39.1867551Z ##[endgroup]
+2025-12-15T14:40:39.2954563Z 
+2025-12-15T14:40:39.2955197Z > maruzzella-roster-clock-in@0.0.0 lint
+2025-12-15T14:40:39.2956188Z > eslint "**/*.{ts,tsx,js,jsx}" --max-warnings=0 --ignore-path .eslintignore
+2025-12-15T14:40:39.2956704Z 
+2025-12-15T14:40:41.3032874Z 
+2025-12-15T14:40:41.3033792Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/App.tsx
+2025-12-15T14:40:41.3066291Z ##[error]  158:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T14:40:41.3077099Z ##[error]  170:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T14:40:41.3079456Z ##[error]  187:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T14:40:41.3081476Z ##[error]  205:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2025-12-15T14:40:41.3082237Z 
+2025-12-15T14:40:41.3082672Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/scripts/clockout-fix.js
+2025-12-15T14:40:41.3083727Z ##[error]   2:12  error  Require statement not part of import statement  @typescript-eslint/no-var-requires
+2025-12-15T14:40:41.3084979Z ##[error]   3:14  error  Require statement not part of import statement  @typescript-eslint/no-var-requires
+2025-12-15T14:40:41.3086187Z ##[error]  51:11  error  'saved' is assigned a value but never used      @typescript-eslint/no-unused-vars
+2025-12-15T14:40:41.3086890Z 
+2025-12-15T14:40:41.3087321Z /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in/server/scripts/edge-tests.js
+2025-12-15T14:40:41.3088179Z ##[error]  115:15  error  Empty block statement  no-empty
+2025-12-15T14:40:41.3088822Z 
+2025-12-15T14:40:41.3089354Z ✖ 8 problems (8 errors, 0 warnings)
+2025-12-15T14:40:41.3089538Z 
+2025-12-15T14:40:41.3378075Z ##[error]Process completed with exit code 1.
+2025-12-15T14:40:41.3479072Z Post job cleanup.
+2025-12-15T14:40:41.4413143Z [command]/usr/bin/git version
+2025-12-15T14:40:41.4448735Z git version 2.52.0
+2025-12-15T14:40:41.4491306Z Temporarily overriding HOME='/home/runner/work/_temp/37ce26e8-7438-4645-bb47-c1fddb50f088' before making global git config changes
+2025-12-15T14:40:41.4492315Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-15T14:40:41.4503353Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/maruzzella-roster---clock-in/maruzzella-roster---clock-in
+2025-12-15T14:40:41.4534828Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-15T14:40:41.4565781Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-15T14:40:41.4787591Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-15T14:40:41.4806928Z http.https://github.com/.extraheader
+2025-12-15T14:40:41.4820118Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-15T14:40:41.4850433Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-15T14:40:41.5067864Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-15T14:40:41.5099644Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-15T14:40:41.5421168Z Cleaning up orphan processes
