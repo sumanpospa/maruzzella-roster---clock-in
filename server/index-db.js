@@ -120,12 +120,14 @@ app.post('/api/state', async (req, res) => {
             name: emp.name,
             role: emp.role,
             pin: emp.pin,
+            department: emp.department,
           },
           create: {
             id: emp.id,
             name: emp.name,
             role: emp.role,
             pin: emp.pin,
+            department: emp.department || 'Kitchen',
           },
         });
       }
