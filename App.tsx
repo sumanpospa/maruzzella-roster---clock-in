@@ -154,8 +154,7 @@ const App: React.FC = () => {
 
   // Real-time sync: listen for server-sent socket events and merge updates
   useEffect(() => {
-    const API_BASE = (import.meta as { env?: Record<string, string> }).env?.VITE_API_BASE ||
-      'http://localhost:4000';
+    const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
 
     const socket = io(API_BASE, { transports: ['websocket', 'polling'] });
     socket.on('connect', () => console.log('[IO] connected', socket.id));
