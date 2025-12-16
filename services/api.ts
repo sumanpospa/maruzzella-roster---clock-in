@@ -1,5 +1,4 @@
-const API_BASE = (import.meta as { env?: Record<string, string> }).env?.VITE_API_BASE ||
-  'http://localhost:4000';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000';
 
 export async function getState() {
   const res = await fetch(`${API_BASE}/api/state`);
